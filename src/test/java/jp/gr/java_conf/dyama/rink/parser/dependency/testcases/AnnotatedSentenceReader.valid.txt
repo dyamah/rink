@@ -1,0 +1,15 @@
+I	PRP	1
+saw	VBD	-1
+a	DT	3
+girl	NN	1
+
+He	PRP	1
+has	VBZ	-1
+his	PRP$	3
+house	NN	1
+
+
+
+Good	RB	-1
+
+
