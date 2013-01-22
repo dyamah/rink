@@ -130,6 +130,7 @@ public class AnnotatedSentenceReader implements SentenceReader {
         return bos;
     }
 
+    @Override
     synchronized public void close() throws IOException{
         reader_.close();
     }

@@ -68,4 +68,8 @@ class SimpleSentenceReader implements SentenceReader {
         return true;
     }
 
+    @Override
+    public void close() throws IOException {
+    }
+
 }
