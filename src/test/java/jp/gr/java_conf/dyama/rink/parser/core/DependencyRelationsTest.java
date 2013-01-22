@@ -7,11 +7,9 @@ import java.util.List;
 
 import jp.gr.java_conf.dyama.rink.corpus.PTB;
 import jp.gr.java_conf.dyama.rink.parser.IDConverterImpl;
-import jp.gr.java_conf.dyama.rink.parser.core.DependencyGraph;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyRelations;
 import jp.gr.java_conf.dyama.rink.parser.core.SentenceImpl;
 import jp.gr.java_conf.dyama.rink.parser.core.WordImpl;
-import jp.gr.java_conf.dyama.rink.tools.PerformanceMeasuring;
 
 import org.junit.After;
 import org.junit.Before;
@@ -682,86 +680,6 @@ public class DependencyRelationsTest {
         assertEquals(false, deps1.isSameChildren(4, deps3));
         assertEquals( true, deps1.isSameChildren(5, deps3));
         assertEquals( true, deps1.isSameChildren(6, deps3));
-    }
-
-
-    @Test
-    public void testPerformance(){
-        SentenceImpl sentence = new SentenceImpl(generator_, null);
-        sentence.addWord(generator_.generate("A",  0,  1,  PTB.POS.PRP,  3, null));
-        sentence.addWord(generator_.generate("B",  1,  2,  PTB.POS.PRP,  3, null));
-        sentence.addWord(generator_.generate("C",  2,  3,  PTB.POS.PRP,  3, null));
-        sentence.addWord(generator_.generate("D",  3,  4,  PTB.POS.PRP, 11, null));
-        sentence.addWord(generator_.generate("E",  4,  5,  PTB.POS.PRP,  3, null));
-        sentence.addWord(generator_.generate("F",  5,  6,  PTB.POS.PRP,  3, null));
-        sentence.addWord(generator_.generate("G",  6,  7,  PTB.POS.PRP,  5, null));
-        sentence.addWord(generator_.generate("H",  7,  8,  PTB.POS.PRP,  6, null));
-        sentence.addWord(generator_.generate("I",  8,  9,  PTB.POS.PRP,  6, null));
-        sentence.addWord(generator_.generate("J",  9, 10,  PTB.POS.PRP,  6, null));
-        sentence.addWord(generator_.generate("K", 10, 11,  PTB.POS.PRP,  6, null));
-        sentence.addWord(generator_.generate("L", 11, 12,  PTB.POS.PRP, -1, null));
-        sentence.addWord(generator_.generate("M", 12, 13,  PTB.POS.PRP, 11, null));
-        sentence.addWord(generator_.generate("N", 13, 14,  PTB.POS.PRP, 11, null));
-        sentence.addWord(generator_.generate("N", 14, 15,  PTB.POS.PRP, 13, null));
-        sentence.addWord(generator_.generate("N", 15, 16,  PTB.POS.PRP, 14, null));
-
-        {
-            PerformanceMeasuring pm = new PerformanceMeasuring();
-            DependencyGraph graph = new DependencyGraph();
-            for(int i = 0; i < 100000; i++){
-                graph.buildDependencies(sentence);
-            }
-            System.err.println("G#build:\t" + pm.getTime());
-        }
-
-        {
-            PerformanceMeasuring pm = new PerformanceMeasuring();
-            DependencyGraph graph = new DependencyGraph();
-            graph.buildDependencies(sentence);
-            for(int i = 0; i < 100000; i++){
-                for(int j = 0; j < graph.size(); j++){
-                    DependencyGraph.Node node = graph.getNode(j);
-                    for(int c = 0; c < node.getNumOfChildren(); c++)
-                        node.getChild(c);
-                }
-            }
-            System.err.println("G#children:\t" + pm.getTime());
-        }
-
-        {
-            PerformanceMeasuring pm = new PerformanceMeasuring();
-            DependencyRelations deps = new DependencyRelations();
-            for(int i = 0; i < 100000; i++){
-                deps.build(sentence);
-            }
-            System.err.println("R#build:\t" + pm.getTime());
-
-        }
-
-        {
-            PerformanceMeasuring pm = new PerformanceMeasuring();
-            DependencyRelations deps = new DependencyRelations();
-            deps.build(sentence);
-            for(int i = 0; i < 100000; i++){
-                for(int j = 0; j < deps.size(); j++){
-                    for(int c = 0; c < deps.getNumberOfChildren(j); c++)
-                        deps.getChildID(j, c);
-                }
-            }
-            System.err.println("R#children:\t" + pm.getTime());
-        }
-
-        {
-            PerformanceMeasuring pm = new PerformanceMeasuring();
-            DependencyRelations deps = new DependencyRelations();
-            DependencyRelations src = new DependencyRelations();
-            src.build(sentence);
-            for(int i = 0; i < 1000000; i++){
-                deps.copy(src);
-            }
-            System.err.println("R#copy:\t" + pm.getTime());
-        }
-
     }
 
 }
