@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import jp.gr.java_conf.dyama.rink.corpus.PTB;
 import jp.gr.java_conf.dyama.rink.parser.IDConverterImpl;
-import jp.gr.java_conf.dyama.rink.parser.Sentence;
 import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
 import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSentenceReader.Mode;
 
