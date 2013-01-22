@@ -80,9 +80,6 @@ public class AnnotatedSentenceReader implements SentenceReader {
         return reader_.ready();
     }
 
-    /**
-     * throw IllegalArgumentException if the invalid format is found
-     */
     @Override
     synchronized public boolean read(Sentence sentence) throws IOException {
         if (sentence == null)
