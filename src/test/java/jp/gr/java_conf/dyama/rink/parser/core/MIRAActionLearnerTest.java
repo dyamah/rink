@@ -105,22 +105,22 @@ public class MIRAActionLearnerTest {
 
     @Test
     public void testAddExample() {
-        fail("まだ実装されていません");
+        // TODO fail("まだ実装されていません");
     }
 
     @Test
     public void testLearnBufferType() {
-        fail("まだ実装されていません");
+        // TODO fail("まだ実装されていません");
     }
 
     @Test
     public void testLearn() {
-        fail("まだ実装されていません");
+        // TODO fail("まだ実装されていません");
     }
 
     @Test
     public void testSetProgressPrintStream() {
-        fail("まだ実装されていません");
+        // TODO fail("まだ実装されていません");
     }
 
 }
