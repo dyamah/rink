@@ -1,0 +1,15 @@
+1	I	_	PRP	PRP	_	2
+2	saw	_	VBD	VBD	_	0
+3	a	_	DT	DT	_	4
+4	girl	_	NN	NN	_	2
+
+1	He	_	PRP	PRP	_	2
+2	has	_	VBZ	VBZ	_	0
+3	his	_	PRP$	PRP$	_	4
+4	house	_	PRN	NN	_	2
+
+
+
+1	Good	_	RB	RB	_	0
+
+
