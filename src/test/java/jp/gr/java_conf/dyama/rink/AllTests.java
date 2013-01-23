@@ -24,6 +24,7 @@ import jp.gr.java_conf.dyama.rink.parser.MutableIDConverterTest;
 import jp.gr.java_conf.dyama.rink.parser.core.ActionImplTest;
 import jp.gr.java_conf.dyama.rink.parser.core.AnnotatedSentenceReaderTest;
 import jp.gr.java_conf.dyama.rink.parser.core.BitVectorTest;
+import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSampleWriterTest;
 import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSentenceReaderTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyParserTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyRelationsTest;
@@ -31,6 +32,7 @@ import jp.gr.java_conf.dyama.rink.parser.core.DeterministicBottomUpParserTest;
 import jp.gr.java_conf.dyama.rink.parser.core.FeatureImplTest;
 import jp.gr.java_conf.dyama.rink.parser.core.IWPT2003BestFeatureFunctionTest;
 import jp.gr.java_conf.dyama.rink.parser.core.OracleActionEstimatorTest;
+import jp.gr.java_conf.dyama.rink.parser.core.OriginalSampleWriterTest;
 import jp.gr.java_conf.dyama.rink.parser.core.SVMActionEstimatorTest;
 import jp.gr.java_conf.dyama.rink.parser.core.SVMActionLearnerTest;
 import jp.gr.java_conf.dyama.rink.parser.core.SampleImplTest;
@@ -60,12 +62,14 @@ import org.junit.runners.Suite.SuiteClasses;
     ActionImplTest.class,
     AnnotatedSentenceReaderTest.class,
     CoNLLXSentenceReaderTest.class,
+    CoNLLXSampleWriterTest.class,
     DependencyRelationsTest.class,
     DependencyParserTest.class,
     DeterministicBottomUpParserTest.class,
     FeatureImplTest.class,
     IWPT2003BestFeatureFunctionTest.class,
     OracleActionEstimatorTest.class,
+    OriginalSampleWriterTest.class,
     SampleImplTest.class,
     SentenceImplTest.class,
     SimpleSentenceReaderTest.class,
