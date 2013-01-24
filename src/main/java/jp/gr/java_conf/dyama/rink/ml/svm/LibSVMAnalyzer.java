@@ -275,10 +275,8 @@ enum LibSVMAnalyzer {
         return svfreq;
     }
 
-    static ClassifierImpl.SVCoefficient[] analyzeSVCoefficient(libsvm.svm_model model){
-        String errMsg = checkValidModel(model);
-        if (errMsg != null)
-            throw new IllegalArgumentException(errMsg);
+    static private ClassifierImpl.SVCoefficient[] analyzeSVCoefficient(libsvm.svm_model model){
+        checkValidModel(model);
 
         ClassifierImpl.SVCoefficient[] svcoefs = new ClassifierImpl.SVCoefficient[model.l];
 

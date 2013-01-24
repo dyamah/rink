@@ -405,6 +405,8 @@ public class DependencyRelationsTest {
             assertEquals(false, deps.hasDependencyRelation(0, 1));
             deps.depend(0, 1);
             assertEquals(true, deps.hasDependencyRelation(0, 1));
+            deps.depend(0, 1);
+            assertEquals(true, deps.hasDependencyRelation(0, 1));
 
             assertEquals(false, deps.hasDependencyRelation(2, 3));
             deps.depend(2, 3);
@@ -418,6 +420,13 @@ public class DependencyRelationsTest {
 
     @Test
     public void testGetChildID() {
+        {
+            DependencyRelations deps = new DependencyRelations();
+            deps.setup(sentence_);
+            assertEquals(-1, deps.getChildID(0, -1));
+            assertEquals(-1, deps.getChildID(0,  0));
+        }
+
         {
             DependencyRelations deps = new DependencyRelations();
             deps.build(sentence_);
@@ -539,13 +548,14 @@ public class DependencyRelationsTest {
             deps.depend(3, 2);
 
             assertEquals(6, deps.getNumberOfChildren(3));
+            assertEquals(-1, deps.getChildID(3, -1));
             assertEquals(0, deps.getChildID(3, 0));
             assertEquals(1, deps.getChildID(3, 1));
             assertEquals(2, deps.getChildID(3, 2));
             assertEquals(4, deps.getChildID(3, 3));
             assertEquals(5, deps.getChildID(3, 4));
             assertEquals(6, deps.getChildID(3, 5));
-
+            assertEquals(-1, deps.getChildID(3, 6));
 
         }
     }
@@ -629,6 +639,12 @@ public class DependencyRelationsTest {
         deps3.depend(3, 2);
         deps3.depend(6, 5);
 
+        DependencyRelations deps4 = new DependencyRelations();
+        deps4.setup(sentence_);
+        deps4.depend(1, 3);
+        deps4.depend(1, 5);
+
+
         assertEquals(7, deps1.size());
         try {
             deps1.isSameChildren(-1, deps0);
@@ -680,6 +696,10 @@ public class DependencyRelationsTest {
         assertEquals(false, deps1.isSameChildren(4, deps3));
         assertEquals( true, deps1.isSameChildren(5, deps3));
         assertEquals( true, deps1.isSameChildren(6, deps3));
+
+        assertEquals( false, deps3.isSameChildren(1, deps4));
+
+
     }
 
 }

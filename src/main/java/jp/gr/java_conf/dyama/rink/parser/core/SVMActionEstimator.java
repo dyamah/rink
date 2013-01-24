@@ -85,7 +85,8 @@ class SVMActionEstimator implements ActionEstimator {
         fv.reset(sample.getFeatureBuffer());
         int y = classifier.classify(fv);
         Action.Type t = Action.Type.parseInt(y);
-        assert(t != null);
+        if (t == null)
+            t = Action.Type.SHIFT;
         ActionImpl action = new ActionImpl(t);
         return action;
     }

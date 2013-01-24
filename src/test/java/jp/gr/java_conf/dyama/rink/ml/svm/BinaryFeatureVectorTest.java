@@ -76,6 +76,42 @@ public class BinaryFeatureVectorTest {
     }
 
     @Test
+    public void testBufferGetFeatures(){
+
+        {
+            BinaryFeatureVector.Buffer buffer = new BinaryFeatureVector.Buffer();
+            int[] expect = {};
+            assertEquals(0, buffer.size());
+            int size = 0;
+            int[] result = new int[10];
+            for(int i : buffer.getFeatures())
+                result[size++] = i;
+
+            assertEquals(0, expect.length);
+            assertEquals(0, size);
+        }
+
+        {
+            BinaryFeatureVector.Buffer buffer = new BinaryFeatureVector.Buffer();
+            int[] expect = {1,2,3,4};
+            assertEquals(0, buffer.size());
+            buffer.add(3);  buffer.add(3); buffer.add(4); buffer.add(1); buffer.add(2); buffer.add(1);
+            assertEquals(4, buffer.size());
+            int size = 0;
+            int[] result = new int[10];
+            for(int i : buffer.getFeatures())
+                result[size++] = i;
+
+            assertEquals(4, expect.length);
+            assertEquals(4, size);
+            for(int i = 0 ; i < size; i++)
+                assertEquals(expect[i], result[i]);
+        }
+
+    }
+
+
+    @Test
     public void testBinaryFeatureVector(){
         BinaryFeatureVector fv = new BinaryFeatureVector();
         assertEquals(0, fv.size());

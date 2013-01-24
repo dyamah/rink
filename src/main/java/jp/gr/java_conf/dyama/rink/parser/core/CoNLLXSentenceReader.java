@@ -28,16 +28,16 @@ public class CoNLLXSentenceReader implements SentenceReader {
         }
     }
 
-    private static final int ID      = 0;
+    private static final int ID      = 0; // OK
     private static final int FORM    = 1;
-    private static final int LEMMA   = 2;
+    private static final int LEMMA   = 2; // OK
     private static final int CPOSTAG = 3;
-    private static final int POSTAG  = 4;
-    private static final int FEATS   = 5;
+    private static final int POSTAG  = 4; // OK
+    private static final int FEATS   = 5; // OK
     private static final int HEAD    = 6;
-    private static final int DEPLEL  = 7;
+    private static final int DEPLEL  = 7; // OK
     private static final int PHEAD   = 8;
-    private static final int PDEPREL = 9;
+    private static final int PDEPREL = 9; // OK
 
     private static final int START_ID = 1 ;
 

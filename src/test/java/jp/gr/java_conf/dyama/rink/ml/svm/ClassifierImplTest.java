@@ -33,6 +33,7 @@ public class ClassifierImplTest {
 
     ClassifierImpl.Arguments args_linear_;
     ClassifierImpl.Arguments args_nonelinear_;
+    ClassifierImpl.Arguments args_default_;
 
     @Before
     public void setUp() throws Exception {
@@ -88,6 +89,16 @@ public class ClassifierImplTest {
             features[3] = new ClassifierImpl.Feature.Binary(13, 2); features[3].addSvID(0); features[3].addSvID(1);
             args_nonelinear_.features_ = features;
         }
+
+        args_default_ = new ClassifierImpl.Arguments();
+        args_default_.labels_ = new int[2]; args_default_.labels_[0] = 1 ; args_default_.labels_[1] = 11;
+        args_default_.default_label_ = 11;
+        args_default_.hps_ = new ClassifierImpl.HyperPlane[0];
+        args_default_.kernel_ = new KernelFunction.Polynomial(2, 1.0, 1.0);
+        args_default_.params_ = new Parameters.ParametersImpl();
+        args_default_.params_.setKernelType(Parameters.KernelType.POLYNOMIAL);
+        args_default_.svcoefs_ = new ClassifierImpl.SVCoefficient[0];
+        args_default_.features_ = new ClassifierImpl.Feature.Binary[0];
     }
 
     @After
@@ -163,7 +174,7 @@ public class ClassifierImplTest {
 
         ClassifierImpl.LinearBinary     c1 = new ClassifierImpl.LinearBinary(args_linear_);
         ClassifierImpl.NoneLinearBinary c2 = new ClassifierImpl.NoneLinearBinary(args_nonelinear_);
-
+        ClassifierImpl.DefaultBinary    c3 = new ClassifierImpl.DefaultBinary(args_default_);
         try {
             c1.classify(null);
             fail("");
@@ -191,6 +202,15 @@ public class ClassifierImplTest {
             fail("");
         }
 
+        try {
+            c3.classify(null);
+            fail("");
+        } catch (IllegalArgumentException e) {
+            assertEquals("the feature vector is null.", e.getMessage());
+        } catch (Exception e){
+            fail("");
+        }
+
         c1.classify(fv0);
         c1.classify(fv1);
         c1.classify(fv2);
@@ -198,6 +218,10 @@ public class ClassifierImplTest {
         c2.classify(fv0);
         c2.classify(fv1);
         c2.classify(fv2);
+
+        assertEquals(11, c3.classify(fv0));
+        assertEquals(11, c3.classify(fv1));
+        assertEquals(11, c3.classify(fv2));
 
 
     }

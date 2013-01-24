@@ -12,16 +12,8 @@ public enum Builder {
     INATANCE;
 
     /**
-     * build SVMs Classifier (Binary Feature Space)
-     * @return
-     */
-    public static Classifier<?, FeatureSpace.Binary> buildClassifier(){
-        return null;
-    }
-
-    /**
-     * build SVMs Learner (Binary Feature Space)
-     * @return
+     * build a new SVM Learner (Binary Feature Space)
+     * @return a new SVM learner
      */
     public static Learner<FeatureSpace.Binary> buildLearner(){
         return new LearnerImpl.BinarySpace();

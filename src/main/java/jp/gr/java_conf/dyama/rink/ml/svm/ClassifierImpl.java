@@ -364,14 +364,14 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
 
             int n = in.readInt();
             if (n < 2)
-                throw new InvalidObjectException("the number of labels is less than 2.");
+                throw new InvalidObjectException("the number of labels is less than 2."); // OK
             labels_ = new int[n];
             for(int i = 0 ; i < n; i++ )
                 labels_[i] = in.readInt();
 
             n = in.readInt();
             if (n < 1)
-                throw new InvalidObjectException("the number of hyperplanes is less than 1.");
+                throw new InvalidObjectException("the number of hyperplanes is less than 1."); // OK
             hps_ = new HyperPlane[n];
             for(int i = 0 ; i < n; i++ ){
                 int pos = in.readInt();
@@ -383,7 +383,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             n = in.readInt();
 
             if ( n < labels_.length - 1)
-                throw new InvalidObjectException("the number of SVs is invalid.");
+                throw new InvalidObjectException("the number of SVs is invalid."); // OK
 
             svcoefs_ = new SVCoefficient[n];
 
@@ -400,7 +400,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             }
             params_ = (Parameters) in.readObject();
         } catch (IllegalArgumentException e){
-            throw new InvalidObjectException(e.getMessage());
+            throw new InvalidObjectException(e.getMessage()); // OK
         }
     }
 
@@ -484,7 +484,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 super.kernel_ = (Linear) in.readObject();
                 int n = in.readInt();
                 if (n < 0)
-                    throw new InvalidObjectException("the degree of feature space is negative.");
+                    throw new InvalidObjectException("the degree of feature space is negative."); // OK
                 features_ = new Feature.Real[n];
                 super.features_ = features_ ;
                 for(int i = 0 ; i < n ; i++){
@@ -647,7 +647,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 super.kernel_ = (NoneLinear) in.readObject();
                 int n = in.readInt();
                 if (n < 0)
-                    throw new InvalidObjectException("the degree of feature space is negative.");
+                    throw new InvalidObjectException("the degree of feature space is negative.");  // OK
                 features_ = new Feature.Binary[n];
                 super.features_ = features_ ;
                 for(int i = 0 ; i < n ; i++){
@@ -661,7 +661,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 }
 
             } catch (IllegalArgumentException e) {
-                throw new InvalidObjectException(e.getMessage());
+                throw new InvalidObjectException(e.getMessage()); // OK
             }
 
         }

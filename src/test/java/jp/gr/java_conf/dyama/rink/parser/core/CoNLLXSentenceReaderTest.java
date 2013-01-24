@@ -97,6 +97,21 @@ public class CoNLLXSentenceReaderTest {
     }
 
     @Test
+    public void testRead() throws IOException {
+        SentenceReader reader = new CoNLLXSentenceReader(valid_columns7.getAbsolutePath(), Mode.TRAIN);
+        try {
+            reader.read(null);
+            fail("");
+        } catch (IllegalArgumentException e) {
+            assertEquals("the sentence is null.", e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            fail("");
+        }
+
+    }
+
+    @Test
     public void testRead00() throws IOException {
         SentenceReader reader = new CoNLLXSentenceReader(valid_columns7.getAbsolutePath(), Mode.TRAIN);
         SentenceImpl sentence = new SentenceImpl(new WordImpl.Generator(new IDConverterImpl.MutableIDConverter()), null);

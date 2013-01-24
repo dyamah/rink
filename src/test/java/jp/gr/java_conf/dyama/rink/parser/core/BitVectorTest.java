@@ -2,11 +2,14 @@ package jp.gr.java_conf.dyama.rink.parser.core;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import jp.gr.java_conf.dyama.rink.parser.core.BitVector;
-import jp.gr.java_conf.dyama.rink.tools.PerformanceMeasuring;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,10 +36,20 @@ public class BitVectorTest {
             fail("");
         }
 
-        double[] v = {0,0, 0,0, 0,0};
-        BitVector bv = new BitVector(v);
-        assertEquals(0, bv.size());
-        assertEquals(0.0, bv.squaredL2norm(), E);
+        {
+            double[] v = {0,0, 0,0, 0,0};
+            BitVector bv = new BitVector(v);
+            assertEquals(0, bv.size());
+            assertEquals(0.0, bv.squaredL2norm(), E);
+        }
+
+        {
+            double[] v = {};
+            BitVector bv = new BitVector(v);
+            assertEquals(0, bv.size());
+            assertEquals(0.0, bv.squaredL2norm(), E);
+        }
+
 
     }
 
@@ -400,68 +413,84 @@ public class BitVectorTest {
         }
     }
 
-    Map<Integer, Double> createMap(double[] array){
-        Map<Integer, Double> map = new HashMap<Integer, Double>();
-        for(int i = 0 ; i < array.length; i++)
-            if (array[i] != 0.0)
-                map.put(i, array[i]);
-        return map;
-    }
-
-    void doBench(Map<Integer, Double> map){
-        PerformanceMeasuring pm = new PerformanceMeasuring();
-        for(int n = 0; n < 1000; n++){
-            for(int i = 0; i < 1000000; i++){
-                map.get(i);
-            }
-        }
-        double time = pm.getTime();
-        System.err.printf("HashMap:\t %.2f sec", time / 1000);
-        System.err.println();
-    }
-    void doBench(BitVector bv){
-        PerformanceMeasuring pm = new PerformanceMeasuring();
-        for(int n = 0; n < 1000; n++){
-            for(int i = 0; i < 1000000; i++){
-                bv.get(i);
-            }
-        }
-        double time = pm.getTime();
-        System.err.printf("BitVector:\t %.2f sec", time / 1000);
-        System.err.println();
-    }
-
-    void check(Map<Integer, Double> map, BitVector bv){
-        assertEquals(map.size(), bv.size());
-        for(Integer i : map.keySet())
-            assertEquals(map.get(i), bv.get(i), E);
-    }
-
-
-    public void testPerformance() {
-
-        int base = 107;
-        double[] test1m = new double[1000000];
-        for(int i = 0 ; i < test1m.length; i++){
-            test1m[i] = 0.0;
-            if (i % base == 0)
-                test1m[i] = 1.0;
-        }
-
-        Map<Integer, Double> map = null;
-        BitVector bv = null;
-
+    @Test
+    public void testProduct() {
         {
-            map = createMap(test1m);
-            System.err.println();
+            double[] v = {0, 0, 0, 0, 0, 0};
+            BitVector bv = new BitVector(v);
+
+            assertEquals(0.0, bv.get(-1), E);
+            assertEquals(0.0, bv.get( 0), E);
+            assertEquals(0.0, bv.get( 1), E);
+            assertEquals(0.0, bv.get( 2), E);
+            assertEquals(0.0, bv.get( 3), E);
+            assertEquals(0.0, bv.get( 4), E);
+            assertEquals(0.0, bv.get( 5), E);
+
+            bv.product(1.11);
+
+            assertEquals(0.0, bv.get(-1), E);
+            assertEquals(0.0, bv.get( 0), E);
+            assertEquals(0.0, bv.get( 1), E);
+            assertEquals(0.0, bv.get( 2), E);
+            assertEquals(0.0, bv.get( 3), E);
+            assertEquals(0.0, bv.get( 4), E);
+            assertEquals(0.0, bv.get( 5), E);
         }
 
         {
-            bv = new BitVector(test1m);
-            doBench(map);
-            doBench(bv);
-            check(map, bv);
+            double[] v = {0, 1.0, 2.0, 3.0, 4.0, 5.0};
+            BitVector bv = new BitVector(v);
+
+            assertEquals(0.0, bv.get(-1), E);
+            assertEquals(0.0, bv.get( 0), E);
+            assertEquals(1.0, bv.get( 1), E);
+            assertEquals(2.0, bv.get( 2), E);
+            assertEquals(3.0, bv.get( 3), E);
+            assertEquals(4.0, bv.get( 4), E);
+            assertEquals(5.0, bv.get( 5), E);
+
+            bv.product(2.0);
+
+            assertEquals(0.0, bv.get(-1), E);
+            assertEquals(0.0, bv.get( 0), E);
+            assertEquals(2.0, bv.get( 1), E);
+            assertEquals(4.0, bv.get( 2), E);
+            assertEquals(6.0, bv.get( 3), E);
+            assertEquals(8.0, bv.get( 4), E);
+            assertEquals(10.0, bv.get( 5), E);
         }
+    }
+
+    @Test
+    public void testSerialize() throws IOException, ClassNotFoundException{
+        File tmpfile = File.createTempFile("BitVectorTest", ".tmp");
+        tmpfile.deleteOnExit();
+        {
+
+            double[] v = new double[1000];
+            for(int i = 0; i < 1000; i++)
+                v[i] = i + 1;
+
+            BitVector bv = new BitVector(v);
+            assertEquals(1000, bv.size());
+            for(int i = 0; i < 1000; i++)
+                assertEquals(i + 1, bv.get(i), E);
+
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(tmpfile) );
+            out.writeObject(bv);
+            out.close();
+        }
+
+        {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(tmpfile));
+            BitVector bv = (BitVector)in.readObject();
+            assertEquals(1000, bv.size());
+            for(int i = 0; i < 1000; i++)
+                assertEquals(i + 1, bv.get(i), E);
+            in.close();
+        }
+
 
     }
 

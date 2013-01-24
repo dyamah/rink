@@ -152,11 +152,12 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
                 max = entry.getValue();
         }
 
-        for(Integer m: order){
+        for(Integer m : order){
             if (map.get(m) == max)
-                return m;
+                return m ;
+
         }
-        return null;
+        return null; // OK
     }
 
     @Override

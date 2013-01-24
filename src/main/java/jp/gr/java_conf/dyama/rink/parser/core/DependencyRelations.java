@@ -196,7 +196,7 @@ class DependencyRelations {
      */
      int getChildID(int nodeID, int n){
         check(nodeID);
-        if (n < 0 || n > nodes_[nodeID].size_)
+        if (n < 0 || n >= nodes_[nodeID].size_)
             return -1;
         return nodes_[nodeID].children_[n];
     }

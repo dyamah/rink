@@ -98,9 +98,6 @@ public class BitVector implements Serializable{
             set(i, num, v);
         }
 
-        if (num_elements_.length < 1)
-            return ;
-
         int start = 0;
         for(int i = 0 ; i < num_elements_.length; i++){
             int k = num_elements_[i];
@@ -167,19 +164,15 @@ public class BitVector implements Serializable{
     }
 
     /**
-     * set an element
+     * set an element.
      * @param id the ID of the elements.
      * @param num the number of none zero elements until the ID.
      * @param value the value of the elements.
      */
     private void set(int id, int num, double value){
-        if (value == 0.0)
-            return ;
         int x = id / BASE;
         int y = id % BASE;
-        if (x >= bit_.length){
-            bit_ = Arrays.copyOf(bit_, x + 1);
-        }
+
         bit_[x] |= BIT_MASK[y];
         if (num > 0)
             elements_[num-1] = value;
