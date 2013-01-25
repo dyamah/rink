@@ -173,6 +173,44 @@ public class DependencyLearner {
         System.err.println("");
     }
 
+    void useMIRA() throws IOException {
+        System.err.println("Parsing the input training data ...");
+
+        steps_ = 0;
+        num_sentences_ = 0;
+
+        SentenceReader reader = createSentenceReader(train_);
+        SampleWriter writer   = createSampleWriter();
+
+        Sample sample = parser_.createSample(reader);
+
+        for(int i = 0 ; i < iterations_ ; i++){
+            while(sample.read()){
+                num_sentences_ ++ ;
+                int num_w = sample.getSentence().size();
+                int num_c = 0 ;
+
+                while(sample.parseOneStep())
+                    steps_++;
+
+                if (num_sentences_ % 2000 == 0){
+                    System.err.print(".");
+                }
+                num_c = ((SampleImpl)sample).getNumberOfCorrectDependencies();
+                if (num_w != num_c)
+                    throw new IllegalStateException("can not parse completely.");
+
+                if (verbose_)
+                    writer.write(sample, System.out);
+            }
+        }
+
+        reader.close();
+        System.err.println("");
+        System.err.println("Total "  + num_sentences_ + " sentences, " + steps_ + " steps.");
+        System.err.println("");
+    }
+
     void parse() throws IOException{
         useSVMs();
     }
@@ -235,7 +273,7 @@ public class DependencyLearner {
             if (type.equals("SVM")){
                 learning_algorithm_ = LearningAlgorithm.SVM;
             } else if (type.equals("MIRA")){
-                throw new ParseException("MIRA has not been supported yet.");
+                learning_algorithm_ = LearningAlgorithm.MIRA;
             } else {
                 throw new ParseException("undefined learner type: " + type);
             }
@@ -308,8 +346,11 @@ public class DependencyLearner {
                 parser_ = jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildSVMDependencyLearner(params_);
             }
         }
-        if (learning_algorithm_ == LearningAlgorithm.MIRA)
-            throw new ParseException("MIRA has not been supported yet.");
+        if (learning_algorithm_ == LearningAlgorithm.MIRA){
+            List<jp.gr.java_conf.dyama.rink.parser.core.DependencyParser> parsers = new ArrayList<jp.gr.java_conf.dyama.rink.parser.core.DependencyParser>();
+            jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildMIRADependencyLearner(parsers);
+            parser_ = parsers.get(0);
+        }
 
 
         try {
