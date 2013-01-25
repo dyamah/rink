@@ -108,8 +108,6 @@ public class DeterministicBottomUpParser extends DependencyParser {
 
         State state = sample.getState();
         if (state.isComplete()){
-            if (learner_ instanceof MIRAActionLearner)
-                ((MIRAActionLearner)learner_).learn(sample);
             return false;
         }
 
@@ -123,9 +121,6 @@ public class DeterministicBottomUpParser extends DependencyParser {
         if (state.apply(action))
             return true ;
 
-        if (learner_ instanceof MIRAActionLearner)
-            ((MIRAActionLearner)learner_).learn(sample);
-        state.disable();
         return false;
     }
 

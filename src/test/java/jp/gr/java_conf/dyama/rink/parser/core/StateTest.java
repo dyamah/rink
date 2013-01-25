@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class StateTest {
+    static final double E = 0.0000000001;
     WordImpl.Generator word_generator_ ;
     SentenceImpl sentence0_;
     SentenceImpl sentence_ ;
@@ -87,6 +88,166 @@ public class StateTest {
             assertEquals(false, state.isEOS());
             assertEquals(true, state.getDependencies() != null);
             assertEquals(7, state.getDependencies().size());
+        }
+
+    }
+
+    @Test
+    public void testCopy(){
+        {
+            State state0 = new State();
+
+            try {
+                state0.copy(null);
+                fail("");
+            } catch (IllegalArgumentException e){
+                assertEquals("the source state is null.", e.getMessage());
+            } catch (Exception e){
+                e.printStackTrace();
+                fail("");
+            }
+
+        }
+
+        {
+            State state0 = new State();
+            State state1 = new State();
+
+            assertEquals(0, state0.size());
+            assertEquals(0, state0.getPosition());
+            assertEquals(true, state0.isComplete());
+            assertEquals(true, state0.isEOS());
+            assertEquals(0.0, state0.getScore(), E);
+            assertEquals(null, state0.getLastAction());
+            {
+                DependencyRelations deps0 = state0.getDependencies();
+                assertEquals(0, deps0.size());
+            }
+
+
+            assertEquals(0, state1.size());
+            assertEquals(0, state1.getPosition());
+            assertEquals(true, state1.isComplete());
+            assertEquals(true, state1.isEOS());
+            assertEquals(0.0, state1.getScore(), E);
+            assertEquals(null, state1.getLastAction());
+            {
+                DependencyRelations deps1 = state1.getDependencies();
+                assertEquals(0, deps1.size());
+            }
+
+
+            state0.copy(state1);
+
+            assertEquals(0, state0.size());
+            assertEquals(0, state0.getPosition());
+            assertEquals(true, state0.isComplete());
+            assertEquals(true, state0.isEOS());
+            assertEquals(0.0, state0.getScore(), E);
+            assertEquals(null, state0.getLastAction());
+
+            {
+                DependencyRelations deps0 = state0.getDependencies();
+                assertEquals(0, deps0.size());
+            }
+
+
+            assertEquals(0, state1.size());
+            assertEquals(0, state1.getPosition());
+            assertEquals(true, state1.isComplete());
+            assertEquals(true, state1.isEOS());
+            assertEquals(0.0, state1.getScore(), E);
+            assertEquals(null, state1.getLastAction());
+            {
+                DependencyRelations deps1 = state1.getDependencies();
+                assertEquals(0, deps1.size());
+            }
+        }
+
+        {
+            State state0 = new State();
+            State state1 = new State();
+
+            assertEquals(0, state0.size());
+            assertEquals(0, state0.getPosition());
+            assertEquals(true, state0.isComplete());
+            assertEquals(true, state0.isEOS());
+            assertEquals(0.0, state0.getScore(), E);
+            assertEquals(null, state0.getLastAction());
+            {
+                DependencyRelations deps = state0.getDependencies();
+                assertEquals(0, deps.size());
+            }
+
+            state1.setup(sentence_);
+
+            state1.apply(new ActionImpl(Action.Type.SHIFT));
+            ActionImpl left = new ActionImpl(Action.Type.LEFT);
+            left.setScore(1.12);
+            state1.apply(left);
+            state1.apply(new ActionImpl(Action.Type.WAIT));
+
+            assertEquals(6, state1.size());
+
+            assertEquals(    1, state1.getPosition());
+            assertEquals(false, state1.isComplete());
+            assertEquals(false, state1.isEOS());
+            assertEquals( 1.12, state1.getScore(), E);
+            assertEquals(Action.Type.WAIT, state1.getLastAction().getType());
+            {
+                DependencyRelations deps = state1.getDependencies();
+                assertEquals( 7, deps.size());
+                assertEquals(-1, deps.getParentID(0));
+                assertEquals(-1, deps.getParentID(1));
+                assertEquals( 1, deps.getParentID(2));
+                assertEquals(-1, deps.getParentID(3));
+                assertEquals(-1, deps.getParentID(4));
+                assertEquals(-1, deps.getParentID(5));
+                assertEquals(-1, deps.getParentID(6));
+            }
+
+            state0.copy(state1);
+
+            assertEquals(    6, state0.size());
+            assertEquals(    1, state0.getPosition());
+            assertEquals(false, state0.isComplete());
+            assertEquals(false, state0.isEOS());
+            assertEquals(1.12, state0.getScore(), E);
+            assertEquals(Action.Type.WAIT, state0.getLastAction().getType());
+            {
+                DependencyRelations deps = state0.getDependencies();
+                assertEquals( 7, deps.size());
+                assertEquals(-1, deps.getParentID(0));
+                assertEquals(-1, deps.getParentID(1));
+                assertEquals( 1, deps.getParentID(2));
+                assertEquals(-1, deps.getParentID(3));
+                assertEquals(-1, deps.getParentID(4));
+                assertEquals(-1, deps.getParentID(5));
+                assertEquals(-1, deps.getParentID(6));
+            }
+
+            assertEquals(    6, state1.size());
+            assertEquals(    1, state1.getPosition());
+            assertEquals(false, state1.isComplete());
+            assertEquals(false, state1.isEOS());
+            assertEquals(1.12, state1.getScore(), E);
+            assertEquals(Action.Type.WAIT, state0.getLastAction().getType());
+
+            {
+                DependencyRelations deps = state1.getDependencies();
+                assertEquals( 7, deps.size());
+                assertEquals(-1, deps.getParentID(0));
+                assertEquals(-1, deps.getParentID(1));
+                assertEquals( 1, deps.getParentID(2));
+                assertEquals(-1, deps.getParentID(3));
+                assertEquals(-1, deps.getParentID(4));
+                assertEquals(-1, deps.getParentID(5));
+                assertEquals(-1, deps.getParentID(6));
+            }
+        }
+
+        {
+
         }
 
     }
@@ -908,4 +1069,34 @@ public class StateTest {
 
     }
 
+    @Test
+    public void testCompareTo(){
+        ActionImpl action = new ActionImpl(Action.Type.LEFT);
+
+        State state0 = new State(); state0.setup(sentence_);
+
+        State state1 = new State(); state1.setup(sentence_);
+        State state2 = new State(); state2.setup(sentence_);
+
+        action.setScore(1.0);
+        state0.apply(action);
+
+        action.setScore(10.1);
+        state1.apply(action);
+
+        assertEquals(true, state0.compareTo(null)   <  0);
+        assertEquals(true, state0.compareTo(state0) == 0);
+        assertEquals(true, state0.compareTo(state1) >  0);
+        assertEquals(true, state0.compareTo(state2) <  0);
+
+        assertEquals(true, state1.compareTo(null)   <  0);
+        assertEquals(true, state1.compareTo(state0) <  0);
+        assertEquals(true, state1.compareTo(state1) == 0);
+        assertEquals(true, state1.compareTo(state2) <  0);
+
+        assertEquals(true, state2.compareTo(null)   <  0);
+        assertEquals(true, state2.compareTo(state0) >  0);
+        assertEquals(true, state2.compareTo(state1) >  0);
+        assertEquals(true, state2.compareTo(state2) == 0);
+    }
 }

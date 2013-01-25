@@ -85,7 +85,7 @@ public class MIRAActionEstimator implements ActionEstimator {
                 }
             }
             if (best == 0){
-                best = 1;
+                best = Action.Type.SHIFT.getID();
                 max_score = 0;
             }
 
@@ -125,7 +125,7 @@ public class MIRAActionEstimator implements ActionEstimator {
             }
         }
         if (best == 0){
-            best = 1;
+            best = Action.Type.SHIFT.getID();
             max_score = 0;
         }
 

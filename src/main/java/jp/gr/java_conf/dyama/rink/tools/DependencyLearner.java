@@ -7,7 +7,12 @@ import java.util.List;
 
 import jp.gr.java_conf.dyama.rink.ml.svm.Parameters;
 import jp.gr.java_conf.dyama.rink.parser.Sample;
+import jp.gr.java_conf.dyama.rink.parser.SampleWriter;
+import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
 import jp.gr.java_conf.dyama.rink.parser.core.AnnotatedSentenceReader;
+import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSampleWriter;
+import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSentenceReader;
+import jp.gr.java_conf.dyama.rink.parser.core.OriginalSampleWriter;
 import jp.gr.java_conf.dyama.rink.parser.core.SampleImpl;
 import jp.gr.java_conf.dyama.rink.parser.core.AnnotatedSentenceReader.AnnotationLevel;
 
@@ -18,10 +23,13 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 
 public class DependencyLearner {
-    static enum LearnerType {
+
+
+    static enum LearningAlgorithm {
         SVM,
         MIRA,
     }
+
     /** Exit Status : OK */
     static final int OK      = 0 ;
 
@@ -48,13 +56,9 @@ public class DependencyLearner {
 
     /** dependency parser */
     jp.gr.java_conf.dyama.rink.parser.core.DependencyParser parser_ ;
-    jp.gr.java_conf.dyama.rink.parser.core.DependencyParser subparser_ ;
-    jp.gr.java_conf.dyama.rink.parser.core.DependencyParser evalparser_ ;
-
-
 
     /** sentence reader */
-    AnnotatedSentenceReader reader_ ;
+    SentenceReader reader_ ;
 
     /** CLI Options */
     Options opts_ ;
@@ -65,12 +69,17 @@ public class DependencyLearner {
     /** the number of training sentences */
     int num_sentences_;
 
-
+    /** the flag for grouping training examples */
     boolean grouping_ ;
 
+    /** training iterations for MIRA */
     int iterations_ ;
 
-    LearnerType learner_type_ ;
+    /** the type of learning algorithms */
+    LearningAlgorithm learning_algorithm_ ;
+
+    /** the data format */
+    Common.Format format_ ;
 
     DependencyLearner() {
         params_ = new Parameters.ParametersImpl();
@@ -107,73 +116,65 @@ public class DependencyLearner {
         opts_.addOption("e", "epsilon", true, "the threshold for convergence (default 0.001).");
 
         opts_.addOption("g", "grouping",  false, "grouping mode faster training.  (default false for SVM, true for MIRA).");
-        opts_.addOption("I", "iterations",  true, "the number of iteration when the MIRA learner has been elected by option -l. (default 100)");
+        opts_.addOption("f", "format",     true, "the verbose output format: ORIGINAL/CoNLLX (default CoNLLX).");
+        opts_.addOption("I", "iterations", true, "the number of iteration when the MIRA learner has been elected by option -l. (default 100)");
 
-        opts_.addOption("v", "verbos",  false, "verbos mode (default false).");
+        opts_.addOption("v", "verbose",  false, "verbose mode (default false).");
 
     }
 
-    void parse() throws IOException{
+    SentenceReader createSentenceReader(File file) throws FileNotFoundException {
+        if (format_ == Common.Format.CoNLLX)
+            return new CoNLLXSentenceReader(file.getPath(), CoNLLXSentenceReader.Mode.TRAIN);
+
+        return new AnnotatedSentenceReader(file.getPath(), AnnotationLevel.DEPENDENCY);
+    }
+
+    SampleWriter createSampleWriter(){
+        if (format_ == Common.Format.CoNLLX)
+            return new CoNLLXSampleWriter();
+        return new OriginalSampleWriter();
+    }
+
+    void useSVMs() throws IOException {
         System.err.println("Parsing the input training data ...");
-        PerformanceMeasuring pm = new PerformanceMeasuring();
 
-        for(int n = 0 ; n < iterations_; n++){
-            int correct = 0 ;
-            int words   = 0 ;
-            steps_ = 0;
-            num_sentences_ = 0;
-            System.err.print("[" + n + "] ");
-            reader_ = new AnnotatedSentenceReader(train_.getPath(), AnnotationLevel.DEPENDENCY);
-            int beamWidth = 1;
-            if (learner_type_ == LearnerType.MIRA)
-                beamWidth = 5;
-            Sample sample = parser_.createSample(reader_, beamWidth);
+        steps_ = 0;
+        num_sentences_ = 0;
 
+        SentenceReader reader = createSentenceReader(train_);
+        SampleWriter writer   = createSampleWriter();
 
-            while(sample.read()){
-                num_sentences_ ++ ;
-                int num_w = sample.getSentence().size();
-                int num_c = 0 ;
+        Sample sample = parser_.createSample(reader);
 
-                while(sample.parseOneStep()){
-                    steps_++;
-                }
+        while(sample.read()){
+            num_sentences_ ++ ;
+            int num_w = sample.getSentence().size();
+            int num_c = 0 ;
 
-                if (num_sentences_ % 2000 == 0){
-                    System.err.print(".");
-                }
-                num_c = ((SampleImpl)sample).getNumberOfCorrectDependencies();
-                //if (num_w != num_c)
-                //    throw new IllegalStateException("can not parse completely.");
-
-                if (verbose_){
-                    sample.show(System.out);
-                }
+            while(sample.parseOneStep()){
+                steps_++;
             }
-            reader_.close();
-            if (n % 5 == 0 && evalparser_ != null){
 
-                reader_ = new AnnotatedSentenceReader(train_.getPath(), AnnotationLevel.DEPENDENCY);
-                sample = evalparser_.createSample(reader_, beamWidth);
-
-                while(sample.read()){
-                    while(sample.parseOneStep()){
-                    }
-                    correct += ((SampleImpl)sample).getNumberOfCorrectDependencies();
-                    words   += sample.getSentence().size();
-                }
-                reader_.close();
-                double mem = pm.getPeakHeapMemorySize();
-                System.err.printf(" Accuraccy: %.3f\tPeak Memory: %.1f [MB]", (((double)correct) / words), mem / 1024 / 1024 );
-                System.err.println();
-            } else {
-                System.err.println();
+            if (num_sentences_ % 2000 == 0){
+                System.err.print(".");
             }
+            num_c = ((SampleImpl)sample).getNumberOfCorrectDependencies();
+            if (num_w != num_c)
+                throw new IllegalStateException("can not parse completely.");
+
+            if (verbose_)
+                writer.write(sample, System.out);
+
         }
-
+        reader.close();
         System.err.println("");
         System.err.println("Total "  + num_sentences_ + " sentences, " + steps_ + " steps.");
         System.err.println("");
+    }
+
+    void parse() throws IOException{
+        useSVMs();
     }
 
     void save() throws IOException{
@@ -184,9 +185,9 @@ public class DependencyLearner {
 
     /**
      * parse command line arguments
-     * @param args command line arguments
-     * @return true if  CLI arguments can be parsed. return false if the option -h ( --help) is found.
-     * @throws ParseException if a invalid argument is found.
+     * @param args the command line arguments
+     * @return true if  CLI arguments can be parsed. return false if the option -h ( --help) has been found.
+     * @throws ParseException if any invalid arguments have been found.
      */
     boolean parseCommandLineArguments(String[] args) throws ParseException {
 
@@ -226,25 +227,27 @@ public class DependencyLearner {
             throw new ParseException("not found the option -o.");
         }
 
-        learner_type_ = LearnerType.SVM;
+        learning_algorithm_ = LearningAlgorithm.SVM;
         if (cl.hasOption("l")){
 
             String type = cl.getOptionValue("l");
 
             if (type.equals("SVM")){
-                learner_type_ = LearnerType.SVM;
+                learning_algorithm_ = LearningAlgorithm.SVM;
             } else if (type.equals("MIRA")){
-                learner_type_ = LearnerType.MIRA;
-                iterations_ = 100;
-                if (cl.hasOption("I")){
-                    iterations_ = Integer.parseInt(cl.getOptionValue("I"));
-                }
+                throw new ParseException("MIRA has not been supported yet.");
             } else {
                 throw new ParseException("undefined learner type: " + type);
-
             }
-
         }
+
+        if (cl.hasOption("f")){
+            String format = cl.getOptionValue("f");
+            format_ = Common.Format.CoNLLX;
+            if (format.equals(Common.Format.ORIGINAL.toString()))
+                format_ = Common.Format.ORIGINAL;
+        }
+
         if (cl.hasOption("t")){
             Parameters.KernelType type = null;
             String v = cl.getOptionValue("t");
@@ -298,20 +301,16 @@ public class DependencyLearner {
         assert(train_ != null);
         assert(model_ != null);
 
-        if (learner_type_ == LearnerType.SVM){
+        if (learning_algorithm_ == LearningAlgorithm.SVM){
             if (grouping_){
                 parser_ = jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildPOSGroupingSVMDependencyLearner(params_);
             } else {
                 parser_ = jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildSVMDependencyLearner(params_);
             }
         }
-        if (learner_type_ == LearnerType.MIRA){
-            List<jp.gr.java_conf.dyama.rink.parser.core.DependencyParser> parsers = new ArrayList<jp.gr.java_conf.dyama.rink.parser.core.DependencyParser>();
-            jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildMIRADependencyLearner(parsers);
-            parser_ = parsers.get(0);
-            // subparser_ = parsers.get(1);
-            evalparser_ = parsers.get(1);
-        }
+        if (learning_algorithm_ == LearningAlgorithm.MIRA)
+            throw new ParseException("MIRA has not been supported yet.");
+
 
         try {
             reader_ = new AnnotatedSentenceReader(train_.getPath(), AnnotationLevel.DEPENDENCY);
@@ -325,9 +324,6 @@ public class DependencyLearner {
 
     }
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         PerformanceMeasuring pm = new PerformanceMeasuring();
         DependencyLearner learner =  new DependencyLearner();

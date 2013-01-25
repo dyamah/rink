@@ -2,9 +2,9 @@ package jp.gr.java_conf.dyama.rink.tools;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.PrintStream;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.Options;
@@ -13,14 +13,19 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 
 import jp.gr.java_conf.dyama.rink.parser.Sample;
+import jp.gr.java_conf.dyama.rink.parser.SampleWriter;
+import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
 import jp.gr.java_conf.dyama.rink.parser.core.AnnotatedSentenceReader;
-import jp.gr.java_conf.dyama.rink.parser.core.SampleImpl;
+import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSampleWriter;
+import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSentenceReader;
+import jp.gr.java_conf.dyama.rink.parser.core.OriginalSampleWriter;
+
 import jp.gr.java_conf.dyama.rink.parser.core.AnnotatedSentenceReader.AnnotationLevel;
 
 
 public class DependencyParser {
     static final String USAGE = "DependencyParser [options] -i train -m model";
-
+    static final String DEFAULT_OUTPUT_DIR = "output";
     /** command line options */
     Options opts_ ;
 
@@ -39,16 +44,29 @@ public class DependencyParser {
     /** the number of parsed sentences */
     int sentences_ ;
 
-    /** flag verbose mode */
+    /** the flag verbose mode */
     boolean verbose_ ;
 
-    /** dependency parser */
+    /** the dependency parser */
     jp.gr.java_conf.dyama.rink.parser.core.DependencyParser parser_;
 
-    /** sentence reader */
-    AnnotatedSentenceReader reader_ ;
+    /** the sentence reader */
+    SentenceReader reader_ ;
 
+    /** the output writer */
+    SampleWriter writer_;
+
+    /** the width of beam search */
     int beamWidth_ ;
+
+    /** the format of input data */
+    Common.Format input_format_ ;
+
+    /** the format of output data */
+    Common.Format output_format_ ;
+
+    /** the output directory for multithread */
+    File output_dir_ ;
 
     DependencyParser(){
 
@@ -61,7 +79,9 @@ public class DependencyParser {
         parser_ = null;
         reader_ = null;
         beamWidth_ = 1;
-
+        input_format_ = Common.Format.CoNLLX;
+        output_format_ = Common.Format.CoNLLX;
+        output_dir_    = new File(DEFAULT_OUTPUT_DIR);
 
         opts_ = new Options();
         opts_.addOption("h", "help", false, "show usage.");
@@ -69,8 +89,23 @@ public class DependencyParser {
         opts_.addOption("m", "model", true, "path to the model file.");
         opts_.addOption("v", "verbos",  false, "verbos mode (default false).");
         opts_.addOption("t", "threads",  true, "the number of threads (default 1)");
-        opts_.addOption("b", "beamWidth",  true, "the width for beam searching. (default 1)");
+        opts_.addOption("b", "beamWidth",  true, "the width for beam search. (default 1). It's not available now.");
+        opts_.addOption("I", "input-format",  true, "the format of input data: ORIGINAL/CoNLLX (default CoNLLX) ");
+        opts_.addOption("O", "output-foramt",  true, "the format of output data: ORIGINAL/CoNLLX (default CoNLLX)");
+        opts_.addOption("D", "output-directory",  true, "the output directory for multithread: (default " + DEFAULT_OUTPUT_DIR + ")");
 
+    }
+
+    SentenceReader createSentenceReader(File file) throws FileNotFoundException{
+        if (input_format_ == Common.Format.CoNLLX)
+            return new CoNLLXSentenceReader(file.getPath(), CoNLLXSentenceReader.Mode.TEST);
+        return new AnnotatedSentenceReader(file.getPath(), AnnotationLevel.POS);
+    }
+
+    SampleWriter createSampleWriter(){
+        if (output_format_ == Common.Format.CoNLLX)
+            return new CoNLLXSampleWriter();
+        return new OriginalSampleWriter();
     }
 
     void parse() throws IOException{
@@ -80,25 +115,23 @@ public class DependencyParser {
 
             while(sample.read()){
                 sentences_ ++;
-                int n = sample.getSentence().size();
-
-                for(int t = 0; t < 2*n -1 ; t ++){
-                    if (! sample.parseOneStep())
-                        break ;
+                while(sample.parseOneStep()){
+                    steps_ ++ ;
                 }
-
-//                while(sample.parseOneStep()){
-//                    steps_ ++ ;
-//                }
                 if (verbose_)
-                    sample.show(System.out);
+                    writer_.write(sample, System.out);
             }
             return ;
         }
 
         ParsingThread[] threads = new ParsingThread[threads_];
+        if (! output_dir_.mkdir() ){
+            if (! output_dir_.exists())
+                throw new RuntimeException("fail to create the output dir: " + output_dir_.getPath());
+        }
+
         for(int i = 0; i < threads.length; i++ ){
-            threads[i] = new ParsingThread(this);
+            threads[i] = new ParsingThread(this, output_dir_.getPath() + "/thread" + i + ".out.txt");
             threads[i].start();
         }
 
@@ -110,7 +143,6 @@ public class DependencyParser {
                 System.exit(1);
             }
         }
-        ParsingThread.showResult(verbose_);
     }
 
 
@@ -163,81 +195,71 @@ public class DependencyParser {
             } catch (NumberFormatException e){
                 throw new ParseException("NumberFormatException: " + e.getMessage() );
             }
+            throw new ParseException("the beam seach is not available now.");
         }
 
+        if (cl.hasOption("I")){
+            String optValue = cl.getOptionValue("I");
+            input_format_ = Common.Format.parseString(optValue);
+            if (input_format_ == null)
+                throw new ParseException("unknown format: " + optValue);
+        }
+
+        if (cl.hasOption("O")){
+            String optValue = cl.getOptionValue("O");
+            output_format_ = Common.Format.parseString(optValue);
+            if (output_format_ == null)
+                throw new ParseException("unknown format: " + optValue);
+        }
+
+        if (cl.hasOption("D")){
+            output_dir_ = new File(cl.getOptionValue("D"));
+        }
         if (cl.hasOption("v"))
             verbose_ = true ;
 
         assert(model_ != null);
         assert(test_ != null);
         parser_ = jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.build(model_.getPath());
-        reader_ = new AnnotatedSentenceReader(test_.getPath(), AnnotationLevel.POS);
+        reader_ = createSentenceReader(test_);
+        writer_ = createSampleWriter();
         return true;
     }
 
     static class ParsingThread extends Thread {
 
-        static class Output {
-            StringBuilder sb_ ;
-            Output(){
-                sb_ = null;
-            }
-        }
-
-        static List<Output> outout_queue = new LinkedList<Output>();
 
         Sample sample_ ;
         boolean verbose_ ;
+        SentenceReader reader_ ;
+        SampleWriter writer_ ;
+        PrintStream out_ ;
+        jp.gr.java_conf.dyama.rink.parser.core.DependencyParser parser_ ;
         DependencyParser main_ ;
 
-        ParsingThread(DependencyParser parser){
+        ParsingThread(DependencyParser parser, String outPath) throws FileNotFoundException{
             main_ = parser;
-            sample_ = main_.parser_.createSample(main_.reader_, main_.beamWidth_);
-            verbose_ = main_.verbose_;
-        }
-
-        static void showResult(boolean verbose){
-            synchronized(outout_queue){
-                while (outout_queue.size() > 0){
-                    Output x = outout_queue.get(0);
-                    if (x.sb_ == null)
-                        break ;
-                    if (verbose)
-                        System.out.print(x.sb_.toString());
-                    outout_queue.remove(0);
-                }
-            }
+            parser_ = parser.parser_ ;
+            reader_ = parser.createSentenceReader(parser.test_);
+            writer_ = parser.createSampleWriter();
+            sample_ = parser_.createSample(reader_, parser.beamWidth_);
+            verbose_ = parser.verbose_;
+            out_ = new PrintStream(new FileOutputStream(outPath));
         }
 
         @Override
         public void run(){
-
-            while(true){
-                boolean eof = false;
-                Output output = null;
-                synchronized (outout_queue){
-                    try {
-                        eof = (! sample_.read()) ;
-                    } catch (IOException e) {
-                        throw new IllegalStateException(e.getMessage());
-                    }
-                    if (eof == false ){
-                        main_.sentences_ ++ ;
-                        output = new Output();
-                        outout_queue.add(output);
-                    }
-                                    }
-                if (eof)
-                    break ;
-                int steps = 0;
-                while(sample_.parseOneStep()){
-                    steps ++ ;
+            try {
+                while(sample_.read()){
+                    main_.sentences_ += 1 ;
+                    while(sample_.parseOneStep());
+                    if (verbose_)
+                        writer_.write(sample_, out_);
                 }
-                main_.steps_ += steps ;
-                StringBuilder sb = new StringBuilder();
-                ((SampleImpl)sample_).show(sb);
-                output.sb_ = sb;
-                showResult(verbose_);
+                reader_.close();
+                out_.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

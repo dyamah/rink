@@ -12,12 +12,22 @@ class State implements Comparable<State> {
         private int size_ ;
         private State[] pool_ ;
 
+        /**
+         * Constructor
+         * @param size the size of maximum pooling. the size is set to 1 if the size is less than 1.
+         */
         StatePool(int size){
+            if (size < 1)
+                size = 1;
             pool_ = new State[size];
             for(int size_ = 0 ; size_ < pool_.length; size_++)
                 pool_[size_] = new State();
         }
 
+        /**
+         * creates a new state from this pool. The new instance is generated if the pool is empty.
+         * @return a new state.
+         */
         State create(){
             if (size_ == 0)
                 return new State();
@@ -27,16 +37,17 @@ class State implements Comparable<State> {
             return state ;
         }
 
+        /**
+         * releases the used state to this pool.
+         * @param state the used state.
+         * @throws IllegalArgumentException if the used state is null.
+         */
         void release(State state){
+            if (state == null)
+                throw new IllegalArgumentException("the state is null.");
             if (size_ == pool_.length)
                 return ;
             pool_[size_++] = state;
-        }
-
-        void full(){
-            for(int i = size_; i < pool_.length ; i++)
-                pool_[i] = new State();
-            size_ = pool_.length;
         }
     }
 
@@ -78,6 +89,11 @@ class State implements Comparable<State> {
         num_actions_ = 0;
     }
 
+    /**
+     * copies internal information from the source state.
+     * @param state the source state.
+     * @throws IllegalArgumentException if the source state is null.
+     */
     void copy(State state){
         if (state == null)
             throw new IllegalArgumentException("the source state is null.");
@@ -93,8 +109,9 @@ class State implements Comparable<State> {
     }
 
     /**
-     * setup a new state
-     * @param sentence throw IllegalArgumentException if sentence null.
+     * Initializes this state as the input sentence.
+     * @param sentence the input sentence.
+     * @throws IllegalArgumentException if the input sentence is null.
      */
     void setup(SentenceImpl sentence){
         if (sentence == null)
@@ -126,9 +143,10 @@ class State implements Comparable<State> {
     }
 
     /**
-     * apply an action at the current position.
-     * @param action parsing action. throw IllegalArgumentException if action is null.
-     * @return true if action could be applied, otherwise false.
+     * Applies the parsing action to this state.
+     * @param action the parsing action.
+     * @return true if the parsing action could be applied, otherwise false.
+     * @throws IllegalArgumentException if the parsing action is null.
      */
     boolean apply(Action action_){
         if (action_ == null)
@@ -169,7 +187,7 @@ class State implements Comparable<State> {
            removeNode(position_);
 
        } else {
-           throw new IllegalArgumentException("unknown type of actions");
+           throw new IllegalArgumentException("unknown type of actions"); // OK
        }
        setLastAction(action);
 
@@ -180,11 +198,12 @@ class State implements Comparable<State> {
     }
 
     /**
-     * check whether parsing is complete or not (= No reduce action can be applied)
-     * @return true if parsing is complete, otherwise false.
-     * the conditions of completeness:<br>
-     * [1] nodes_.size() < 2 <br>
-     * [2] no applying left or right actions from BOS to EOS. <br>
+     * Checks whether the parsing process is complete or not (= No reduce action can be applied)
+     * @return true if the parsing process is complete, otherwise false.
+     * the conditions of the completeness:<br>
+     * [1] {@link #size()} < 2 <br>
+     * [2] the number of applied actions is more than 2 * #words - 1. (#words means the number of words in the input sentence.)<br>
+     * [3] No Left/Right actions have been applied when the parsing position arrived at the end of the input sentence.
      */
     boolean isComplete(){
         if (size_ < 2)
@@ -197,20 +216,19 @@ class State implements Comparable<State> {
 
     void disable(){ // TODO :
         num_actions_ = Integer.MAX_VALUE;
-        // score_ = -Double.MAX_VALUE;
     }
 
     /**
-     * get the current position
-     * @return current position
+     * Returns the current position.
+     * @return the current position
      */
     int getPosition(){
         return position_ ;
     }
 
     /**
-     * get the ID of left target node at the current position
-     * @return the ID of left target node.
+     * Returns the ID of the left target node at the current position
+     * @return the ID of the left target node. return -1 if the current position is out of range.
      */
     int getLeftTarget(){
         if (position_ < 0 || position_ >= size_)
@@ -219,24 +237,24 @@ class State implements Comparable<State> {
     }
 
     /**
-     * get the ID of left node from the current position
-     * @param pos relative position from the current position.
-     * @return the ID of left node. return -1 if the absolute position arrives at BOS.
-     * @throws IllegalArgumentException if pos is greater than 0.
+     * Returns the ID of the left node corresponding to the relative position from the current position.
+     * @param position the relative position from the current position.
+     * @return the ID of the left node. return -1 if the absolute position arrives at BOS.
+     * @throws IllegalArgumentException if the relative position is greater than 0.
      */
-    int getIDofLeftNode(int pos){
-        if (pos > 0)
+    int getIDofLeftNode(int position){
+        if (position > 0)
             throw new IllegalArgumentException("the relative position is greater than 0.");
 
-        int p = position_ + pos ;
+        int p = position_ + position ;
         if (p <  0 || p >= size())
             return -1 ;
         return nodes_[p];
     }
 
     /**
-     * get the ID of right target node at the current position
-     * @return the ID of right target node.
+     * Returns the ID of the right target node at the current position
+     * @return the ID of the right target node. return -1 if the current position is out of range.
      */
     int getRightTarget(){
         if (position_ + 1 < 0 || position_ + 1 >= size_)
@@ -245,43 +263,44 @@ class State implements Comparable<State> {
     }
 
     /**
-     * get the ID of  right node from the current position
-     * @param pos relative position from the current position.
-     * @return the ID of right node corresponding the relative position. return -1 if the absolute position arrives at BOS.
-     * @throws IllegalArgumentException if pos is greater than 0.
+     * Returns the ID of the right node corresponding to the relative position from the current position.
+     * @param position the relative position from the current position.
+     * @return the ID of right node corresponding the relative position. return -1 if the absolute position arrives at EOS.
+     * @throws IllegalArgumentException if the relative position is greater than 0.
      */
-    int getRightNode(int pos){
-        if (pos < 0)
+    int getRightNode(int position){
+        if (position < 0)
             throw new IllegalArgumentException("the relative position is less than 0.");
 
-        int p = position_ + 1 + pos ;
+        int p = position_ + 1 + position ;
         if (p < 0 || p >= size_)
             return -1 ;
         return nodes_[p];
     }
 
     /**
-     * get the latest action which could be applied.
-     * @return action. return null if no action is applied.
+     * Returns the last action.
+     * @return the action. return null if no action have been applied.
      */
     Action getLastAction(){
         return last_action_ ;
     }
 
     /**
-     * set the parsing position
-     * @param pos new position. throw IllegalArgumentException if pos is out of range. (pos < 0 || pos > {@link #size()})
+     * Sets the parsing position.
+     * @param position the parsing position.
+     * @throws IllegalArgumentException if the parsing position is out of range.
      */
-    void setPosition(int pos){
-        if (pos < 0 || pos > size())
+    void setPosition(int position){
+        if (position < 0 || position > size())
             throw new IllegalArgumentException("the position is out of range.");
-        if (pos == 0)
+        if (position == 0)
             complete_ = true;
-        position_ = pos;
+        position_ = position;
     }
 
     /**
-     * the number of active dependency nodes
+     * Returns the number of active dependency nodes
      * @return the number of target dependency nodes
      */
     int size(){
@@ -289,7 +308,7 @@ class State implements Comparable<State> {
     }
 
     /**
-     * check whether the current position arrives at EOS.
+     * Checks whether the current position arrives at EOS.
      * @return true if the current position arrives at EOS, otherwise false.
      */
     boolean isEOS(){
@@ -298,13 +317,17 @@ class State implements Comparable<State> {
 
 
     /**
-     * get the analyzed dependency relations.
+     * Returns the analyzed dependency relations.
      * @return dependency relations
      */
     DependencyRelations getDependencies() {
         return deps_;
     }
 
+    /**
+     * Returns the score of this state.
+     * @return the score of this state.
+     */
     double getScore(){
         return score_ ;
     }

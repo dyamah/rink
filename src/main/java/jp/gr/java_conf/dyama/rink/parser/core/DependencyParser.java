@@ -10,7 +10,6 @@ import jp.gr.java_conf.dyama.rink.parser.IDConverterImpl;
 import jp.gr.java_conf.dyama.rink.parser.Parser;
 import jp.gr.java_conf.dyama.rink.parser.Sample;
 import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
-import jp.gr.java_conf.dyama.rink.parser.core.OracleActionEstimator.SetOfActions;
 
 
 public abstract class DependencyParser implements Parser {
@@ -21,15 +20,16 @@ public abstract class DependencyParser implements Parser {
      * @author Hiroyasu Yamada
      *
      */
-    public static class Builder{
-
+    public enum Builder{
+        INSTANCE;
         /**
-         * Build Deterministic BottomUp Dependency Parser from model file.
-         * @param path path to the model file. throw IllegalArgumentException if path is null.
-         * @return dependency parser.
+         * Builds the deterministic bottom-up dependency parser from the trained model file.
+         * @param path the path to the model file.
+         * @return the dependency parser builded from the model file. .
          * @throws FileNotFoundException
          * @throws IOException
          * @throws ClassNotFoundException
+         * @throws IllegalArgumentException if the path is null.
          */
         static public DependencyParser build(String path) throws FileNotFoundException, IOException, ClassNotFoundException{
             DeterministicBottomUpParser parser = DeterministicBottomUpParser.load(path);
@@ -38,9 +38,10 @@ public abstract class DependencyParser implements Parser {
         }
 
         /**
-         * Build a dependency learner by using SVMs.
-         * @param params parameters for SVMs. throw IllegalArgumentException if params is null.
+         * Builds the SVM dependency learner.
+         * @param params the parameters for SVMs.
          * @return dependency learner.
+         * @throws IllegalArgumentException if the parameters is null.
          */
         static public DependencyParser buildSVMDependencyLearner(jp.gr.java_conf.dyama.rink.ml.svm.Parameters params){
             if (params == null)
@@ -52,9 +53,10 @@ public abstract class DependencyParser implements Parser {
         }
 
         /**
-         * Build a faster dependency learner by using grouping training examples with POS tags.
-         * @param params parameters for SVMs. throw IllegalArgumentException if params is null.
+         * Builds SVM dependency learner (training examples are grouping some sets by using the POS tags of the left target node.
+         * @param params the parameters for SVMs.
          * @return dependency learner.
+         * @throws IllegalArgumentException if the parameters is null.
          */
         static public DependencyParser buildPOSGroupingSVMDependencyLearner(jp.gr.java_conf.dyama.rink.ml.svm.Parameters params){
             if (params == null)
@@ -66,16 +68,15 @@ public abstract class DependencyParser implements Parser {
         }
 
         /**
-         * Build a  dependency learner by using MIRA
-         * @param num_iterations the number of iterations. throw IllegalArgumentException if num_iterations is less than 1.
+         * Builds the MIRA dependency learner.
+         * @param parsers the list of parsers.
          * @return dependency learner.
          */
         static public void buildMIRADependencyLearner(List<DependencyParser> parsers){
-            FeatureFunction function = new IWPT2003BestFeatureFunction(2, 4);
-            // ActionEstimator estimator = new OracleActionEstimator(function, SetOfActions.FourAcctions);
+            FeatureFunction function  = new IWPT2003BestFeatureFunction(2, 4);
             MIRAActionLearner learner = new MIRAActionLearner(function, new GroupIdentifier.ExtPOSGroupIdentifier());
-            DependencyParser parser0 = new DeterministicBottomUpParser(learner.convert(),  learner);
-            DependencyParser parser1 = new DeterministicBottomUpParser(parser0.getIDConverter(), learner.convert());
+            DependencyParser parser0  = new DeterministicBottomUpParser(learner.convert(),  learner);
+            DependencyParser parser1  = new DeterministicBottomUpParser(parser0.getIDConverter(), learner.convert());
             parsers.add(parser0);
             parsers.add(parser1);
         }
@@ -91,30 +92,33 @@ public abstract class DependencyParser implements Parser {
     }
 
     /**
-     * create a new sample with the sentence reader. the sample is able to parse dependency relations.
+     * Creates a new sample attaching  the sentence reader and this parser. The new sample is able to parse dependency relations.
      * @param reader the sentence reader.
-     * @return Sample
-     * @throws IllegalArgumentException if the reader is null.
+     * @return a new sample
+     * @throws IllegalArgumentException if the sentence reader is null.
      */
     public abstract Sample createSample(SentenceReader reader);
 
     /**
-     * create a new sample with the sentence reader. the sample is able to parse dependency relations with beam search.
+     * Create a new sample attaching the sentence reader. The new sample is able to parse dependency relations.
      * @param reader the sentence reader.
      * @param beamWidth the width of beam search. the beam search is enable only if the beamWidth is more than 1.
      * @return Sample
-     * @throws IllegalArgumentException if the reader is null.
+     * @throws IllegalArgumentException if the sentence reader is null.
      */
     public abstract Sample createSample(SentenceReader reader, int beamWidth);
 
     /**
-     * get ID Converter.
+     * Returns the ID Converter.
      * @return ID Converter
      */
     final IDConverter getIDConverter(){
         return idconverter_ ;
     }
 
+    /**
+     * Change the mutable ID Converter to the immutable one.
+     */
     final void toImmutable(){
         if (idconverter_ instanceof IDConverterImpl.MutableIDConverter)
             idconverter_ = ((IDConverterImpl.MutableIDConverter) idconverter_).toImmutable();
@@ -122,16 +126,16 @@ public abstract class DependencyParser implements Parser {
 
 
     /**
-     * parse dependency structures of a sample
-     * @param sample sample.
+     * Parses dependency relations of the input sample.
+     * @param sample the input sample.
      * @return true if the parser can parse one step. otherwise false.
      */
     abstract boolean parse(SampleImpl sample);
 
 
     /**
-     * save the parser to a file.
-     * @param path file path
+     * Saves the parser to the model file.
+     * @param path file the path to the model file.
      * @throws IOException
      */
     public abstract void save(String path) throws IOException ;
