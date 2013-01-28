@@ -28,6 +28,7 @@ public class DependencyLearner {
     static enum LearningAlgorithm {
         SVM,
         MIRA,
+        IWPT2003
     }
 
     /** Exit Status : OK */
@@ -56,6 +57,8 @@ public class DependencyLearner {
 
     /** dependency parser */
     jp.gr.java_conf.dyama.rink.parser.core.DependencyParser parser_ ;
+
+    jp.gr.java_conf.dyama.rink.parser.core.DependencyParser eval_parser_ ;
 
     /** sentence reader */
     SentenceReader reader_ ;
@@ -106,7 +109,7 @@ public class DependencyLearner {
         opts_.addOption("i", "input", true, "path to the input file.");
         opts_.addOption("o", "output", true, "path to the output file.");
 
-        opts_.addOption("l", "learner", true, "the type of learners: SVM, MIRA (default SVM).");
+        opts_.addOption("l", "learner", true, "the type of learners: SVM/MIRA/IWPT2003 (default SVM).");
         opts_.addOption("t", "kernel",  true, "the type of kernel functions: [LINEAR, POLYNOMIAL, RBF, SIGMOID] (default POLYNOMIAL).");
         opts_.addOption("d", "degree",  true, "the degree of polynomial kernel (default 2).");
         opts_.addOption("s", "gamma",   true, "the kernel parameter for Polynomial, RBF, Sigmoid (default 1.0).");
@@ -173,18 +176,37 @@ public class DependencyLearner {
         System.err.println("");
     }
 
+
+    private double evaluateTrainingData() throws IOException{
+        int n = 0;
+        double c = 0;
+        SentenceReader reader = createSentenceReader(train_);
+        SampleImpl sample = (SampleImpl) eval_parser_.createSample(reader);
+
+
+        while(sample.read()){
+            while(sample.parseOneStep());
+            n += sample.getSentence().size();
+            c += sample.getNumberOfCorrectDependencies();
+        }
+        reader.close();
+        return c / n;
+    }
+
     void useMIRA() throws IOException {
         System.err.println("Parsing the input training data ...");
 
         steps_ = 0;
         num_sentences_ = 0;
 
-        SentenceReader reader = createSentenceReader(train_);
+
         SampleWriter writer   = createSampleWriter();
 
-        Sample sample = parser_.createSample(reader);
 
         for(int i = 0 ; i < iterations_ ; i++){
+            System.err.printf("#iterations: " + i);
+            SentenceReader reader = createSentenceReader(train_);
+            Sample sample = parser_.createSample(reader);
             while(sample.read()){
                 num_sentences_ ++ ;
                 int num_w = sample.getSentence().size();
@@ -203,16 +225,25 @@ public class DependencyLearner {
                 if (verbose_)
                     writer.write(sample, System.out);
             }
-        }
+            if (i % 10 == 0)
+                System.err.printf(" Accuracy: %.3f", evaluateTrainingData());
 
-        reader.close();
+            System.err.println();
+            reader.close();
+        }
         System.err.println("");
         System.err.println("Total "  + num_sentences_ + " sentences, " + steps_ + " steps.");
         System.err.println("");
     }
 
     void parse() throws IOException{
-        useSVMs();
+        if (learning_algorithm_ == LearningAlgorithm.SVM || learning_algorithm_ == LearningAlgorithm.IWPT2003){
+            useSVMs();
+        }
+
+        if (learning_algorithm_ == LearningAlgorithm.MIRA)
+            useMIRA();
+
     }
 
     void save() throws IOException{
@@ -274,6 +305,8 @@ public class DependencyLearner {
                 learning_algorithm_ = LearningAlgorithm.SVM;
             } else if (type.equals("MIRA")){
                 learning_algorithm_ = LearningAlgorithm.MIRA;
+            } else if (type.equals("IWPT2003")){
+                learning_algorithm_ = LearningAlgorithm.IWPT2003;
             } else {
                 throw new ParseException("undefined learner type: " + type);
             }
@@ -346,10 +379,24 @@ public class DependencyLearner {
                 parser_ = jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildSVMDependencyLearner(params_);
             }
         }
+
+        if (learning_algorithm_ == LearningAlgorithm.IWPT2003){
+            params_.setKernelType(Parameters.KernelType.POLYNOMIAL);
+            params_.setDegree(2);
+            params_.setGamma(1.0);
+            params_.setCoef0(1.0);
+            parser_ = jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildIWPT2003Learner(params_);
+        }
+
         if (learning_algorithm_ == LearningAlgorithm.MIRA){
+            iterations_ = 1;
+            if (cl.hasOption("I"))
+                iterations_ = Integer.parseInt(cl.getOptionValue("I"));
+
             List<jp.gr.java_conf.dyama.rink.parser.core.DependencyParser> parsers = new ArrayList<jp.gr.java_conf.dyama.rink.parser.core.DependencyParser>();
             jp.gr.java_conf.dyama.rink.parser.core.DependencyParser.Builder.buildMIRADependencyLearner(parsers);
             parser_ = parsers.get(0);
+            eval_parser_ = parsers.get(1);
         }
 
 
