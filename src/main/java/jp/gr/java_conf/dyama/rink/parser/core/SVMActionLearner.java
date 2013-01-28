@@ -52,7 +52,7 @@ class SVMActionLearner implements ActionLearner {
         function_ = function ;
         learners_ = new HashMap<Integer, Learner<FeatureSpace.Binary>>();
         group_identifier_ = new GroupIdentifier.UniGroupIdentifier();
-        out_ = null;
+        out_ = System.err;
     }
 
     SVMActionLearner(Parameters params, FeatureFunction function, GroupIdentifier identifier){
@@ -67,7 +67,7 @@ class SVMActionLearner implements ActionLearner {
         function_ = function ;
         learners_ = new HashMap<Integer, Learner<FeatureSpace.Binary>>();
         group_identifier_ = identifier ;
-        out_ = null;
+        out_ = System.err;
     }
 
     /**
