@@ -4,7 +4,6 @@
 
   <groupId>jp.gr.java_conf.dyama.rink</groupId>
   <artifactId>rink</artifactId>
-  <version>1.0-beta</version>
   <packaging>jar</packaging>
 
   <name>rink</name>
@@ -66,4 +65,5 @@
 		<version>1.2</version>
 	</dependency>
   </dependencies>
+  <version>0.1-beta</version>
 </project>
