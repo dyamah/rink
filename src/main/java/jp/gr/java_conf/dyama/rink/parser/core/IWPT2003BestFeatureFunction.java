@@ -50,11 +50,11 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
     private POSITION toPosition(int pos, boolean left) {
         if (left){
             switch (pos) {
-            case -7: return POSITION.L7 ;
-            case -6: return POSITION.L6 ;
-            case -5: return POSITION.L5 ;
-            case -4: return POSITION.L4 ;
-            case -3: return POSITION.L3 ;
+            case -7: return POSITION.L7 ; // OK
+            case -6: return POSITION.L6 ; // OK
+            case -5: return POSITION.L5 ; // OK
+            case -4: return POSITION.L4 ; // OK
+            case -3: return POSITION.L3 ; // OK
             case -2: return POSITION.L2 ;
             case -1: return POSITION.L1 ;
             case  0: return POSITION.L0 ;
@@ -66,11 +66,11 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
         case  2: return POSITION.R2 ;
         case  3: return POSITION.R3 ;
         case  4: return POSITION.R4 ;
-        case  5: return POSITION.R5 ;
-        case  6: return POSITION.R6 ;
-        case  7: return POSITION.R7 ;
+        case  5: return POSITION.R5 ;  // OK
+        case  6: return POSITION.R6 ;  // OK
+        case  7: return POSITION.R7 ;  // OK
         }
-        return null ; //
+        return null ;  // OK
 
     }
 
@@ -97,7 +97,7 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
             buffer.add(i);
             return true;
         }
-        return false ;
+        return false ; // OK
     }
 
     /**

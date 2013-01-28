@@ -39,11 +39,9 @@ public class SampleImpl implements Sample {
 
         private State.StatePool state_pool_;
 
-
-
         /**
          * Constructor
-         * @param beamWidth the beam-width. it must be more than 1.
+         * @param beamWidth the beam width. it must be more than 1.
          */
         private Agenda(int beamWidth){
             size_ = 0;
@@ -54,22 +52,38 @@ public class SampleImpl implements Sample {
             state_pool_ = new State.StatePool(m + 1);
         }
 
+        /**
+         * Returns the state pool.
+         * @return the state pool
+         */
         State.StatePool getStatePool(){
             return state_pool_ ;
         }
 
+        /**
+         * initialize this agenda and setup the new state.
+         * @param state the new state.
+         */
         private void setup(State state){
             clear();
             list_[0] = state ;
             size_ ++ ;
         }
 
+        /**
+         * clear this agenda.
+         */
         private void clear(){
             size_ = 0;
             candidates_.clear();
             actions_.clear();
         }
 
+        /**
+         * add a candidate
+         * @param state the state
+         * @param action the parsing action that will be apply to the state.
+         */
         void addCandidate(State state, Action action){
             if (action == null){
                 candidates_.add(state);
@@ -84,6 +98,10 @@ public class SampleImpl implements Sample {
             state_pool_.release(newState);
         }
 
+        /**
+         * Returns the temporally list of actions.
+         * @return the list of actions.
+         */
         List<ActionImpl> getActionList(){
             return actions_ ;
         }
@@ -106,7 +124,7 @@ public class SampleImpl implements Sample {
      * Constructor
      * @param reader the sentence reader.
      * @param converter the IDConverter.
-     * @throws IllegalArgumentException if the reader is null.
+     * @throws IllegalArgumentException if the sentence reader is null.
      * @throws IllegalArgumentException if the IDConverter is null.
      */
     SampleImpl(SentenceReader reader, IDConverter converter){
@@ -128,8 +146,9 @@ public class SampleImpl implements Sample {
     }
 
     /**
-     * set a parser.
-     * @param parser parser. throw IllegalArgumentException if parser is null.
+     * Sets the parser.
+     * @param parser the parser.
+     * @throws IllegalArgumentException if the parser is null.
      */
     void setParser(DependencyParser parser){
         if (parser == null)
@@ -157,15 +176,15 @@ public class SampleImpl implements Sample {
     }
 
     /**
-     * get the correct dependency graph.
-     * @return correct dependency graph.
+     * Returns the annotated dependency relations.
+     * @return the annotated dependency relations
      */
     DependencyRelations getY(){
         return y_ ;
     }
 
     /**
-     * get the agenda for beam searching.
+     * Returns the agenda for beam search.
      * @return the agenda. return null if {@link #setAgenda(int)} has not been called yet.
      */
     Agenda getAgenda(){
@@ -173,7 +192,7 @@ public class SampleImpl implements Sample {
     }
 
     /**
-     * set agenda with n-beam-width.
+     * Sets agenda with n beam-width.
      * @param n the beam width. it's set only if n is more than 1.
      */
     void setAgenda(int n){
@@ -186,31 +205,31 @@ public class SampleImpl implements Sample {
     }
 
     /**
-     * get the parsing state.
-     * @return parsing state.
+     * Returns the parsing state.
+     * @return the parsing state.
      */
     State getState(){
         return state_ ;
     }
 
     /**
-     * get the buffer for the feature vector.
-     * @return buffer
+     * Returns the buffer for the feature vector.
+     * @return the buffer
      */
     BinaryFeatureVector.Buffer getFeatureBuffer(){
         return fbuffer_;
     }
 
     /**
-     * get the dependency feature.
-     * @return dependency feature
+     * Returns the dependency feature.
+     * @return the dependency feature
      */
     FeatureImpl getFeature(){
         return feature_;
     }
 
     /**
-     * get the feature vector for estimations.
+     * Returns the feature vector for estimations.
      * @return feature vector
      */
     BinaryFeatureVector getFeatureVector(){
@@ -273,60 +292,8 @@ public class SampleImpl implements Sample {
         return sentence_ ;
     }
 
-    @Override
-    public void show(PrintStream out) {
-        if (out == null)
-            return ;
-
-        DependencyRelations x = state_.getDependencies();
-
-        for(int i = 0 ; i < x.size(); i++){
-            StringBuilder builder = new StringBuilder();
-            int p = - state_.size();
-            int y__ = x.getParentID(i);
-            if (y__ >= 0)
-                p = y__ ;
-            WordImpl word = (WordImpl) sentence_.getWord(i);
-            builder.append(word.getSurface());
-            builder.append("\t");
-            builder.append(word.getPOS().toString());
-            builder.append("\t");
-            builder.append(word.getParent());
-            builder.append("\t");
-            builder.append(p);
-            out.println(builder.toString());
-        }
-        out.println("");
-    }
-
-    public void show(StringBuilder out) {
-        if (out == null)
-            return ;
-
-        DependencyRelations x = state_.getDependencies();
-
-        for(int i = 0 ; i < x.size(); i++){
-            StringBuilder builder = new StringBuilder();
-            int p = - state_.size();
-            int y__ = x.getParentID(i);
-            if (y__  >= 0)
-                p = y__;
-            WordImpl word = (WordImpl) sentence_.getWord(i);
-            builder.append(word.getSurface());
-            builder.append("\t");
-            builder.append(word.getPOS().toString());
-            builder.append("\t");
-            builder.append(word.getParent());
-            builder.append("\t");
-            builder.append(p);
-            builder.append("\n");
-            out.append(builder);
-        }
-        out.append("\n");
-    }
-
     /**
-     * get the number of correct dependencies.
+     * Returns the number of correct dependencies.
      * @return the number of correct dependency parents in the sentence.
      */
     public int getNumberOfCorrectDependencies(){
@@ -348,10 +315,4 @@ public class SampleImpl implements Sample {
         }
         return correct ;
     }
-
-    public void toBOS(){
-        state_.setPosition(0);
-    }
-
-
 }

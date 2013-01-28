@@ -42,6 +42,56 @@ public class StateTest {
     }
 
     @Test
+    public void testStatePool(){
+        {
+            State.StatePool pool = new State.StatePool(0);
+            State state0 = pool.create();
+            State state1 = pool.create();
+            assertEquals(false, state0 == state1);
+
+            pool.release(state0);
+            pool.release(state1);
+
+            State state2 = pool.create();
+            assertEquals(true, state0 == state2);
+            assertEquals(false, state1 == state2);
+        }
+
+        {
+            State.StatePool pool = new State.StatePool(1);
+            State state0 = pool.create();
+            State state1 = pool.create();
+            assertEquals(false, state0 == state1);
+
+            pool.release(state0);
+            pool.release(state1);
+
+            State state2 = pool.create();
+            assertEquals(true, state0 == state2);
+            assertEquals(false, state1 == state2);
+        }
+
+        {
+            State.StatePool pool = new State.StatePool(2);
+            State state0 = pool.create();
+            State state1 = pool.create();
+            assertEquals(false, state0 == state1);
+
+            pool.release(state0);
+            pool.release(state1);
+
+            State state2 = pool.create();
+            State state3 = pool.create();
+            assertEquals(false, state2 == state3);
+            assertEquals(true, state0 == state3);
+            assertEquals(true, state1 == state2);
+        }
+
+
+
+    }
+
+    @Test
     public void testState() {
         State state = new State();
         assertEquals(0, state.getPosition());

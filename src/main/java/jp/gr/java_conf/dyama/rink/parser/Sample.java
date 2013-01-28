@@ -1,7 +1,6 @@
 package jp.gr.java_conf.dyama.rink.parser;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 /**
  * Parsing Sample
@@ -40,11 +39,5 @@ public interface Sample {
      * @throws IOException if the reader fail to read a sentence from input stream.
      */
     public boolean read() throws IOException;
-
-    /**
-     * show parsing result
-     * @param out output stream. do nothing if out is null.
-     */
-    public void show(PrintStream out) ;
 
 }

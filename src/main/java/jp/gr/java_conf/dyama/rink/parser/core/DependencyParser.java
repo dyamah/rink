@@ -41,11 +41,11 @@ public abstract class DependencyParser implements Parser {
          * Builds the SVM dependency learner.
          * @param params the parameters for SVMs.
          * @return dependency learner.
-         * @throws IllegalArgumentException if the parameters is null.
+         * @throws IllegalArgumentException if the set of parameters is null.
          */
         static public DependencyParser buildSVMDependencyLearner(jp.gr.java_conf.dyama.rink.ml.svm.Parameters params){
             if (params == null)
-                throw new IllegalArgumentException("the parameters is null.");
+                throw new IllegalArgumentException("the set of parameters is null.");
             FeatureFunction function = new IWPT2003BestFeatureFunction(2, 4);
             ActionEstimator estimator = new OracleActionEstimator(function);
             ActionLearner learner = new SVMActionLearner(params, function);
@@ -56,11 +56,11 @@ public abstract class DependencyParser implements Parser {
          * Builds SVM dependency learner (training examples are grouping some sets by using the POS tags of the left target node.)
          * @param params the parameters for SVMs.
          * @return dependency learner.
-         * @throws IllegalArgumentException if the parameters is null.
+         * @throws IllegalArgumentException if the set of parameters is null.
          */
         static public DependencyParser buildPOSGroupingSVMDependencyLearner(jp.gr.java_conf.dyama.rink.ml.svm.Parameters params){
             if (params == null)
-                throw new IllegalArgumentException("the parameters is null.");
+                throw new IllegalArgumentException("the set of parameters is null.");
             FeatureFunction function = new IWPT2003BestFeatureFunction(2, 4);
             ActionEstimator estimator = new OracleActionEstimator(function);
             ActionLearner learner = new SVMActionLearner(params, function, new GroupIdentifier.POSGroupIdentifier());
@@ -71,11 +71,11 @@ public abstract class DependencyParser implements Parser {
          * Builds IWPT2003 best model (SVM dependency learner (training examples are grouping some sets by using the POS tags of the left target node.))
          * @param params the parameters for SVMs.
          * @return dependency learner.
-         * @throws IllegalArgumentException if the parameters is null.
+         * @throws IllegalArgumentException if the set of parameters is null.
          */
         static public DependencyParser buildIWPT2003Learner(jp.gr.java_conf.dyama.rink.ml.svm.Parameters params){
             if (params == null)
-                throw new IllegalArgumentException("the parameters is null.");
+                throw new IllegalArgumentException("the set of parameters is null.");
             FeatureFunction function = new IWPT2003BestFeatureFunction(2, 4);
             ActionEstimator estimator = new OracleActionEstimator(function, OracleActionEstimator.SetOfActions.ThreeActions);
             ActionLearner learner = new SVMActionLearner(params, function, new GroupIdentifier.POSGroupIdentifier());

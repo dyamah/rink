@@ -16,6 +16,7 @@ import jp.gr.java_conf.dyama.rink.parser.core.Action;
 import jp.gr.java_conf.dyama.rink.parser.core.ActionImpl;
 import jp.gr.java_conf.dyama.rink.parser.core.IWPT2003BestFeatureFunction;
 import jp.gr.java_conf.dyama.rink.parser.core.OracleActionEstimator;
+import jp.gr.java_conf.dyama.rink.parser.core.OracleActionEstimator.SetOfActions;
 import jp.gr.java_conf.dyama.rink.parser.core.SampleImpl;
 import jp.gr.java_conf.dyama.rink.parser.core.SimpleSentenceReader;
 import jp.gr.java_conf.dyama.rink.parser.core.State;
@@ -66,7 +67,21 @@ public class OracleActionEstimatorTest {
             fail("");
         }
 
+        try {
+            new OracleActionEstimator(null, OracleActionEstimator.SetOfActions.FourAcctions);
+            fail("");
+        } catch (IllegalArgumentException e){
+            assertEquals("the feature function is null.", e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            fail("");
+        }
+
         new OracleActionEstimator(function_) ;
+
+        new OracleActionEstimator(function_, null) ;
+
+
     }
 
     @Test
@@ -185,6 +200,242 @@ public class OracleActionEstimatorTest {
         }
 
     }
+
+    @Test
+    public void testEstimate00_1() throws IOException {
+        OracleActionEstimator estimator = new OracleActionEstimator(function_, null) ;
+
+        try {
+            estimator.estimate(null);
+            fail("");
+        } catch (IllegalArgumentException e){
+            assertEquals("the sample is null.", e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            fail("");
+        }
+        sample_.read();
+        assertEquals(0, sample_.getFeatureBuffer().size());
+
+        State state = sample_.getState();
+        assertEquals(0, state.getPosition());
+        assertEquals(7, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.RIGHT, action.getType());
+            assertEquals(true, sample_.getFeatureBuffer().size() > 0);
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(6, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(6, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.RIGHT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.WAIT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.WAIT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(2, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(3, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.RIGHT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(2, state.getPosition());
+        assertEquals(4, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.LEFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(3, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.LEFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(2, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.LEFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(1, state.size());
+
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(1, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(false, state.apply(action));
+        }
+
+    }
+
+    @Test
+    public void testEstimate00_2() throws IOException {
+        OracleActionEstimator estimator = new OracleActionEstimator(function_, SetOfActions.ThreeActions) ;
+
+        try {
+            estimator.estimate(null);
+            fail("");
+        } catch (IllegalArgumentException e){
+            assertEquals("the sample is null.", e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            fail("");
+        }
+        sample_.read();
+        assertEquals(0, sample_.getFeatureBuffer().size());
+
+        State state = sample_.getState();
+        assertEquals(0, state.getPosition());
+        assertEquals(7, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.RIGHT, action.getType());
+            assertEquals(true, sample_.getFeatureBuffer().size() > 0);
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(6, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(6, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.RIGHT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(2, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(3, state.getPosition());
+        assertEquals(5, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.RIGHT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(2, state.getPosition());
+        assertEquals(4, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.LEFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(3, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.LEFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(2, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.LEFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(0, state.getPosition());
+        assertEquals(1, state.size());
+
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(true, state.apply(action));
+        }
+
+        assertEquals(1, state.getPosition());
+        assertEquals(1, state.size());
+        {
+            Action action = estimator.estimate(sample_);
+            assertEquals(Action.Type.SHIFT, action.getType());
+            assertEquals(false, state.apply(action));
+        }
+
+    }
+
+
 
     @Test
     public void testEstimate01() throws IOException {

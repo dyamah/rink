@@ -2,11 +2,8 @@ package jp.gr.java_conf.dyama.rink.parser.core;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +15,6 @@ import jp.gr.java_conf.dyama.rink.parser.Sample;
 import jp.gr.java_conf.dyama.rink.parser.Sentence;
 import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
 import jp.gr.java_conf.dyama.rink.parser.Word;
-import jp.gr.java_conf.dyama.rink.parser.core.Action;
-import jp.gr.java_conf.dyama.rink.parser.core.ActionImpl;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyParser;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyRelations;
 import jp.gr.java_conf.dyama.rink.parser.core.FeatureImpl;
@@ -104,7 +99,13 @@ public class SampleImplTest {
     }
 
     @Test
-    public void testSampleImpl() {
+    public void testDummyParser(){
+        dummy_parser_ = new DummyParser();
+        dummy_parser_.createSample(reader_, 3);
+    }
+
+    @Test
+    public void testSampleImpl00() {
 
         try {
             new SampleImpl(null, idconverter_);
@@ -290,7 +291,8 @@ public class SampleImplTest {
         assertEquals(false, sample.parseOneStep());
         sample.reparse();
         assertEquals(false, sample.parseOneStep());
-
+        sample.reparse(0);
+        assertEquals(false, sample.parseOneStep());
     }
 
     @Test
@@ -317,6 +319,55 @@ public class SampleImplTest {
         assertEquals(true, sample.parseOneStep());
         assertEquals(false, sample.parseOneStep());
 
+        sample.reparse(0);
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(true, sample.parseOneStep());
+        assertEquals(false, sample.parseOneStep());
+
+    }
+
+    @Test
+    public void testGetNumberOfCorrectDependencies() throws IOException{
+        SampleImpl sample = new SampleImpl(reader_, idconverter_);
+        assertEquals(0, sample.getNumberOfCorrectDependencies());
+
+        sample.read();
+        assertEquals(1, sample.getNumberOfCorrectDependencies());
+
+        DependencyRelations dep = sample.getState().getDependencies();
+        dep.depend(1, 0);
+        dep.depend(1, 3);
+        dep.depend(1, 6);
+        assertEquals(3, sample.getNumberOfCorrectDependencies());
+    }
+
+    @Test
+    public void testAgenda(){
+        SampleImpl sample = new SampleImpl(reader_, idconverter_);
+        {
+            SampleImpl.Agenda agenda = sample.getAgenda();
+            assertEquals(null, agenda);
+        }
+
+        {
+            sample.setAgenda(1);
+            SampleImpl.Agenda agenda = sample.getAgenda();
+            assertEquals(null, agenda);
+        }
+
+        {
+            sample.setAgenda(2);
+            SampleImpl.Agenda agenda = sample.getAgenda();
+            assertNotNull(agenda);
+        }
+
+
+
     }
 
     @Test
@@ -330,119 +381,5 @@ public class SampleImplTest {
 
         assertEquals(true, sentence0 == sentence1);
         assertEquals(true, sentence0 == sentence2);
-    }
-
-    @Test
-    public void testShow00() throws IOException{
-        File tmpfile = File.createTempFile("SampleImplShowTest", ".tmp");
-        tmpfile.deleteOnExit();
-        {
-            SampleImpl sample = new SampleImpl(reader_, idconverter_);
-            PrintStream out = new PrintStream(tmpfile);
-            PrintStream n = null;
-            sample.show(n);
-            out.close();
-
-            BufferedReader in = new BufferedReader(new FileReader(tmpfile));
-            assertEquals(null, in.readLine());
-            in.close();
-        }
-
-        {
-            SampleImpl sample = new SampleImpl(reader_, idconverter_);
-            sample.read();
-            PrintStream out = new PrintStream(tmpfile);
-            sample.show(out);
-            out.close();
-            BufferedReader in = new BufferedReader(new FileReader(tmpfile));
-
-            assertEquals("I\tPRP\t1\t-7", in.readLine());
-            assertEquals("saw\tVBD\t-1\t-7", in.readLine());
-            assertEquals("a\tDT\t3\t-7", in.readLine());
-            assertEquals("girl\tNN\t1\t-7", in.readLine());
-            assertEquals("with\tIN\t3\t-7", in.readLine());
-            assertEquals("a\tDT\t6\t-7", in.readLine());
-            assertEquals("telescope\tNN\t4\t-7", in.readLine());
-            assertEquals("", in.readLine());
-            assertEquals(null, in.readLine());
-            in.close();
-        }
-    }
-
-    @Test
-    public void testShow01() throws IOException{
-        File tmpfile = File.createTempFile("SampleImplShowTest", ".tmp");
-        tmpfile.deleteOnExit();
-
-        {
-            SampleImpl sample = new SampleImpl(reader_, idconverter_);
-            sample.read();
-            PrintStream out = new PrintStream(tmpfile);
-            State state = sample.getState();
-            state.apply(new ActionImpl(Action.Type.RIGHT));
-            state.apply(new ActionImpl(Action.Type.LEFT));
-
-            sample.show(out);
-            out.close();
-            BufferedReader in = new BufferedReader(new FileReader(tmpfile));
-
-            assertEquals("I\tPRP\t1\t1", in.readLine());
-            assertEquals("saw\tVBD\t-1\t-5", in.readLine());
-            assertEquals("a\tDT\t3\t1", in.readLine());
-            assertEquals("girl\tNN\t1\t-5", in.readLine());
-            assertEquals("with\tIN\t3\t-5", in.readLine());
-            assertEquals("a\tDT\t6\t-5", in.readLine());
-            assertEquals("telescope\tNN\t4\t-5", in.readLine());
-            assertEquals("", in.readLine());
-            assertEquals(null, in.readLine());
-            in.close();
-        }
-    }
-
-    @Test
-    public void testShow02() throws IOException{
-
-        {
-            SampleImpl sample = new SampleImpl(reader_, idconverter_);
-
-            sample.read();
-
-            StringBuilder out = null;
-
-            sample.show(out);
-            assertNull(out);
-
-            out = new StringBuilder();
-            State state = sample.getState();
-            state.apply(new ActionImpl(Action.Type.RIGHT));
-            state.apply(new ActionImpl(Action.Type.LEFT));
-            sample.show(out);
-
-            StringBuilder expect = new StringBuilder();
-            expect.append("I\tPRP\t1\t1\n");
-            expect.append("saw\tVBD\t-1\t-5\n");
-            expect.append("a\tDT\t3\t1\n");
-            expect.append("girl\tNN\t1\t-5\n");
-            expect.append("with\tIN\t3\t-5\n");
-            expect.append("a\tDT\t6\t-5\n");
-            expect.append("telescope\tNN\t4\t-5\n");
-            expect.append("\n");
-            assertEquals(expect.toString(), out.toString());
-        }
-    }
-
-    @Test
-    public void testShow03() throws IOException{
-
-        {
-            SampleImpl sample = new SampleImpl(reader_, idconverter_);
-            StringBuilder out = null;
-            sample.show(out);
-            out = new StringBuilder();
-            sample.show(out);
-            StringBuilder expect = new StringBuilder();
-            expect.append("\n");
-            assertEquals(expect.toString(), out.toString());
-        }
     }
 }

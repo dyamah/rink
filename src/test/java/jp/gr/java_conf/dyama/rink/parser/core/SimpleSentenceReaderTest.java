@@ -123,10 +123,17 @@ public class SimpleSentenceReaderTest {
             assertEquals(8, word.getEnd());
             assertEquals(PTB.POS.CC, word.getPOS());
         }
+    }
 
-
-
-
+    @Test
+    public void testClose() throws IOException{
+        SimpleSentenceReader reader = new SimpleSentenceReader(generator_);
+        reader.addWord("foo", 0, 3, PTB.POS.NN, -1);
+        reader.addWord("bar", 4, 8, PTB.POS.CC, -1);
+        SentenceImpl sentence = new SentenceImpl(generator_, null);
+        reader.close();
+        reader.read(sentence);
+        assertEquals(0, sentence.size());
     }
 
 }

@@ -32,19 +32,21 @@ public class DeterministicBottomUpParser extends DependencyParser {
         learner_   = null;
     }
 
-    DeterministicBottomUpParser(IDConverter converter, ActionEstimator estimator, ActionLearner learner){
-        super(converter);
-        assert(converter != null);
-        assert(estimator != null);
-        assert(learner != null);
-        estimator_ = estimator ;
-        learner_   = learner;
-    }
+//    DeterministicBottomUpParser(IDConverter converter, ActionEstimator estimator, ActionLearner learner){
+//        super(converter);
+//        assert(converter != null);
+//        assert(estimator != null);
+//        assert(learner != null);
+//        estimator_ = estimator ;
+//        learner_   = learner;
+//    }
 
     /**
      * Constructor: (training mode)
-     * @param estimator Action estimator. throw IllegalArgumentException if estimator is null.
-     * @param learner Action learner. throw IllegalArgumentException if learner is null.
+     * @param estimator the action estimator.
+     * @param learner the action learner.
+     * @throws IllegalArgumentException if the action estimator is null.
+     * @throws IllegalArgumentException if the action learner is null.
      */
     DeterministicBottomUpParser(ActionEstimator estimator, ActionLearner learner){
         super();
@@ -58,7 +60,8 @@ public class DeterministicBottomUpParser extends DependencyParser {
 
     /**
      * Constructor:
-     * @param estimator throw IllegalArgumentException if estimator is null.
+     * @param estimator the action estimator.
+     * @throw IllegalArgumentException if the action estimator is null.
      */
     DeterministicBottomUpParser(ActionEstimator estimator){
         super();
@@ -69,12 +72,14 @@ public class DeterministicBottomUpParser extends DependencyParser {
     }
 
     /**
-     * load the parser.
-     * @param path file path. throw IllegalArgumentException if path is null.
-     * @return parser.
+     * Loads the parser from a file.
+     * @param path the file path.
+     * @return dependency parser.
+     * @throw IllegalArgumentException if the file path is null.
      * @throws FileNotFoundException
      * @throws IOException
      * @throws ClassNotFoundException
+     *
      */
     public static DeterministicBottomUpParser load(String path) throws FileNotFoundException, IOException, ClassNotFoundException {
         if (path == null)

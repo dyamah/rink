@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.gr.java_conf.dyama.rink.common.IDConverter;
 import jp.gr.java_conf.dyama.rink.ml.svm.Parameters;
@@ -35,6 +37,8 @@ public class DependencyParserTest {
         params.setDegree(2);
         params.setGamma(1.0);
         params.setCoef0(1.0);
+
+
         {
             DependencyParser parser = DependencyParser.Builder.buildSVMDependencyLearner(params);
 
@@ -47,6 +51,18 @@ public class DependencyParserTest {
         }
 
         {
+            try {
+                DependencyParser.Builder.buildSVMDependencyLearner(null);
+                fail("");
+            } catch(IllegalArgumentException  e) {
+                assertEquals("the set of parameters is null.", e.getMessage());
+            } catch(Exception e) {
+                e.printStackTrace();
+                fail("");
+            }
+        }
+
+        {
             DependencyParser parser = DependencyParser.Builder.buildPOSGroupingSVMDependencyLearner(params);
 
             AnnotatedSentenceReader reader = new AnnotatedSentenceReader(train_.getPath(), AnnotatedSentenceReader.AnnotationLevel.DEPENDENCY);
@@ -55,6 +71,66 @@ public class DependencyParserTest {
             while(sample.read())
                 while(sample.parseOneStep());
             parser.save(gmodel_.getPath());
+        }
+
+        {
+            try {
+                DependencyParser.Builder.buildPOSGroupingSVMDependencyLearner(null);
+                fail("");
+            } catch(IllegalArgumentException  e) {
+                assertEquals("the set of parameters is null.", e.getMessage());
+            } catch(Exception e) {
+                e.printStackTrace();
+                fail("");
+            }
+        }
+
+        {
+            DependencyParser parser = DependencyParser.Builder.buildIWPT2003Learner(params);
+
+            AnnotatedSentenceReader reader = new AnnotatedSentenceReader(train_.getPath(), AnnotatedSentenceReader.AnnotationLevel.DEPENDENCY);
+
+            Sample sample = parser.createSample(reader);
+            while(sample.read())
+                while(sample.parseOneStep());
+            parser.save(gmodel_.getPath());
+        }
+
+        {
+            try {
+                DependencyParser.Builder.buildIWPT2003Learner(null);
+                fail("");
+            } catch(IllegalArgumentException  e) {
+                assertEquals("the set of parameters is null.", e.getMessage());
+            } catch(Exception e) {
+                e.printStackTrace();
+                fail("");
+            }
+        }
+
+        {
+            List<DependencyParser> parsers = new ArrayList<DependencyParser>();
+            DependencyParser.Builder.buildMIRADependencyLearner(parsers);
+            DependencyParser parser = parsers.get(0);
+            assertNotNull(parsers.get(1));
+            assertEquals(2, parsers.size());
+            AnnotatedSentenceReader reader = new AnnotatedSentenceReader(train_.getPath(), AnnotatedSentenceReader.AnnotationLevel.DEPENDENCY);
+
+            Sample sample = parser.createSample(reader);
+            while(sample.read())
+                while(sample.parseOneStep());
+        }
+
+        {
+            try {
+                DependencyParser.Builder.buildMIRADependencyLearner(null);
+                fail("");
+            } catch(IllegalArgumentException  e) {
+                assertEquals("the list of parsers is null.", e.getMessage());
+            } catch(Exception e) {
+                e.printStackTrace();
+                fail("");
+            }
         }
 
     }
@@ -148,7 +224,7 @@ public class DependencyParserTest {
             DependencyParser.Builder.buildSVMDependencyLearner(null);
             fail("");
         } catch (IllegalArgumentException e) {
-            assertEquals("the parameters is null.", e.getMessage());
+            assertEquals("the set of parameters is null.", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             fail("");
@@ -166,7 +242,7 @@ public class DependencyParserTest {
             DependencyParser.Builder.buildPOSGroupingSVMDependencyLearner(null);
             fail("");
         } catch (IllegalArgumentException e) {
-            assertEquals("the parameters is null.", e.getMessage());
+            assertEquals("the set of parameters is null.", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             fail("");

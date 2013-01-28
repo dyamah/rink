@@ -147,7 +147,7 @@ public class MIRAActionLearnerTest {
     }
 
     @Test
-    public void testMIRAActionLearner() throws IOException {
+    public void testMIRAActionLearner() throws IOException, ClassNotFoundException {
         MIRAActionLearner learner  = new MIRAActionLearner(function_, new GroupIdentifier.UniGroupIdentifier());
         sample_.read();
 
@@ -175,16 +175,46 @@ public class MIRAActionLearnerTest {
         reader_.addWord("a",         18, 19, PTB.POS.CC,   6);
         reader_.addWord("telescope", 20, 29, PTB.POS.JJ,   4);
         sample_.read();
-        ActionEstimator est = learner.learn();
+
+        File tmpfile = File.createTempFile("MIRAActionEstimatorTest", ".tmp");
+        tmpfile.deleteOnExit();
         {
+            ActionEstimator est = learner.learn();
             State state = sample_.getState();
             while(state.size() > 1){
-                int l = state.getLeftTarget();
-                int r = state.getRightTarget();
                 Action y = est.estimate(sample_);
-                Action.Type t = y.getType();
                 state.apply(y);
             }
+            DependencyRelations dep = state.getDependencies();
+            dep.hasDependencyRelation(1, 0);
+            dep.hasDependencyRelation(1, 3);
+            dep.hasDependencyRelation(3, 2);
+            dep.hasDependencyRelation(3, 4);
+            dep.hasDependencyRelation(4, 6);
+            dep.hasDependencyRelation(6, 5);
+
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(tmpfile));
+            out.writeObject(est);
+            out.close();
+        }
+
+        {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(tmpfile));
+            ActionEstimator est = (ActionEstimator) in.readObject();
+            sample_.reparse();
+            State state = sample_.getState();
+            while(state.size() > 1){
+                Action y = est.estimate(sample_);
+                state.apply(y);
+            }
+            DependencyRelations dep = state.getDependencies();
+            dep.hasDependencyRelation(1, 0);
+            dep.hasDependencyRelation(1, 3);
+            dep.hasDependencyRelation(3, 2);
+            dep.hasDependencyRelation(3, 4);
+            dep.hasDependencyRelation(4, 6);
+            dep.hasDependencyRelation(6, 5);
+            in.close();
         }
 
     }

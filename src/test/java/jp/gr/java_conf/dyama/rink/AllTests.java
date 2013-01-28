@@ -30,7 +30,9 @@ import jp.gr.java_conf.dyama.rink.parser.core.DependencyParserTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyRelationsTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DeterministicBottomUpParserTest;
 import jp.gr.java_conf.dyama.rink.parser.core.FeatureImplTest;
+import jp.gr.java_conf.dyama.rink.parser.core.GroupIdentifierTest;
 import jp.gr.java_conf.dyama.rink.parser.core.IWPT2003BestFeatureFunctionTest;
+import jp.gr.java_conf.dyama.rink.parser.core.MIRAActionLearnerTest;
 import jp.gr.java_conf.dyama.rink.parser.core.OracleActionEstimatorTest;
 import jp.gr.java_conf.dyama.rink.parser.core.OriginalSampleWriterTest;
 import jp.gr.java_conf.dyama.rink.parser.core.SVMActionEstimatorTest;
@@ -67,7 +69,9 @@ import org.junit.runners.Suite.SuiteClasses;
     DependencyParserTest.class,
     DeterministicBottomUpParserTest.class,
     FeatureImplTest.class,
+    GroupIdentifierTest.class,
     IWPT2003BestFeatureFunctionTest.class,
+    MIRAActionLearnerTest.class,
     OracleActionEstimatorTest.class,
     OriginalSampleWriterTest.class,
     SampleImplTest.class,

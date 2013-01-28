@@ -7,15 +7,15 @@ import jp.gr.java_conf.dyama.rink.corpus.PTB;
 
 interface GroupIdentifier extends Serializable {
     /**
-     * get the group ID.
+     * Returns the group ID.
      * @param sample the target sample.
-     * @return group ID (0 and positive number.)
+     * @return the group ID (0 and positive number.)
      * @throws IllegalArgumentException if the sample is null.
      */
     public int getGroupID(SampleImpl sample);
 
     /**
-     * get the string corresponding to the group ID.
+     * Returns the string corresponding to the group ID.
      * @param groupID group ID.
      * @return the string corresponding to the group ID.
      */

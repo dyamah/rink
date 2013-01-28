@@ -70,6 +70,7 @@ class SimpleSentenceReader implements SentenceReader {
 
     @Override
     public void close() throws IOException {
+        words_.clear();
     }
 
 }
