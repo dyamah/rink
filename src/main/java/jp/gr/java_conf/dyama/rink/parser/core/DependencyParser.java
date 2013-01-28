@@ -53,7 +53,7 @@ public abstract class DependencyParser implements Parser {
         }
 
         /**
-         * Builds SVM dependency learner (training examples are grouping some sets by using the POS tags of the left target node.
+         * Builds SVM dependency learner (training examples are grouping some sets by using the POS tags of the left target node.)
          * @param params the parameters for SVMs.
          * @return dependency learner.
          * @throws IllegalArgumentException if the parameters is null.
@@ -68,17 +68,37 @@ public abstract class DependencyParser implements Parser {
         }
 
         /**
+         * Builds IWPT2003 best model (SVM dependency learner (training examples are grouping some sets by using the POS tags of the left target node.))
+         * @param params the parameters for SVMs.
+         * @return dependency learner.
+         * @throws IllegalArgumentException if the parameters is null.
+         */
+        static public DependencyParser buildIWPT2003Learner(jp.gr.java_conf.dyama.rink.ml.svm.Parameters params){
+            if (params == null)
+                throw new IllegalArgumentException("the parameters is null.");
+            FeatureFunction function = new IWPT2003BestFeatureFunction(2, 4);
+            ActionEstimator estimator = new OracleActionEstimator(function, OracleActionEstimator.SetOfActions.ThreeActions);
+            ActionLearner learner = new SVMActionLearner(params, function, new GroupIdentifier.POSGroupIdentifier());
+            return new DeterministicBottomUpParser(estimator,  learner);
+        }
+
+        /**
          * Builds the MIRA dependency learner.
          * @param parsers the list of parsers.
          * @return dependency learner.
+         * @throws IllegalArgumentException if the list of parsers is nulll.
          */
         static public void buildMIRADependencyLearner(List<DependencyParser> parsers){
+            if (parsers == null)
+                throw new IllegalArgumentException("the list of parsers is null.");
             FeatureFunction function  = new IWPT2003BestFeatureFunction(2, 4);
             MIRAActionLearner learner = new MIRAActionLearner(function, new GroupIdentifier.ExtPOSGroupIdentifier());
-            DependencyParser parser0  = new DeterministicBottomUpParser(learner.convert(),  learner);
+            ActionEstimator estimator = new OracleActionEstimator(function);
+            DependencyParser parser0  = new DeterministicBottomUpParser(estimator,  learner);
             DependencyParser parser1  = new DeterministicBottomUpParser(parser0.getIDConverter(), learner.convert());
             parsers.add(parser0);
             parsers.add(parser1);
+
         }
     }
 
