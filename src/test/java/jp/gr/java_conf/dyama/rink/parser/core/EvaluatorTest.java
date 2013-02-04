@@ -1,7 +1,6 @@
 package jp.gr.java_conf.dyama.rink.parser.core;
 
 import static org.junit.Assert.*;
-import jp.gr.java_conf.dyama.rink.common.IDConverter;
 import jp.gr.java_conf.dyama.rink.corpus.PTB;
 import jp.gr.java_conf.dyama.rink.parser.IDConverterImpl;
 import jp.gr.java_conf.dyama.rink.parser.Sentence;
