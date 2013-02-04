@@ -217,6 +217,26 @@ public class MIRAActionLearnerTest {
             in.close();
         }
 
+        {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(tmpfile));
+            ActionEstimator est = (ActionEstimator) in.readObject();
+            sample_.reparse();
+            sample_.setAgenda(2);
+            State state = sample_.getState();
+            while(state.size() > 1){
+                Action y = est.estimate(sample_);
+                state.apply(y);
+            }
+            DependencyRelations dep = state.getDependencies();
+            dep.hasDependencyRelation(1, 0);
+            dep.hasDependencyRelation(1, 3);
+            dep.hasDependencyRelation(3, 2);
+            dep.hasDependencyRelation(3, 4);
+            dep.hasDependencyRelation(4, 6);
+            dep.hasDependencyRelation(6, 5);
+            in.close();
+        }
+
     }
 
     @Test

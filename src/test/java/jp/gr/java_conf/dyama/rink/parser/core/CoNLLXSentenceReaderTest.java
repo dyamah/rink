@@ -34,6 +34,11 @@ public class CoNLLXSentenceReaderTest {
     }
 
     @Test
+    public void testCheckID(){
+
+    }
+
+    @Test
     public void testCoNLLXSentenceReader() {
 
         try {
