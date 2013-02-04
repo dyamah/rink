@@ -18,10 +18,10 @@ import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
  */
 public class DeterministicBottomUpParser extends DependencyParser {
 
-    /** action estimator */
+    /** The action estimator */
     private ActionEstimator estimator_;
 
-    /** action learner */
+    /** The action learner */
     private ActionLearner learner_;
 
     DeterministicBottomUpParser(IDConverter converter, ActionEstimator estimator){

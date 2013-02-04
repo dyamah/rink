@@ -43,10 +43,10 @@ public class CoNLLXSentenceReader implements SentenceReader {
 
     private BufferedReader reader_;
 
-    /** number of reading lines */
+    /** the number of reading lines */
     private int lines_ ;
 
-    /** annotation level */
+    /** the annotation level */
     private Mode mode_ ;
 
     /**
