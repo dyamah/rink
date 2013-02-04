@@ -29,6 +29,7 @@ import jp.gr.java_conf.dyama.rink.parser.core.CoNLLXSentenceReaderTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyParserTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DependencyRelationsTest;
 import jp.gr.java_conf.dyama.rink.parser.core.DeterministicBottomUpParserTest;
+import jp.gr.java_conf.dyama.rink.parser.core.EvaluatorTest;
 import jp.gr.java_conf.dyama.rink.parser.core.FeatureImplTest;
 import jp.gr.java_conf.dyama.rink.parser.core.GroupIdentifierTest;
 import jp.gr.java_conf.dyama.rink.parser.core.IWPT2003BestFeatureFunctionTest;
@@ -68,6 +69,7 @@ import org.junit.runners.Suite.SuiteClasses;
     DependencyRelationsTest.class,
     DependencyParserTest.class,
     DeterministicBottomUpParserTest.class,
+    EvaluatorTest.class,
     FeatureImplTest.class,
     GroupIdentifierTest.class,
     IWPT2003BestFeatureFunctionTest.class,
