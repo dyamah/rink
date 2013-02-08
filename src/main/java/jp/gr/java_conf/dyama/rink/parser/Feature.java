@@ -8,14 +8,15 @@ package jp.gr.java_conf.dyama.rink.parser;
 public interface Feature {
 
     /**
-     * encode a feature information into positive unique integer.
-     * @return encoded integer
+     * Encodes the feature information into the positive unique integer.
+     * @return the encoded integer
      */
     public int encode();
 
     /**
-     * decode an integer to a feature information
-     * @param code encoded integer. throw IllegalArgumentExcption if code is negative number.
+     * Decodes the code to the feature information
+     * @param code the code
+     * @throws IllegalArgumentExcption if the code is a negative number.
      */
     public void decode(int code);
 
