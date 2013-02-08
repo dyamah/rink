@@ -8,14 +8,14 @@ package jp.gr.java_conf.dyama.rink.corpus;
 public interface TagSet {
 
     /**
-     * get the tag ID. tag ID must be positive number.
-     * @return tag ID
+     * Returns the ID of the tag. THe ID must be a positive number.
+     * @return The ID.
      */
     public int getID();
 
 
     /**
-     * get the description about the tag.
+     * Returns the description about the tag.
      * @return description
      */
     public String getDescription();
