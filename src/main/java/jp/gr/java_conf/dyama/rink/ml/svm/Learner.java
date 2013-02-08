@@ -12,29 +12,31 @@ import jp.gr.java_conf.dyama.rink.ml.FeatureVector;
 public interface Learner<FS extends FeatureSpace>  {
 
     /**
-     * add a training example.
-     * @param x feature vector. throw IllegalArgumentException if x is null.
-     * @param y label
+     * Adds the training example.
+     * @param x the feature vector.
+     * @param y the label.
+     * @throws IllegalArgumentException if the feature vector is null.
      */
     public void addExample(FeatureVector<FS> x, int y);
 
     /**
-     * learn SVM Classifiers by using added examples.
-     * @param params paramters for learning. throw IllegalArgumentException if params is null.
-     * @return SVM classifiers
+     * learns SVM Classifiers
+     * @param params the set of parameters for learning.
+     * @return SVM classifiers.
+     * @throw IllegalArgumentException if the set of parameters is null.
      */
     public Classifier<? extends KernelFunction, FS> learn(Parameters params);
 
 
     /**
-     * get the size of set of labels for added examples.
-     * @return the size of set of labels
+     * Returns the number of different types of labels in the added examples.
+     * @return the number of different types of labels
      */
     public int getSizeOfSetOfLabels();
 
     /**
-     * get the default label for added examples. the default label is defined as follows:
-     * most frequent labels.
+     * Returns the default label. The default label is defined as follows:
+     * the most frequent labels.
      * if there are 2 more  most frequent labels, the default label is more earlier added label in the added examples.
      * @return default label. return null if no example has been added.
      */
@@ -42,7 +44,7 @@ public interface Learner<FS extends FeatureSpace>  {
 
 
     /**
-     * get the size of added examples.
+     * Returns the size of added examples.
      * @return the size of added examples.
      */
     public int getSizeOfExamples();
