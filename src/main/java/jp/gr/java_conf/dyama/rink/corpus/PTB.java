@@ -58,8 +58,8 @@ public interface PTB {
 
         static private final PhrasalCategory[] ARRAY = PhrasalCategory.values();
         /**
-         * Parses ID into  a none terminal tag.
-         * @param i none terminal ID
+         * Parses the integer into the none terminal tag.
+         * @param i the integer
          * @return None terminal tag. return UNDEFINED if i is undefined.
          */
         static public TagSet.NoneTerminal parseInt(int i){
@@ -71,7 +71,7 @@ public interface PTB {
         }
 
         /**
-         * Parses a string into none terminal tag.
+         * Parses the string into the none terminal tag.
          * @param string the string of the none terminal symbol.
          * @return None terminal tag. return UNDEFINED if the string is undefined or null.
          */
@@ -202,8 +202,8 @@ public interface PTB {
 
         static private final PTB.POS[] ARRAY = PTB.POS.values();
         /**
-         * Parse a ID into a POS tag
-         * @param i POS ID
+         * Parse the integer into the POS tag
+         * @param i the integer
          * @return POS tag. return UNDEFINED if i is undefined.
          */
         static public TagSet.PartOfSpeech parseInt(int i){
@@ -215,7 +215,7 @@ public interface PTB {
         }
 
         /**
-         * Parses a string into a POS tag
+         * Parses the string into the POS tag
          * @param string the string of the POS tag.
          * @return POS tag. return UNDEFINED if the string is undefined or null.
          */
