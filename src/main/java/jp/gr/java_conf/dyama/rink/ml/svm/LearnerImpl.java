@@ -33,10 +33,10 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
             out_.print(arg0);
         }
     }
-    /** feature vectors */
+    /** the list of feature vectors */
     private List<libsvm.svm_node[]> x_ ;
 
-    /** labels */
+    /** the list of labels */
     private List<Integer> y_ ;
 
     /**
@@ -48,10 +48,10 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
     }
 
     /**
-     * make libsvm's examples from added examples.
+     * Makes libsvm's examples from added examples.
      * @return libsvm's examples.
      * return null if the number of examples is less than 2;
-     * return null if the number of classes is less than 2
+     * return null if the number of different types of classes is less than 2
      */
     libsvm.svm_problem makeSvmProblem(){
         assert(x_.size() == y_.size());
@@ -76,13 +76,14 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
     }
 
     /**
-     * convert into libsvm parameters.
-     * @param params parameters for SVMs. throw IllegalArgumentException if params is null.
+     * Converts into libsvm parameters.
+     * @param params the set of parameters for SVMs.
      * @return libsvm's parameters
+     * @throw IllegalArgumentException if the set of parameters is null.
      */
     libsvm.svm_parameter convert(Parameters params){
         if (params == null)
-            throw new IllegalArgumentException("the parameters is null.");
+            throw new IllegalArgumentException("the set of parameters is null.");
 
         libsvm.svm_parameter params_ = new libsvm.svm_parameter();
         params_.cache_size = params.getCacheSize();
@@ -105,11 +106,12 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
     }
 
     /**
-     * training by using the libsvm solver.
-     * @param params parameters for training. throw IllegalArgumentException if params is null.
+     * Trains the SVM's model by the libsvm solver.
+     * @param params the set of parameters for training.
      * @return libsvm's model<br>
-     * throw IllegalStateException if the number of examples is less than 2.
-     * throw IllegalStateException if the number of classes is less than 2.
+     * @throws IllegalArgumentException if the set of parameters is null.
+     * @throws IllegalStateException if the number of examples is less than 2.
+     * @throws IllegalStateException if the number of classes is less than 2.
      */
     libsvm.svm_model train(Parameters params){
         libsvm.svm_parameter svm_params = convert(params);
@@ -193,7 +195,7 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
                 Parameters params) {
 
             if (params == null)
-                throw new IllegalArgumentException("the parameters is null.");
+                throw new IllegalArgumentException("the set of parameters is null.");
 
             if (getSizeOfSetOfLabels() < 2){
                 ClassifierImpl.Arguments args = ClassifierImpl.Arguments.createDummyArguments();
