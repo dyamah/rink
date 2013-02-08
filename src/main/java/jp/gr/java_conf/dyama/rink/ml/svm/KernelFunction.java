@@ -12,11 +12,11 @@ public interface KernelFunction extends Serializable{
     }
 
     /**
-     * get Kernel Value: K(x0, x1)
+     * Returns the kernel Value: K(x0, x1)
      * @param sql2norm0 the value of squared L2 norm of x0.
      * @param ip  the value of inner products between x0 and x1.
      * @param sql2norm1 the value of squared L2 norm of x1.
-     * @return kernel value
+     * @return the kernel value
      */
     public double getValue(double sql2norm0, double ip, double sql2norm1);
 
@@ -107,7 +107,7 @@ public interface KernelFunction extends Serializable{
 
         private static final long serialVersionUID = -2094063714235544409L;
 
-        /** paramter 'gammna' */
+        /** the parameter 'gamma' */
         private double gamma_ ;
 
         /**
