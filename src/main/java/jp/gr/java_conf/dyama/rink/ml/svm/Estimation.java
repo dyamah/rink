@@ -7,22 +7,22 @@ package jp.gr.java_conf.dyama.rink.ml.svm;
  */
 final class Estimation {
 
-    /** array for inner products (integer) */
+    /** the array for inner products (integer) */
     private int[] ips_int_;
 
-    /** array for inner products (double) */
+    /** the array for inner products (double) */
     private double[] ips_double_;
 
-    /** array for distances_ form hyperplanes */
+    /** the array for distances form hyperplanes */
     private double[] distances_;
 
-    /** pairwise score */
+    /** the score for pairwise classifications */
     private Score.PairwiseScore score_;
 
     /**
      * Constructor:
-     * @param classes the number of classes. it must be more than 0.
-     * @param svs the number of support vectors. it must be 0 and over.
+     * @param classes the number of classes. The number of classes must be more than 0.
+     * @param svs the number of support vectors. The number of support vectors must be 0 and over.
      */
     Estimation(int classes, int svs) {
         assert(classes > 0);
@@ -34,9 +34,9 @@ final class Estimation {
     }
 
     /**
-     * setup
-     * @param classes the number of classes. it must be more than 0.
-     * @param svs svs the number of support vectors. it must be 0 and over.
+     * Setup
+     * @param classes the number of classes. The number of classes must be more than 0.
+     * @param svs svs the number of support vectors. The number of support vectors must be 0 and over.
      */
     void setup(int classes, int svs){
         assert(classes > 0);
@@ -69,23 +69,23 @@ final class Estimation {
     }
 
     /**
-     * get the array (int) for inner products.
-     * @return array (int)
+     * Returns the integer array for inner products.
+     * @return the array
      */
     int[] getIntArrayForInnerProducts() {
         return ips_int_;
     }
 
     /**
-     * get the array (double) for inner products.
-     * @return array (double)
+     * Returns the double array for inner products.
+     * @return the array
      */
     double[] getDoubleArrayForInnerProducts() {
         return ips_double_;
     }
 
     /**
-     * get the array for distances from hyperplanes.
+     * Returns the array for distances from hyperplanes.
      * @return array
      */
     double[] getDistances() {
