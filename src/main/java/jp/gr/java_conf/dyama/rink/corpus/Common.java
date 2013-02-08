@@ -25,8 +25,8 @@ public interface Common {
         static private Common.POS[] ARRAY = Common.POS.values();
 
         /**
-         * parse integer as a POS tag
-         * @param i POS ID
+         * Parses a ID into a POS tag
+         * @param i ID
          * @return POS tag. return UNDEFINED if i is undefined.
          */
         public static TagSet.PartOfSpeech parseInt(int i){
@@ -38,15 +38,15 @@ public interface Common {
         }
 
         /**
-         * parse string as a POS tag
-         * @param str POS tag string.
-         * @return POS tag. return UNDEFINED if str is undefined or null.
+         * Parses a string into a POS tag.
+         * @param string the POS tag string.
+         * @return POS tag. return UNDEFINED if the string is undefined or null.
          */
-        public static TagSet.PartOfSpeech parseString(String str){
-            if (str == null)
+        public static TagSet.PartOfSpeech parseString(String string){
+            if (string == null)
                 return UNDEFINED;
             for(POS pos : ARRAY){
-                if (pos.toString().equals(str))
+                if (pos.toString().equals(string))
                     return pos;
             }
             return UNDEFINED;
