@@ -11,7 +11,7 @@ import java.io.PrintStream;
 public interface SampleWriter {
 
     /**
-     * write one sample to the print stream.
+     * Writes one sample to the print stream.
      * @param sample the sample.
      * @param out the print stream. do nothing if the out is null.
      * @throws IOException if it failed to write.
