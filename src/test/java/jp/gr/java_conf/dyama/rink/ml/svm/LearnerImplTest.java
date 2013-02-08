@@ -95,7 +95,7 @@ public class LearnerImplTest {
             learner.convert(null);
             fail("");
         } catch (IllegalArgumentException e){
-            assertEquals("the parameters is null.", e.getMessage());
+            assertEquals("the set of parameters is null.", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             fail("");
@@ -122,7 +122,7 @@ public class LearnerImplTest {
             learner.train(null);
             fail("");
         } catch (IllegalArgumentException e){
-            assertEquals("the parameters is null.", e.getMessage());
+            assertEquals("the set of parameters is null.", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             fail("");
@@ -216,7 +216,7 @@ public class LearnerImplTest {
             learner.learn(null);
             fail("");
         } catch (IllegalArgumentException e){
-            assertEquals("the parameters is null.", e.getMessage());
+            assertEquals("the set of parameters is null.", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             fail("");
