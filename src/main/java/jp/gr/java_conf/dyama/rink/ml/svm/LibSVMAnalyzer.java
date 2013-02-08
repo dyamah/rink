@@ -22,10 +22,11 @@ enum LibSVMAnalyzer {
     INSTANCE;
 
     /**
-     * analyze a libsvm model, and covert into classifier arguments.
-     * @param model libsvm's model. throw IllegalArgumentException if model is invalid.
-     * throw IllegalArugmentException if the feature space is not binary.
+     * Analyzes the libsvm model, and covert the model into classifier arguments.
+     * @param model the libsvm's model.
      * @return classifier arguments
+     * @throws IllegalArugmentException if the feature space is not binary.
+     * @throws IllegalArgumentException if the libsvm's  model is invalid.
      */
     static ClassifierImpl.Arguments analyzeModel(libsvm.svm_model model){
         String errMsg = checkValidModel(model) ;
@@ -60,8 +61,8 @@ enum LibSVMAnalyzer {
     }
 
     /**
-     * make lisbsvm's default parameters
-     * @return libsvm's default parameters.
+     * Makes the lisbsvm's default parameters
+     * @return the libsvm's default parameters.
      */
     static libsvm.svm_parameter makeDefaultParameters(){
         libsvm.svm_parameter params = new libsvm.svm_parameter();
@@ -84,10 +85,10 @@ enum LibSVMAnalyzer {
     }
 
     /**
-     * check whether the mode is valid or not.
-     * @param model libsvm's model
-     * @return null if the model is valid, otherwise return error messages.
-     * the conditions of invalid model are follows:<br>
+     * Checks whether the mode is valid or not.
+     * @param model the libsvm's model
+     * @return null if the model is valid, otherwise return the error messages.
+     * the conditions of invalid model are:<br>
      * model is null. <br>
      * model.params is null. <br>
      * model.params.svm_type is not C_SVC.<br>
@@ -154,9 +155,10 @@ enum LibSVMAnalyzer {
         return null ;
     }
     /**
-     * analyze the type of kernel functions of libsvm's model
-     * @param moodel libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
-     * @return type of kernel functions. return null if the kernel function is unknown.
+     * Analyzes the type of kernel functions of the libsvm's model
+     * @param moodel the libsvm's model.
+     * @return the type of kernel functions. return null if the kernel function is unknown.
+     * @throws IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
      */
     static KernelType analyzeKernelType(libsvm.svm_model model){
         String errMsg = checkValidModel(model);
@@ -177,9 +179,10 @@ enum LibSVMAnalyzer {
     }
 
     /**
-     * analyze feature space : binary or not.
-     * @param model libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
+     * Analyzes the feature space : binary or not.
+     * @param model the libsvm's model.
      * @return true if the feature space is binary, otherwise false.
+     * @throws IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
      */
     static boolean analyzeFeatureSpace(libsvm.svm_model model){
         String errMsg = checkValidModel(model);
@@ -197,9 +200,10 @@ enum LibSVMAnalyzer {
     }
 
     /**
-     * analyze libsvm parameters.
-     *  @param model libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
+     * Analyzes the libsvm parameters.
+     * @param model the libsvm's model.
      * @return Parameters
+     * @throws IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
      */
     static Parameters analyzeParameters(libsvm.svm_model model){
         String errMsg = checkValidModel(model);
@@ -218,9 +222,10 @@ enum LibSVMAnalyzer {
     }
 
     /**
-     * analyze label information
-     * @param model libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
+     * Analyzes the label's information
+     * @param model the libsvm's model.
      * @return array of labels
+     * @throws IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
      */
     static int[] analyzeLabelInfo(libsvm.svm_model model){
         String errMsg = checkValidModel(model);
@@ -253,9 +258,9 @@ enum LibSVMAnalyzer {
     }
 
     /**
-     * analyze frequency of SV features.
-     * @param model libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
-     * @return map feature ID to it's frequency.
+     * Analyzes the frequency of SV features.
+     * @param model the libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
+     * @return the map that converts the feature ID to it's frequency.
      */
     static Map<Integer, Integer> analyzeFeatureFrequency(libsvm.svm_model model){
         String errMsg = checkValidModel(model);
@@ -336,9 +341,11 @@ enum LibSVMAnalyzer {
         return svcoefs ;
     }
     /**
-     * analyze support vectors in none linear kernel functions.
-     * @param model libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
-     * @param args  model arguments. throw IllegalArgumentException if args is null ;
+     * Analyzes the support vectors in none linear kernel functions.
+     * @param model the libsvm's model.
+     * @param args  the model's arguments.
+     * @throws IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
+     * @throw IllegalArgumentException if the model's arguments is null ;
      */
     static void analyzeNoneLinearSupportVectors(libsvm.svm_model model, ClassifierImpl.Arguments args) {
         if (args == null)
@@ -413,9 +420,11 @@ enum LibSVMAnalyzer {
         }
     }
     /**
-     * analyze support vectors in linear kernel functions.
-     * @param model libsvm's model. throw IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
-     * @param args  model arguments. throw IllegalArgumentException if args is null ;
+     * Analyzes support vectors in linear kernel functions.
+     * @param model the libsvm's model.
+     * @param args  the model's arguments.
+     * @throws IllegalArgumentException if {@link #checkValidModel(libsvm.svm_model)} is not null.
+     * @throws IllegalArgumentException if the model's arguments is null ;
      */
     static void analyzeLinearSupportVectors(libsvm.svm_model model, ClassifierImpl.Arguments args) {
         if (args == null)
