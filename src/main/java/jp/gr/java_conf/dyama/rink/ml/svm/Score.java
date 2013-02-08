@@ -3,7 +3,7 @@ package jp.gr.java_conf.dyama.rink.ml.svm;
 interface Score {
 
     /**
-     * get the best label ( = high scored label). if there are tie scored labels, the smallest labelID (= label's ID itself)  is the best one.
+     * Returns the best label ( = high scored label). if there are tie scored labels, the smallest labelID (= label's ID itself)  is the best one.
      * throw IllegalStateException if the no judge has been added.
      * @return best labelID
      */
@@ -15,17 +15,19 @@ interface Score {
     void clear();
 
     /**
-     * get the number of labels.
+     * Returns the number of labels.
      * @return the number of labels
      */
     int getNumberOfLabels();
 
 
     /**
-     * add a judge of a classifier
-     * @param pos the label ID of positive label. throw IllegalArgumentException if pos is negative number.
-     * @param neg the label ID of negative label. throw IllegalArgumentException if neg is pos and fewer.
-     * @param dist a distance of  a classifier
+     * Adds the judge of classifiers
+     * @param pos the label ID of the positive label.
+     * @param neg the label ID of the negative label.
+     * @param dist the distance of classifiers
+     * @throws IllegalArgumentException if pos is negative number.
+     * @throws IllegalArgumentException if neg is pos and fewer.
      */
     void addJudge(int pos, int neg, double dist);
 
