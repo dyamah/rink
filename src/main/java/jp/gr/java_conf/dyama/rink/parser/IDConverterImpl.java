@@ -28,10 +28,10 @@ public interface IDConverterImpl {
             map_ = converter.map_;
         }
         /**
-         * convert a string into unique ID
-         * @param string source string
-         * @return unique ID. The ID is greater than 10 if string has already been defined as word, otherwise 0.
-         * return 0 if string is null.
+         * Converts the string into the unique ID
+         * @param string the source string
+         * @return the unique ID. The ID is greater than 10 if the string has already been defined as word, otherwise 0.
+         * Note that return 0 if string is null.
          */
         @Override
         public int convert(String string) {
@@ -77,7 +77,7 @@ public interface IDConverterImpl {
 
         private static final long serialVersionUID = -7633434536883311768L;
 
-        /** string to ID map */
+        /** the map that the string to ID */
         private Map<String, Integer> map_ ;
 
         /**
@@ -88,8 +88,8 @@ public interface IDConverterImpl {
         }
 
         /**
-         * change to the immutable converter
-         * @return immutable converter
+         * Changes this instance to the immutable converter
+         * @return a new immutable converter
          * Note that this instance is initialized to the default after this method is called.
          */
         public ImmutableIDConverter toImmutable(){
@@ -100,9 +100,9 @@ public interface IDConverterImpl {
 
 
         /**
-         * convert a string into unique ID.
-         * @param string source string.
-         * @return unique ID. The id must be greater than 0 except for null.
+         * Converts the string into the unique ID.
+         * @param string the source string.
+         * @return the unique ID. The id must be greater than 0 except for null.
          * return 0 if string is null.
          */
         @Override
@@ -118,7 +118,7 @@ public interface IDConverterImpl {
         }
 
         /**
-         * get the number of converted strings
+         * Returns the number of converted strings
          * @return the number of converted strings
          */
         public int size(){
@@ -147,7 +147,5 @@ public interface IDConverterImpl {
                 }
             }
         }
-
     }
-
 }
