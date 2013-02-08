@@ -8,7 +8,7 @@ import jp.gr.java_conf.dyama.rink.ml.FeatureVector;
 
 
 /**
- * Binary Feature Vector for efficiency
+ * Binary Feature Vector
  * @author Hiroyasu Yamada
  *
  */
@@ -16,13 +16,13 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
 
 
     /**
-     * Feature ID buffer
+     * Buffer for Feature IDs.
      * @author Hiroyasu Yamada
      *
      */
     static public class Buffer {
 
-        /** buffer */
+        /** the internal buffer */
         private Set<Integer> buffer_ ;
 
         /**
@@ -33,8 +33,9 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
         }
 
         /**
-         * add feature ID
-         * @param id feature ID. throw IllegalArgumentException if id is negative.
+         * Adds the feature ID
+         * @param id the feature ID.
+         * @throws IllegalArgumentException if the id is negative.
          */
         public void add(int id){
             if (id < 0)
@@ -44,15 +45,15 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
         }
 
         /**
-         * get the size of feature IDs ( = the number of features).
-         * @return size of feature IDs
+         * Returns the number of features.
+         * @return the number of features.
          */
         public int size() {
             return buffer_.size() ;
         }
 
         /**
-         * clear the buffer.
+         * clear this buffer.
          */
         public void clear(){
             buffer_.clear();
@@ -63,24 +64,24 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
         }
 
         /**
-         * get the inner set .
-         * @return Set
+         * Returns the internal set
+         * @return the internal set.
          */
         private Set<Integer> getSet(){
             return buffer_ ;
         }
     }
 
-    /** default capacity */
+    /** the default capacity */
     private static final int DEFAULT_CAPACITY = 100;
 
-    /** array for features */
+    /** the array for features */
     private int[] features_;
 
-    /** maximum size for features ( = features_.length) */
+    /** the maximum size for features ( = features_.length) */
     private int capacity_;
 
-    /** the size of available features */
+    /** the number of available features */
     private int size_;
 
     Estimation estimation_ ;
@@ -88,7 +89,7 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
     /**
      * Constructor
      * the capacity of the vector is set as DEFAULT_CAPACITY.
-     * the size is initialized as 0.
+     * the size is initialized to 0.
      */
     public BinaryFeatureVector(){
         features_ = new int[DEFAULT_CAPACITY];
@@ -99,8 +100,9 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
     }
 
     /**
-     * reset a new feature vector
-     * @param buffer buffer for features. throw IllegalArgumentException if buffer is null.
+     * Reset to a new feature vector
+     * @param buffer the buffer for new features.
+     * @throws IllegalArgumentException if the buffer is null.
      */
     public void reset(Buffer buffer) {
         if (capacity_ < buffer.size()){
@@ -117,25 +119,26 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
     }
 
     /**
-     * get the size of available features.
-     * @return the size of available features.
+     * Returns the number of available features.
+     * @return the number of available features.
      */
     public int size(){
         return size_;
     }
 
     /**
-     * get squared L2 norm.
-     * @return the value of squared L2 norm.
+     * Returns the value of the squared L2 norm.
+     * @return the value of the squared L2 norm.
      */
     public double getSquareOfL2Norm(){
         return size_ ;
     }
 
     /**
-     * get a available feature.
-     * @param i the index ( not Feature ID ). throw IllegalArgumentException if i is negative, or m{@link #size()} and over.
-     * @return feature corresponding to the index i
+     * Returns the feature.
+     * @param i the index ( not the feature ID ).
+     * @return feature corresponding to the index.
+     * @throws IllegalArgumentException if the index is negative, or {@link #size()} and over.
      */
     public Feature getFeature(int i){
         if (i < 0 || size_ <= i)
@@ -144,9 +147,10 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
     }
 
     /**
-     * get a available feature ID.
-     * @param i the index ( not Feature ID ). throw IllegalArgumentException if i is negative, or {@link #size()} and over.
+     * Returns the feature ID.
+     * @param i the index ( not the feature ID ).
      * @return feature ID corresponding to the index i
+     * @throws IllegalArgumentException if i is negative, or {@link #size()} and over.
      */
     public int getFeatureID(int i){
         if (i < 0 || size_ <= i)
@@ -155,8 +159,8 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
     }
 
     /**
-     * get the array of feature IDs. Note that the max index of available features is {@link size()} API, not equals to the length of this array.
-     * @return array of feature IDs
+     * Returns the array of feature IDs. Note that the max index of available features is {@link size()} API, not equals to the length of the array.
+     * @return the array of feature IDs
      */
     int[] getFeatureIDs(){
         return features_ ;
