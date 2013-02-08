@@ -12,7 +12,7 @@ public enum Builder {
     INATANCE;
 
     /**
-     * build a new SVM Learner (Binary Feature Space)
+     * Builds a new SVM Learner (Binary Feature Space)
      * @return a new SVM learner
      */
     public static Learner<FeatureSpace.Binary> buildLearner(){
