@@ -58,7 +58,7 @@ public interface PTB {
 
         static private final PhrasalCategory[] ARRAY = PhrasalCategory.values();
         /**
-         * parse integer as a none terminal tag.
+         * Parses ID into  a none terminal tag.
          * @param i none terminal ID
          * @return None terminal tag. return UNDEFINED if i is undefined.
          */
@@ -71,15 +71,15 @@ public interface PTB {
         }
 
         /**
-         * parse string as a none terminal tag.
-         * @param str none terminal ID
-         * @return None terminal tag. return UNDEFINED if str is undefined or null.
+         * Parses a string into none terminal tag.
+         * @param string the string of the none terminal symbol.
+         * @return None terminal tag. return UNDEFINED if the string is undefined or null.
          */
-        static public TagSet.NoneTerminal parseString(String str){
-            if (str == null)
+        static public TagSet.NoneTerminal parseString(String string){
+            if (string == null)
                 return UNDEFINED;
             for(PhrasalCategory pc : ARRAY){
-                if (pc.toString().equals(str))
+                if (pc.toString().equals(string))
                     return pc;
             }
             return UNDEFINED;
@@ -202,7 +202,7 @@ public interface PTB {
 
         static private final PTB.POS[] ARRAY = PTB.POS.values();
         /**
-         * parse integer as a POS tag
+         * Parse a ID into a POS tag
          * @param i POS ID
          * @return POS tag. return UNDEFINED if i is undefined.
          */
@@ -215,15 +215,15 @@ public interface PTB {
         }
 
         /**
-         * parse string as a POS tag
-         * @param str POS tag string.
-         * @return POS tag. return UNDEFINED if str is undefined or null.
+         * Parses a string into a POS tag
+         * @param string the string of the POS tag.
+         * @return POS tag. return UNDEFINED if the string is undefined or null.
          */
-        static public TagSet.PartOfSpeech parseString(String str){
-            if (str == null)
+        static public TagSet.PartOfSpeech parseString(String string){
+            if (string == null)
                 return Common.POS.UNDEFINED;
             for(PTB.POS pos : ARRAY){
-                if (pos.toString().equals(str))
+                if (pos.toString().equals(string))
                     return pos;
             }
             return Common.POS.UNDEFINED;
