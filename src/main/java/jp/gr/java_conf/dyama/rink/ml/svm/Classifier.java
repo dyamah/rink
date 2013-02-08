@@ -16,9 +16,9 @@ import jp.gr.java_conf.dyama.rink.ml.FeatureVector;
 public interface Classifier <K extends KernelFunction, FS extends FeatureSpace> extends Serializable {
 
     /**
-     * classify a feature vector.
+     * classify the feature vector.
      * @param x the feature vector.
-     * @return the best result of classification.
+     * @return the best result of the classification.
      * @throws IllegalArgumentException if the feature vector is null.
      */
     public int classify(FeatureVector<FS> x);
