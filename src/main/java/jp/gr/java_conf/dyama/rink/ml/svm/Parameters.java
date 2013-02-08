@@ -29,85 +29,86 @@ public interface Parameters extends Serializable {
     }
 
     /**
-     * set size of cache memory for learning.
+     * Sets the size of cache memory for learning.
      * @param size the size of cache memory [MB]. This value is at least 30.0 [MB] if the size is less than 30.0 [MB].
      */
     public void setCacheSize(double size);
 
     /**
-     * set the parameter 'degree' of polynomial kernel.
-     * @param degree the degree of polynomial kernel. throw IllegalArgumentException if the degree is less than 1.
+     * Sets the parameter 'degree' of polynomial kernel functions.
+     * @param degree the degree of polynomial kernel functions.
+     * @throws IllegalArgumentException if the degree is less than 1.
      */
     public void setDegree(int degree);
 
     /**
-     * set the parameter 'gamma' of kernel functions.
+     * Sets the parameter 'gamma' of kernel functions.
      * @param gamma the parameter gamma
      */
     public void setGamma(double gamma) ;
 
     /**
-     * set the parameter 'coef0' of kernel functions.
+     * Sets the parameter 'coef0' of kernel functions.
      * @param coef0
      */
     public void setCoef0(double coef0);
 
     /**
-     * set the parameter 'c' for soft margin.
+     * Sets the parameter 'c' for soft margin.
      * @param c
      */
     public void setC(double c);
 
     /**
-     * set the parameter 'Epsilon' for the threshold of convergence.
+     * Sets the parameter 'Epsilon' for the threshold of convergence.
      * @param e epsilon
      */
     public void setEpsilon(double e);
 
     /**
-     * set the type of kernel functions.
-     * @param type the type of kernel function: {LINEAR, POLYNOMIAL, RBF, SIGMOID} is available, otherwise throw IllegalArgumentException.
+     * Sets the type of kernel functions.
+     * @param type the type of kernel functions: {LINEAR, POLYNOMIAL, RBF, SIGMOID} is available, otherwise throw IllegalArgumentException.
      */
     public void setKernelType(KernelType type);
 
     /**
-     * get the size of cache memory [MB].
+     * Returns the size of cache memory [MB].
      * @return the size of cache memory.
      */
     public double getCacheSize();
 
     /**
-     * get the degree of polynomial kernel functions.
+     * Returns the degree of polynomial kernel functions.
      * @return the degree of polynomial kernel functions.
      */
     public int getDegree();
 
     /**
-     * get the parameter 'gamma' of kernel functions.
+     * Returns the parameter 'gamma' of kernel functions.
      * @return gamma
      */
     public double getGamma();
 
     /**
-     * get the parameter 'coef0' of kernel functions.
+     * Returns the parameter 'coef0' of kernel functions.
      * @return coef0
      */
     public double getCoef0();
 
     /**
-     * get the parameter 'C" for soft magin optimization.
+     * Returns the parameter 'C" for soft margin optimization.
      * @return C
      */
     public double getC();
 
     /**
-     * get the parameter 'Epsilon' for the threshold of convergence.
+     * Returns the parameter 'Epsilon' for the threshold of convergence.
      * @return Epsilon
      */
     public double getEpsilon();
 
     /**
-     * get the type of kernel functions.
+     * Returns the type of kernel functions.
      * @return the type of kernel functions.
      */
     public KernelType getKernelType();
@@ -157,9 +158,9 @@ public interface Parameters extends Serializable {
         }
 
         /**
-         * create a new instance that the parameters are same to the argument's ones.
-         * @param params source parameters.
-         * @return clone of the params. return null if the params is null.
+         * Creates a new instance that the parameters are same to the argument's ones.
+         * @param params the set of source parameters.
+         * @return the copied instance. return null if the set of parameters is null.
          */
         static ParametersImpl copy(Parameters params){
             if ( params == null)
