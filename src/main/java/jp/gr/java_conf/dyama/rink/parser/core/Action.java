@@ -8,7 +8,7 @@ package jp.gr.java_conf.dyama.rink.parser.core;
 public interface Action {
 
     /**
-     * Type of Action
+     * The type of Action
      */
     public static enum Type {
 
@@ -20,19 +20,19 @@ public interface Action {
 
         /**
          * The action that there is an dependency between the left and right target node,
-         * but the subtree of a child node has not been complete yet.
+         * but the subtree of the left/right target node has not been complete yet.
          * Move the current position to the right.
          */
         WAIT(2),
 
         /**
-         * The action for a dependency relation that the left node is the parent of the right node.
+         * The action for building the dependency relation that the left node is the parent of the right node.
          * Move the current position to the left after applying this action.
          */
         LEFT(3),
 
         /**
-         * The action for a dependency relation that the right node is the parent of the left node
+         * The action for building the dependency relation that the right node is the parent of the left node
          * stay current position after applying this action.
          */
         RIGHT(4);
@@ -43,8 +43,8 @@ public interface Action {
         }
 
         /**
-         * get the action ID
-         * @return action ID
+         * Returns the action's ID
+         * @return the action's ID
          */
         public int getID(){
             return id_ ;
@@ -52,9 +52,9 @@ public interface Action {
 
         private static final Type[] types_ = Type.values();
         /**
-         * parse integer into the type of actions.
-         * @param i integer
-         * @return type of actions. return null if i is undefined.
+         * Parses the integer into the type of actions.
+         * @param i the integer
+         * @return the type of actions. return null if i is undefined.
          */
         static Type parseInt(int i){
             for(int k = 0 ; k < types_.length ; k++ ){
@@ -66,28 +66,26 @@ public interface Action {
     }
 
     /**
-     * get the score
+     * Returns the score
      * @return score
      */
     public double getScore();
 
     /**
-     * get the node ID of the left target node.
-     * @return node ID
+     * Returns the node ID of the left target node.
+     * @return the node ID
      */
     public int getLeftTarget();
 
     /**
-     * get the node ID of the right target node.
-     * @return node ID
+     * Returns the node ID of the right target node.
+     * @return the node ID
      */
     public int getRightTarget();
 
     /**
-     * get the type of Actions
-     * @return type of Actions
+     * Returns the type of Actions
+     * @return the type of Actions
      */
     public Type getType();
-
-
 }
