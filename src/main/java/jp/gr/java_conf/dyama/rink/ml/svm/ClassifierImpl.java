@@ -28,29 +28,26 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
     private static final long serialVersionUID = 2917094435679636763L;
 
     /**
-     * A hyperplane
+     * the hyperplane
      */
     static final class HyperPlane {
-        /** positive label ID */
+        /** the positive label ID */
         private int positive_;
 
-        /** negative label ID */
+        /** the negative label ID */
         private int negative_;
 
-        /** bias value */
+        /** the bias value */
         private double bias_;
 
         /**
          * Constructor
          *
-         * @param pos
-         *            ID of the positive label. throw IllegalArgumentExcpetion
-         *            if pos is negative.
-         * @param neg
-         *            ID of the negative label. throw IllegalArgumentException
-         *            if neg is less than pos.
-         * @param bias
-         *            the value of bias
+         * @param pos the ID of the positive label.
+         * @param neg the ID of the negative label.
+         * @param bias the value of bias
+         * @throws IllegalArgumentExcpetion if pos is negative.
+         * @throws IllegalArgumentException if neg is less than pos.
          */
         HyperPlane(int pos, int neg, double bias) {
             if (pos < 0)
@@ -74,16 +71,17 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         static final class Real implements Feature {
 
             static class Value {
-                /** feature value */
+                /** the feature value */
                 private double value_;
 
-                /** support vector ID */
+                /** the support vector ID */
                 private int svid_;
 
                 /**
                  * Constructor
-                 * @param value feature value
-                 * @param svid  support vector ID. throw IllegalArgumentException if svid is negative.
+                 * @param value the feature value
+                 * @param svid  the support vector ID.
+                 * @throws IllegalArgumentException if svid is negative.
                  */
                 private Value(double value, int svid){
                     if (svid < 0)
@@ -93,7 +91,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 }
 
                 /**
-                 * get the feature value.
+                 * Returns the feature value.
                  * @return feature value
                  */
                 double getValue(){
@@ -101,7 +99,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 }
 
                 /**
-                 * get the support vector ID.
+                 * Returns the support vector ID.
                  * @return support vector ID
                  */
                 int getSvID(){
@@ -112,10 +110,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
 
             static final int DEFAULT_VALUE_SIZE = 10;
 
-            /** feature id */
+            /** the feature ID */
             private int id_;
 
-            /** feature values for SVs */
+            /** the feature values for SVs */
             private Value[] values_;
 
             /** the size of feature values */
@@ -123,8 +121,9 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
 
             /**
              * Constructor
-             * @param id feature id. throw IllegalArgumentException if id is negative.
-             * @param capacity expected size of values. it's set to DEFAULT_VALUE_SIZE if capacity is negative.
+             * @param id the feature ID.
+             * @param capacity the expected size of capacity. it's set to DEFAULT_VALUE_SIZE if the size of the capacity is negative.
+             * @throws IllegalArgumentException if the feature ID is negative.
              */
             Real(int id, int capacity){
                 if ( id < 0 )
@@ -141,8 +140,9 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
 
             /**
              * add a feature value for SVs.
-             * @param value feature value.
-             * @param svid support vector ID. throw IlleaglArgumentException if svid is negative.
+             * @param value the feature value.
+             * @param svid the support vector ID.
+             * @throws IlleaglArgumentException if svid is negative.
              */
             void addValue(double value, int svid){
                 Value v = new Value(value, svid);
@@ -172,12 +172,9 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             /**
              * Constructor
              *
-             * @param id
-             *            feature ID. throw IllegalArgumentException if id is
-             *            negative.
-             * @param capacity
-             *            expected size of values. capacity is set to
-             *            {@link DEFAULT_VALUE_SIZE} if capacity is negative.
+             * @param id the feature ID.
+             * @param capacity the expected size of the capacity. the size of the capacity is set to{@link DEFAULT_VALUE_SIZE} if the capacity is negative.
+             * @throws IllegalArgumentException if the feature id is negative.
              */
             Binary(int id, int capacity) {
                 if (id < 0)
@@ -193,11 +190,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             }
 
             /**
-             * add a new Support Vector ID.
+             * Adds a new Support Vector ID.
              *
-             * @param svid
-             *            Support Vector ID. throw IllegalArgument Exception if
-             *            svid is negative.
+             * @param svid the support vector ID.
+             * @throw IllegalArgument Exception if the support vector ID is negative.
              */
             void addSvID(int svid) {
                 if (svid < 0)
@@ -223,18 +219,18 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 coef_ = coef ;
             }
         }
-        /** label ID */
+        /** the label ID */
         private int label_id_;
 
         private Coefficient[] coefs_ ;
         private int size_ ;
 
-        /** squared L2 norm */
+        /** the squared L2 norm */
         private double sq_l2norm_;
 
         /**
          * Constructor
-         * @param label_id   label ID. label_id must be positive or 0.
+         * @param label_id   label ID. label_id must be a positive number or 0.
          * @param sq_l2norm  the value of squared L2 norm. sq_l2norm must be positive.
          * @param num_labels the number of labels. num_labels must be more than 0.
          */
@@ -249,9 +245,9 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         }
 
         /**
-         * add a support vector coefficient of the hyperplane: label_id vs. k.
-         * @param k label ID . k must be positive or 0.
-         * @param coef coefficient
+         * Adds a new support vector coefficient of the hyperplane: label_id vs. k.
+         * @param k the label ID. k must be a positive number or 0.
+         * @param coef the coefficient
          */
         void addCoefficient(int k, double coef) {
             assert(k >= 0);
@@ -304,10 +300,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
 
     // ClassifierImpl //
 
-    /** labels for classifications */
+    /** the array of labels for classifications */
     private int[] labels_;
 
-    /** kernel function */
+    /** the kernel function */
     private K kernel_;
 
     /** the information about hyperplanes */
@@ -317,10 +313,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
     private SVCoefficient[] svcoefs_;
 
 
-    /** training parameters */
+    /** the set of training parameters */
     private Parameters params_;
 
-    /** features of support vectors */
+    /** the features of support vectors */
     private Feature[] features_;
 
     /**
@@ -429,12 +425,11 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
     }
 
     /**
-     * get the label corresponding a label ID
+     * Returns the label corresponding to the label ID
      *
-     * @param labelID
-     *            labelID. throw IllegalArgumentException if labelID is
-     *            negative, or greater than {@link #getNumberOfLabels()}-1.
-     * @return label
+     * @param labelID  the label ID.
+     * @return the label ID.
+     * @throws IllegalArgumentException if the label ID is negative, or greater than {@link #getNumberOfLabels()}-1.
      */
     final int getLabel(int labelID) {
         if (labelID < 0)
@@ -447,8 +442,7 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
     }
 
     /**
-     * get the number of labels for classifications
-     *
+     * Returns the number of labels for classifications
      * @return the number of labels
      */
     final int getNumberOfLabels() {
@@ -457,21 +451,18 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
 
     /**
      * A Linear Classifier Implementation for Binary Feature Space.
-     *
      */
     static class LinearBinary extends ClassifierImpl<KernelFunction.Linear, FeatureSpace.Binary> {
 
         private static final long serialVersionUID = 496882953148504188L;
 
-        /** features for support vectors */
+        /** the features for support vectors */
         private Feature.Real[] features_;
 
         /**
          * Constructor
          *
-         * @param args
-         *            classifier arguments. see {@link
-         *            ClassifierImpl(Arguments)}.
+         * @param args the classifier arguments. see {@link ClassifierImpl(Arguments)}.
          */
         LinearBinary(Arguments args) {
             super(args);
@@ -517,12 +508,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         }
 
         /**
-         * calculate inner products between a feature vector and each SV
+         * Calculates the inner products between the feature vector and each SV
          *
-         * @param x
-         *            feature vector.
-         * @param estimation
-         *            results for estimation
+         * @param x the feature vector.
+         * @param estimation the results for this estimation.
          */
         private void ips(BinaryFeatureVector x, Estimation estimation) {
             int i = 0;
@@ -556,12 +545,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         }
 
         /**
-         * calculate kernel values between a feature vector and each SV
+         * Calculates the kernel values between the feature vector and each SV
          *
-         * @param x
-         *            feature vector
-         * @param estimation
-         *            results
+         * @param x the feature vector
+         * @param estimation the results for this estimation.
          */
         private void kernel_values(BinaryFeatureVector x, Estimation estimation) {
             double[] dist = estimation.getDistances();
@@ -577,10 +564,9 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         }
 
         /**
-         * calculate pairwise predictions for all hyperplanes.
+         * Calculates pairwise predictions for all hyperplanes.
          *
-         * @param estimation
-         *            results
+         * @param estimation the results for this estimation.
          */
         private void predict_values(Estimation estimation) {
             Score.PairwiseScore score = estimation.getScore();
@@ -618,23 +604,19 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
     }
 
     /**
-     * A SVM Classifier Implementation for None Linear Kernel Functions in
-     * Binary Feature Space
-     *
+     * SVM Implementation for None Linear Kernel Functions in Binary Feature Space
      */
     static class NoneLinearBinary extends ClassifierImpl<KernelFunction.NoneLinear, FeatureSpace.Binary> {
 
         private static final long serialVersionUID = 5739868221057807257L;
 
-        /** features of SVs */
+        /** the features of SVs */
         private Feature.Binary[] features_;
 
         /**
          * Constructor
          *
-         * @param args
-         *            classifier arguments. see {@link
-         *            ClassifierImpl(Arguments)}.
+         * @param args the classifier arguments. see {@link ClassifierImpl(Arguments)}.
          */
         NoneLinearBinary(Arguments args) {
             super(args);
@@ -678,12 +660,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             }
         }
         /**
-         * calculate inner products between a feature vector and each SV
+         * Calculates the inner products between the feature vector and each SV
          *
-         * @param x
-         *            feature vector.
-         * @param estimation
-         *            results for estimation
+         * @param x the feature vector.
+         * @param estimation the results for this estimation.
          */
         private void ips(BinaryFeatureVector x, Estimation estimation) {
             int i = 0;
@@ -714,12 +694,10 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         }
 
         /**
-         * calculate kernel values between a feature vector and each SV
+         * Calculates the kernel values between the feature vector and each SV.
          *
-         * @param x
-         *            feature vector
-         * @param estimation
-         *            results
+         * @param x the feature vector.
+         * @param estimation the results for this estimation.
          */
         private void kernel_values(BinaryFeatureVector x, Estimation estimation) {
             double[] dist = estimation.getDistances();
@@ -735,10 +713,9 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         }
 
         /**
-         * calculate pairwise predictions for all hyperplanes.
+         * Calculates the pairwise predictions for all hyperplanes.
          *
-         * @param estimation
-         *            results
+         * @param estimation the results for this estimation.
          */
         private void predict_values(Estimation estimation) {
             Score.PairwiseScore score = estimation.getScore();
