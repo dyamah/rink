@@ -5,47 +5,47 @@ import jp.gr.java_conf.dyama.rink.corpus.TagSet;
 public interface Word extends Range {
 
     /**
-     * get the beginning position of the word.
-     * @return  beginning position of the word
+     * Returns the beginning position of the word.
+     * @return the beginning position of the word
      */
     @Override
     public int getBegin();
 
     /**
-     * get the end position of the word.
-     * @return the end position of the word
+     * Returns the ending position of the word.
+     * @return the ending position of the word
      */
     @Override
     public int getEnd();
 
     /**
-     * get the length of the word ( = the number of characters )
-     * @return length of the word
+     * Returns the length of the word ( = the number of characters )
+     * @return the length of the word
      */
     public int length();
 
     /**
-     * get the word ID.
-     * @return word ID
+     * Returns the word's ID.
+     * @return word's ID
      */
     public int getID();
 
 
     /**
-     * get the surface string of the word
-     * @return surface string
+     * Returns the surface string of the word
+     * @return the surface string of the word.
      */
     public String getSurface();
 
     /**
-     * get the base form string of the word
+     * Returns the base form of the word
      * @return base form string
      */
     public String getBaseForm();
 
     /**
-     * get the part-of-speech
-     * @return part-of-speech
+     * Returns the part-of-speech tag
+     * @return the part-of-speech tag.
      */
     public TagSet.PartOfSpeech getPOS();
 
