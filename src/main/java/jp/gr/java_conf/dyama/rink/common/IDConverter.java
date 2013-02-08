@@ -17,7 +17,7 @@ public interface IDConverter {
     static final int START                 = 10;
 
     /**
-     * Converts a string into positive unique ID
+     * Converts the string into the positive unique ID
      * @param string  the target string.
      * @return ID. return 0 if string is null.
      */
