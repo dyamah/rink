@@ -20,19 +20,20 @@ public interface FeatureVector<T extends FeatureSpace> {
      */
     public static final class Feature {
 
-        /** Feature ID for unknown features */
+        /** the feature ID for unknown features */
         public static final int UNKNOWN_ID = -1 ;
 
-        /** Feature ID */
+        /** the feature ID */
         private int id_;
 
-        /** Feature value */
+        /** the feature value */
         private double value_;
 
         /**
          * Constructor:
-         * @param id Feature ID. throw IllegalArgumentException if id is negative.
-         * @param value Feature Value
+         * @param id the feature ID.
+         * @param value the feature Value
+         * @throws IllegalArgumentException if the feature ID is negative.
          */
         public Feature(int id, double value){
             if (id < 0)
@@ -43,25 +44,26 @@ public interface FeatureVector<T extends FeatureSpace> {
         }
 
         /**
-         * get Feature ID
-         * @return Feature ID
+         * Returns the feature ID
+         * @return the feature ID
          */
         public final int getID(){
             return id_ ;
         }
 
         /**
-         * get Feature Value.
-         * @return Feature Value.
+         * Returns the feature Value.
+         * @return the feature Value.
          */
         public final double getValue(){
             return value_;
         }
 
         /**
-         * set Feature ID and Feature Value.
-         * @param id Feature ID. throw IllegalArgumentException if id is negative.
-         * @param value Feature Value.
+         * Sets the feature ID and the feature Value.
+         * @param id the feature ID.
+         * @param value the feature Value.
+         * @throws IllegalArgumentException if the feature ID is negative.
          */
         final void set(int id, double value){
             if (id < 0)
@@ -100,12 +102,12 @@ public interface FeatureVector<T extends FeatureSpace> {
     public static class Impl implements FeatureVector<FeatureSpace.Real> {
 
         /**
-         * Feature Buffer for creating a {@link Impl} instance.
+         * Feature Buffer
          * @author Hiroyasu Yamada
          */
         public static class Buffer {
 
-            /** buffer */
+            /** the internal buffer */
             private Map<Integer, Double> buffer_;
 
             /**
@@ -118,8 +120,9 @@ public interface FeatureVector<T extends FeatureSpace> {
 
             /**
              * add a new Feature.
-             * @param id feature ID. throw IllegalArgumentException if the id is negative.
-             * @param value feature value.
+             * @param id the new feature ID.
+             * @param value the feature value.
+             * @throw IllegalArgumentException if the id is negative.
              * If the buffer has included the same ID, the value of the buffer is updated to sum of value and buffer's one.
              */
             public void add(int id, double value){
@@ -142,16 +145,16 @@ public interface FeatureVector<T extends FeatureSpace> {
             }
 
             /**
-             * get the size of buffered features
-             * @return the size of buffered features.
+             * Returns the size of this buffer.
+             * @return the size of this buffer.
              */
             public int size(){
                 return buffer_.size();
             }
 
             /**
-             * get the buffer.
-             * @return buffer.
+             * Returns the internal buffer.
+             * @return the internal buffer.
              */
             Map<Integer, Double> getBuffer(){
                 return buffer_;
@@ -159,18 +162,18 @@ public interface FeatureVector<T extends FeatureSpace> {
 
         }
 
-        /** array for features */
+        /** the array for features */
         private Feature[] features_;
 
         /** the size of available features */
         private int size_;
 
-        /** The square value of L2 norm */
+        /** the square value of L2 norm */
         private double sq_l2norm_ ;
 
         /**
          * Constructor
-         * the capacity of the vector is set as DEFAULT_CAPACITY.
+         * the capacity of the vector is set to DEFAULT_CAPACITY.
          * the size is initialized as 0.
          */
         public Impl(Buffer buffer){
@@ -195,7 +198,7 @@ public interface FeatureVector<T extends FeatureSpace> {
         }
 
         /**
-         * get the size of available features.
+         * Returns the size of available features.
          * @return the size of available features.
          */
         public int size(){
@@ -203,7 +206,7 @@ public interface FeatureVector<T extends FeatureSpace> {
         }
 
         /**
-         * get squared L2 norm.
+         * Returns the squared L2 norm.
          * @return the value of squared L2 norm.
          */
         public double getSquareOfL2Norm(){
@@ -211,9 +214,10 @@ public interface FeatureVector<T extends FeatureSpace> {
         }
 
         /**
-         * get a available feature.
-         * @param i the index ( not Feature ID ). throw IllegalArgumentException if i is negative or more and over {@link #size()}.
-         * @return
+         * Returns the available feature.
+         * @param i the index ( not Feature ID ).
+         * @return the feature corresponding to the index.
+         * @throws IllegalArgumentException if i is negative or more and over {@link #size()}.
          */
         public Feature getFeature(int i){
             if (i < 0 || size_ <= i)
