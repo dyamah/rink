@@ -13,7 +13,7 @@ public interface Action {
     public static enum Type {
 
         /**
-         * The action for the no dependency relation between left and right target node.
+         * The action for the no dependency relation between the left and right target node.
          * Move the current position to the right.
          */
         SHIFT(1),
