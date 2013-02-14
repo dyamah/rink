@@ -1,7 +1,7 @@
 
 概要
 
-  rink プロジェクトはIWPT2003で提案した英語の決定性上昇型依存構造解析({{{http://cl.aist-nara.ac.jp/papers/2003/hiroya-y/IWPT-2003.pdf} Yamada & Matsumoto IWPT03}})のJava実装です。
+  rink プロジェクトはIWPT2003で提案した英語の決定性上昇型依存構造解析({{Y & M IWPT03}})のJava実装です。
 
 動作環境
 
@@ -13,19 +13,19 @@
 
 入出力データ形式
 
-   解析対象文の入出力データは、{{{http://www.clips.ua.ac.be/conll2006/proceedings.html}CoNLL-X}} の{{{http://ilk.uvt.nl/conll/index.html#dataformat}書式}}と同じとします。
+   解析対象文の入出力データは、{{CoNLL-X}} の{{{http://ilk.uvt.nl/conll/index.html#dataformat}書式}}と同じとします。
 
 コーパスについて
 
   研究でよく利用する英語の依存構造解析済みコーパスは、Penn Treebank コーパスの句構造を依存構造に変換したものです。
   ここでは公開されているツールの情報を簡単にまとめておきます。
 
-  [[1]] Penn2Malt : {{http://w3.msi.vxu.se/~nivre/research/Penn2Malt.html}}
+  [[1]] {{Penn2Malt}}
 
         Nivre のJava実装です。現在開発はfixしており、過去の論文の結果を再現するためのツールという位置づけのようです。
         後継は下のpennconverterです。
 
-  [[2]] pennconverter : {{http://nlp.cs.lth.se/software/treebank_converter/}}
+  [[2]] {{pennconverter}}
 
         ここではPenn Treebank コーパスにDavid Vadasの{{{http://sydney.edu.au/engineering/it/~dvadas1/?Noun_Phrases} 名詞句タグ付けの修正パッチ}}
         をあてることを強く奨めています。
@@ -114,8 +114,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
 * データ
 
   Penn Treebank の標準データセット(訓練データ section 02 から 21、テストデータ section 23)を使用しました。
-  品詞タグ付けは先行研究でもよく利用されている {{{http://www.inf.ed.ac.uk/resources/nlp/local_doc/mxpost_doc.pdf} Adwait Ratnaparkhi EMNLP1996}}の実装{{{ftp://ftp.cis.upenn.edu/pub/adwait/jmx/} mxpost}}を利用。
-  品詞タグ付けのモデルはmxpostに添付されていた標準のモデルを使用しました。
+  品詞タグ付けは先行研究でもよく利用されている {{Ratnaparkhi EMNLP96}}の実装{{mxpost}}を利用。
+  品詞タグ付けのモデルは{{mxpost}}に添付されていた標準のモデルを使用しました。
 
 * 性能評価指標
 
@@ -149,15 +149,15 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
   ここでは以下３つのモデルについて記載します。
 
   [[1]] IWPT2003: IWPT2003 に記載した精度。当時の実装を完全にビルドできていないので学習ツール、測定環境等は他２つとは異なります。
-        また使用している品詞タグ付け器や精度評価ツールも若干異なっているので、あくまで参考情報という位置づけです。
+        また使用している品詞タグ付け器({{Nakagawa ACL02}}) や精度評価ツールも若干異なっているので、あくまで参考情報という位置づけです。
         (当時の測定環境は CPU: Pentium 4 3.0Ghz, OSはLinux)
 
-  [[2]] SVM: rink モジュールでIWPT2003最良モデルを再現したモデル。
+  [[2]] SVMs: rink モジュールでIWPT2003最良モデルを再現したモデル。
 
   [[3]] MIRA: rinkモジュールに試験実装したMIRAによるモデル(SVMの代わりにMIRAによって解析アクションを学習、分類したもの）。素性はSVMと同一で 解析アクションを少しだけ拡張しています。
 
 *-------------------+----------*-------*-------*
-                    | IWPT2003 | SVM   | MIRA
+                    | IWPT2003 | SVMs  | MIRA
 *-------------------+----------*-------*-------*
  POS Accuracy       | 0.971    | 0.968 | 0.968
 *-------------------+----------*-------*-------*
@@ -182,10 +182,48 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
   より高速にするにはLinear Kernelを使ったモデルが考えられますが、今回の最良素性では学習に３日以上かかること、また解析速度も２倍程度しか速くならないことが事前調査でわかっています。
 
   一方学習方法をMIRAに変えた場合、学習時間(SVMが約1日に対して数時間)、解析速度も高速化できますが、精度が落ちます。
-  ただし最近の先行研究{{{http://aclweb.org/anthology-new/P/P11/P11-2033.pdf} Zhang & Nivre ACL2011}}ではMIRAのような線形分類器とビームサーチを組み合わせて非常に高い精度(UAS で 0.926)に達しています。
+  ただし最近の先行研究{{Zhang & Nivre ACL11}}ではMIRAのような線形分類器とビームサーチを組み合わせて非常に高い精度(UAS で 0.926)に達しています。
   解析速度も 2GHz のCPUで 29 [sent./sec] 程度と記載されています。
 
 今後の予定
 
+  現在 0.1 alpha 版として必要最低限のテストは実施していますが、一部試験実装（変更の可能性が高い箇所）でテストが不十分な部分がまだあります。
+  また先行研究 Zhang & Nivre ACL2011 にあるように、ビームサーチを使うことで精度を上げることが可能なので、同様の機能をrinkモジュールにも取り込みたいと考えています。
+
+  2013/3末にリリース予定の version 1.0　では以下の機能変更を予定しています。
+
+    * SVM 学習機能の無効化（研究比較用のためモデルのロード、解析機能は可能のままにします。）
+
+    * MIRA による学習機能、解析機能の対応
+
+    * ビームサーチによる冗長解析機能
+
+  また品質向上のため可能な限り多くのテストを追加する予定です。
+
 謝辞
 
+  {{概要}}
+
+  rink プロジェクトは東京工業大学精密工学研究所で研究員として在職中に立ち上げたプロジェクトです。
+  短い間ではありましたが自由に研究開発を行うことができました。
+  このような環境を提供してくださり、また数々のアドバイスをくださった奥村先生、高村さん、笹野さん、そして研究室の皆さんに心より感謝いたします。
+
+  本当にありがとうございました。
+
+参考情報
+
+  * {Y & M IWPT03}: {{{http://cl.aist-nara.ac.jp/papers/2003/hiroya-y/IWPT-2003.pdf}Hiroyasu Yamada and Yuji Matsumoto, "Statistical Dependency Analysis with Support Vector Machines", IWPT2003}}
+
+  * {CoNLL-X}: {{{http://www.clips.ua.ac.be/conll2006/proceedings.html}The Tenth Conference on Natural Language Learning (CoNLL-X) 2006}}
+
+  * {Penn2Malt} : {{http://w3.msi.vxu.se/~nivre/research/Penn2Malt.html}}
+
+  * {pennconverter} : {{http://nlp.cs.lth.se/software/treebank_converter/}}
+
+  * {mxpost}:　{{ftp://ftp.cis.upenn.edu/pub/adwait/jmx/}}
+
+  * {Nakagawa ACL02} : {{{http://acl.ldc.upenn.edu/P/P02/P02-1063.pdf} Tetsuji Nakagawa and Taku Kudo and Yuji Matsumoto, "Revision Learning and its Application to Part-of-Speech Tagging", ACL2002}}
+
+  * {Ratnaparkhi EMNLP96}: {{{http://www.inf.ed.ac.uk/resources/nlp/local_doc/mxpost_doc.pdf}Adwait Ratnaparkhi, "A Maximum Entropy Model for Part-of-Speech Tagging", EMNLP1996}}
+
+  * {Zhang & Nivre ACL11}: {{{http://aclweb.org/anthology-new/P/P11/P11-2033.pdf} Yue Zhang and Joakim Nivre, "Transition-based Dependency Parsing with Rich Non-local Features", ACL2011 }}
