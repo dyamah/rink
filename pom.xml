@@ -7,11 +7,27 @@
   <packaging>jar</packaging>
 
   <name>rink</name>
-  <url>http://maven.apache.org</url>
+  <version>0.1-alpha</version>
+  <!-- <url>http://dyama.github.com/rink/</url>  -->
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <developers>
+	  <developer>
+	    <id>Yamada</id>
+	    <name>Hiroyasu</name>
+	    <email>dyama.h@gmail.com</email>
+	    <url>http://dyama.github.gom/</url>
+  	</developer>
+  </developers>
+
+  <licenses>
+    <license>
+    <name>BSD 3-Clause License</name>
+    </license>
+  </licenses>
 
   <repositories>
     <repository>
@@ -65,5 +81,4 @@
 		<version>1.2</version>
 	</dependency>
   </dependencies>
-  <version>0.1-alpha</version>
 </project>

@@ -1,15 +1,22 @@
-
 概要
 
   rink プロジェクトはIWPT2003で提案した英語の決定性上昇型依存構造解析({{Y & M IWPT03}})のJava実装です。
 
 動作環境
 
-  *JRE 1.6以降
+  * JRE 1.6以降
 
-  *libsvm.jar   (version 3.1) SVMライブラリ。SVMで学習をする場合に必要
+必要なモジュール
 
-  *commons-cli.jar  (version 1.2) コマンドライン解析ライブラリ
+  * rinkモジュール本体：${project.name}-${project.version}.jar　
+
+  動作には以下２つのモジュールが必要です。
+  詳細は{{{../site/dependencies.html}依存関係}}を参照してください。
+
+  *{{{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} LIBSVM}}:  SVMライブラリ。SVMで学習をする場合に必要
+
+  *{{{http://commons.apache.org/cli/} commons-cli}}:  コマンドライン解析ライブラリ
+
 
 入出力データ形式
 
@@ -202,15 +209,13 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
 
 謝辞
 
-  {{概要}}
-
   rink プロジェクトは東京工業大学精密工学研究所で研究員として在職中に立ち上げたプロジェクトです。
   短い間ではありましたが自由に研究開発を行うことができました。
   このような環境を提供してくださり、また数々のアドバイスをくださった奥村先生、高村さん、笹野さん、そして研究室の皆さんに心より感謝いたします。
 
   本当にありがとうございました。
 
-参考情報
+参考文献、リンク
 
   * {Y & M IWPT03}: {{{http://cl.aist-nara.ac.jp/papers/2003/hiroya-y/IWPT-2003.pdf}Hiroyasu Yamada and Yuji Matsumoto, "Statistical Dependency Analysis with Support Vector Machines", IWPT2003}}
 
