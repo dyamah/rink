@@ -1,13 +1,23 @@
-ライセンスについて
 
-  rink モジュールのライセンスは修正BSDライセンスとします。
-  詳細は同封のLICENSE.txtをご参照ください。
+  Copyright (c) ${project.inceptionYear}-2013, Hiroyasu Yamada
+  All rights reserved.
 
-  ただし、研究比較用に学習した以下の２つはモデルファイルについては、利用に注意事項及び制限があります。
+  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-  [[1]] {{{../site/models/rink.IWPT2003.svm}rink.IWPT2003.svm}} (IWPT2003の最良モデルの再現モデル）
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 
-  [[2]] {{{../site/models/rink.IWPT2003.mira}rink.IWPT2003.mira}} (IWPT2003の最良結果と同一素性を利用。1.より精度は落ちるが解析速度を高速化したモデル）
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 
-  上記2つのモデルの利用には、{{{http://www.ldc.upenn.edu} LDC}} が販売する {{{http://www.ldc.upenn.edu/Catalog/catalogEntry.jsp?catalogId=LDC99T42} Penn Treebank}} コーパスのライセンスを保持している必要があります。
-  またPenn Treebankコーパスのライセンスを保持している場合でも、研究目的以外で利用することはできません。ご利用には十分ご注意ください。
+    * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
