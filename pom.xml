@@ -9,7 +9,7 @@
   <name>rink</name>
   <version>0.1-alpha</version>
   <description>Java Implementation for parsing word-word dependency relations.</description>
-  <url>http://dyama.github.com/rink/</url>
+  <url>http://dyamah.github.com/rink/</url>
 
 
   <properties>
@@ -21,7 +21,7 @@
 	    <id>Yamada</id>
 	    <name>Hiroyasu</name>
 	    <email>dyama.h@gmail.com</email>
-	    <url>http://dyama.github.gom/</url>
+	    <url>http://dyamah.github.gom/</url>
   	</developer>
   </developers>
 
