@@ -65,5 +65,5 @@
 		<version>1.2</version>
 	</dependency>
   </dependencies>
-  <version>0.1-beta</version>
+  <version>0.1-alpha</version>
 </project>
