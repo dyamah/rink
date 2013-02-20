@@ -7,7 +7,7 @@
   <packaging>jar</packaging>
 
   <name>rink</name>
-  <version>0.1-alpha</version>
+  <version>0.1-beta</version>
   <description>Java Implementation for parsing word-word dependency relations.</description>
   <url>http://dyamah.github.com/rink/</url>
 
@@ -53,6 +53,15 @@
   </pluginRepositories>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.13</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -71,8 +80,69 @@
           </dependency>
           </dependencies>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <configuration>
+          <instrumentation>
+            <ignores>
+              <ignore>jp.gr.java_conf.dyama.rink.tools.*</ignore>
+              <ignore>jp.gr.java_conf.dyama.rink.utils.*</ignore>
+            </ignores>
+            <excludes>
+              <exclude>jp/gr/java_conf/dyama/rink/tools/**/*.class</exclude>
+              <exclude>jp/gr/java_conf/dyama/rink/tools/**/*Test.class</exclude>
+              <exclude>jp/gr/java_conf/dyama/rink/utils/**/*.class</exclude>
+              <exclude>jp/gr/java_conf/dyama/rink/utils/**/*Test.class</exclude>
+            </excludes>
+          </instrumentation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
    </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <additionalJOption>-J-Dfile.encoding=UTF-8</additionalJOption>
+          <sourcePathInclude>src/main/java/**/*.java</sourcePathInclude>
+          <locale>en_US</locale>
+          <show>public</show>
+          <nohelp>true</nohelp>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <id>default</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.13</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <dependencies>
     <dependency>
