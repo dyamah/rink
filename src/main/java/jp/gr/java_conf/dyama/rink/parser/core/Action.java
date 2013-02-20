@@ -51,6 +51,7 @@ public interface Action {
         }
 
         private static final Type[] types_ = Type.values();
+
         /**
          * Parses the integer into the type of actions.
          * @param i the integer

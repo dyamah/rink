@@ -9,7 +9,7 @@ public interface ActionEstimator extends Serializable {
      * Estimates the best parsing action at the current position in the target sample.
      * @param sample the target sample.
      * @return action the best parsing action.
-     * @throw IllegalArgumentException if the sample is null.
+     * @throws IllegalArgumentException if the sample is null.
      */
     public Action estimate(SampleImpl sample);
 

@@ -9,8 +9,6 @@ import jp.gr.java_conf.dyama.rink.parser.Word;
 /**
  * Word class for Dependency Parsers
  * @author Hiroyasu Yamada
- *
- * @param <POS> part of speech tag
  */
 public class WordImpl implements Word {
 

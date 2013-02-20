@@ -10,8 +10,8 @@ final class ActionImpl implements Action {
 
     /**
      * Constructor
-     * @param type type of actions.
-     * @throws IllegalArgumentException if action is null.
+     * @param type the type of actions.
+     * @throws IllegalArgumentException if the type of actions is null.
      */
     ActionImpl(Type type){
         if ( type == null)
@@ -28,7 +28,7 @@ final class ActionImpl implements Action {
     }
 
     /**
-     * set score
+     * Sets score
      * @param score score.
      */
     void setScore(double score){
@@ -45,19 +45,21 @@ final class ActionImpl implements Action {
     }
 
     /**
-     * set target node's ID
-     * @param left left target's ID. throw IllegalArgumentException if left is negative.
-     * @param right right target's ID. throw IllegalArgumentException if left is not less than right.
+     * Sets the target node's ID.
+     * @param leftID the left target's ID.
+     * @param rightID right target's ID.
+     * @throws IllegalArgumentException if the leftID is negative.
+     * @throws IllegalArgumentException if the leftID is not less than the rightID.
      */
-    void setTarget(int left, int right){
-        if (left < 0 )
+    void setTarget(int leftID, int rightID){
+        if (leftID < 0 )
             throw new IllegalArgumentException("the left ID is negative.");
 
-        if (left >= right)
+        if (leftID >= rightID)
             throw new IllegalArgumentException("the left ID is not less than the right ID.");
 
-        left_ = left;
-        right_ = right;
+        left_ = leftID;
+        right_ = rightID;
     }
 
     @Override

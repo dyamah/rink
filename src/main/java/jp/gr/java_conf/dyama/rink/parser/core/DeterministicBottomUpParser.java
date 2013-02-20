@@ -75,7 +75,7 @@ public class DeterministicBottomUpParser extends DependencyParser {
      * Loads the parser from a file.
      * @param path the file path.
      * @return dependency parser.
-     * @throw IllegalArgumentException if the file path is null.
+     * @throws IllegalArgumentException if the file path is null.
      * @throws FileNotFoundException
      * @throws IOException
      * @throws ClassNotFoundException

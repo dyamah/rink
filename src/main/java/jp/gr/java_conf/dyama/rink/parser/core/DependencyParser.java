@@ -85,8 +85,7 @@ public abstract class DependencyParser implements Parser {
         /**
          * Builds the MIRA dependency learner.
          * @param parsers the list of parsers.
-         * @return dependency learner.
-         * @throws IllegalArgumentException if the list of parsers is nulll.
+         * @throws IllegalArgumentException if the list of parsers is null.
          */
         static public void buildMIRADependencyLearner(List<DependencyParser> parsers){
             if (parsers == null)

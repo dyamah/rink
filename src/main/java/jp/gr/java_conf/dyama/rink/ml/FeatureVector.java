@@ -90,7 +90,7 @@ public interface FeatureVector<T extends FeatureSpace> {
 
     /**
      * get a feature.
-     * @param i index. throw IllegalArgumentException if i is negative, or {@link size()} and over.
+     * @param i index. throw IllegalArgumentException if i is negative, or {@link #size()} and over.
      * @return feature
      */
     public Feature getFeature(int i) ;
@@ -122,7 +122,7 @@ public interface FeatureVector<T extends FeatureSpace> {
              * add a new Feature.
              * @param id the new feature ID.
              * @param value the feature value.
-             * @throw IllegalArgumentException if the id is negative.
+             * @throws IllegalArgumentException if the id is negative.
              * If the buffer has included the same ID, the value of the buffer is updated to sum of value and buffer's one.
              */
             public void add(int id, double value){

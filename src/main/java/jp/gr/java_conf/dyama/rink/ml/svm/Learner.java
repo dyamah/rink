@@ -23,7 +23,7 @@ public interface Learner<FS extends FeatureSpace>  {
      * learns SVM Classifiers
      * @param params the set of parameters for learning.
      * @return SVM classifiers.
-     * @throw IllegalArgumentException if the set of parameters is null.
+     * @throws IllegalArgumentException if the set of parameters is null.
      */
     public Classifier<? extends KernelFunction, FS> learn(Parameters params);
 
