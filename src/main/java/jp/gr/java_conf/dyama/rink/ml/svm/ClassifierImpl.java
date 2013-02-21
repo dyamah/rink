@@ -41,8 +41,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         private double bias_;
 
         /**
-         * Constructor
-         *
          * @param pos the ID of the positive label.
          * @param neg the ID of the negative label.
          * @param bias the value of bias
@@ -78,7 +76,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
                 private int svid_;
 
                 /**
-                 * Constructor
                  * @param value the feature value
                  * @param svid  the support vector ID.
                  * @throws IllegalArgumentException if svid is negative.
@@ -120,7 +117,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             private int size_ ;
 
             /**
-             * Constructor
              * @param id the feature ID.
              * @param capacity the expected size of capacity. it's set to DEFAULT_VALUE_SIZE if the size of the capacity is negative.
              * @throws IllegalArgumentException if the feature ID is negative.
@@ -170,8 +166,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
             private int size_;
 
             /**
-             * Constructor
-             *
              * @param id the feature ID.
              * @param capacity the expected size of the capacity. the size of the capacity is set to{@link DEFAULT_VALUE_SIZE} if the capacity is negative.
              * @throws IllegalArgumentException if the feature id is negative.
@@ -229,7 +223,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         private double sq_l2norm_;
 
         /**
-         * Constructor
          * @param label_id   label ID. label_id must be a positive number or 0.
          * @param sq_l2norm  the value of squared L2 norm. sq_l2norm must be positive.
          * @param num_labels the number of labels. num_labels must be more than 0.
@@ -325,7 +318,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
     private int default_label_ ;
 
     /**
-     * Constructor
      *
      * @param args
      *            model arguments. throw IllegalArgumentException if args is null.<br>
@@ -460,8 +452,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         private Feature.Real[] features_;
 
         /**
-         * Constructor
-         *
          * @param args the classifier arguments. see {@link ClassifierImpl(Arguments)}.
          */
         LinearBinary(Arguments args) {
@@ -614,8 +604,6 @@ abstract class ClassifierImpl<K extends KernelFunction, FS extends FeatureSpace>
         private Feature.Binary[] features_;
 
         /**
-         * Constructor
-         *
          * @param args the classifier arguments. see {@link ClassifierImpl(Arguments)}.
          */
         NoneLinearBinary(Arguments args) {

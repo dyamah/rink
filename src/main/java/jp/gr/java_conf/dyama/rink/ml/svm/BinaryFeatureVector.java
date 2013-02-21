@@ -25,9 +25,7 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
         /** the internal buffer */
         private Set<Integer> buffer_ ;
 
-        /**
-         * Constructor
-         */
+
         public Buffer(){
             buffer_ = new TreeSet<Integer>();
         }
@@ -87,7 +85,6 @@ public final class BinaryFeatureVector implements FeatureVector<FeatureSpace.Bin
     Estimation estimation_ ;
 
     /**
-     * Constructor
      * the capacity of the vector is set as DEFAULT_CAPACITY.
      * the size is initialized to 0.
      */

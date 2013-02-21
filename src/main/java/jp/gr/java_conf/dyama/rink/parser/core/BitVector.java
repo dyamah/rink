@@ -71,7 +71,6 @@ public class BitVector implements Serializable{
     private double[] elements_;
 
     /**
-     * Constructor
      * @param array the original array.
      * @throws IllegalArgumentException if the array is null.
      */

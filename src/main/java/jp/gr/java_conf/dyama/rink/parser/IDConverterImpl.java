@@ -19,7 +19,6 @@ public interface IDConverterImpl {
         private Map<String, Integer> map_ ;
 
         /**
-         * Constructor
          * @param converter mutable ID converter. throw IllegalArgumentException if converter is null.
          */
         ImmutableIDConverter(MutableIDConverter converter){
@@ -80,9 +79,6 @@ public interface IDConverterImpl {
         /** the map that the string to ID */
         private Map<String, Integer> map_ ;
 
-        /**
-         * Constructor
-         */
         public MutableIDConverter(){
             map_ = new HashMap<String, Integer>();
         }

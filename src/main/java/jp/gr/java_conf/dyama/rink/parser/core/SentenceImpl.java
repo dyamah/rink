@@ -14,7 +14,6 @@ public class SentenceImpl implements Sentence {
     private String string_;
 
     /**
-     * Constructor
      * @param generator the word generator.
      * @param string the sentence surface.
      * @throws IllegalArgumentException if the word generator is null.

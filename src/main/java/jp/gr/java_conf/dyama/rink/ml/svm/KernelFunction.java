@@ -55,7 +55,6 @@ public interface KernelFunction extends Serializable{
         private double coef0_;
 
         /**
-         * Constructor:
          * @param degree the parameter of this function: (gamma (x0 * x1) + coef0)^degree. throw IllegalArgumentException if degree is less than 1.
          * @param gamma the parameter of this function: (gamma (x0 * x1) + coef0)^degree.
          * @param coef0 the parameter of this function: (gamma (x0 * x1) + coef0)^degree.
@@ -111,7 +110,6 @@ public interface KernelFunction extends Serializable{
         private double gamma_ ;
 
         /**
-         * Constructor
          * @param gamma the parameter of this function: exp(-gamma |x0 - x1|^2).
          */
         RBF(double gamma){
@@ -141,7 +139,6 @@ public interface KernelFunction extends Serializable{
         private double coef0_ ;
 
         /**
-         * Constructor:
          * @param gamma the parameter of this function: tanh( gamma* x1 * x2 + coef0).
          * @param coef0 the parameter of this function: tanh( gamma* x1 * x2 + coef0).
          */

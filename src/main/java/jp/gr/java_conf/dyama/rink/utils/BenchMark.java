@@ -33,7 +33,6 @@ public class BenchMark {
         private long peak_;
 
         /**
-         * Constructor:
          * @param name the name of the task. use DEFAULT_NAME if name is null.
          */
         public Task(String name) {
@@ -115,9 +114,7 @@ public class BenchMark {
     /** List of Tasks t*/
     private List<Task> tasks_;
 
-    /**
-     * Constructor
-     */
+
     public BenchMark() {
         tasks_ = new ArrayList<Task>();
     }

@@ -27,7 +27,6 @@ public class SimpleFeatureFunction implements FeatureFunction{
     private int length_of_right_context_;
 
     /**
-     * Constructor
      * @param left the length of left context for extracting features. throw IllegalArgumentException if the length is not from 1 to 7.
      * @param right the length of right context for extracting features. throw IllegalArgumentException if the length is not from 1 to 7.
      */

@@ -42,7 +42,6 @@ public class DeterministicBottomUpParser extends DependencyParser {
 //    }
 
     /**
-     * Constructor: (training mode)
      * @param estimator the action estimator.
      * @param learner the action learner.
      * @throws IllegalArgumentException if the action estimator is null.
@@ -59,7 +58,6 @@ public class DeterministicBottomUpParser extends DependencyParser {
     }
 
     /**
-     * Constructor:
      * @param estimator the action estimator.
      * @throw IllegalArgumentException if the action estimator is null.
      */

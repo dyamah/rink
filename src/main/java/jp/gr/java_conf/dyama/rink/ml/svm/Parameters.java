@@ -144,7 +144,7 @@ public interface Parameters extends Serializable {
         private KernelType kernel_type_;
 
         /**
-         * Default Constructor: each parameter is initialized to the libsvm's one except for gamma (see svm_train.java).
+         * Each parameter is initialized to the libsvm's one except for gamma (see svm_train.java).
          * gamma is initialized to 0.0 ( 1/#features in libsvm).
          */
         public ParametersImpl(){

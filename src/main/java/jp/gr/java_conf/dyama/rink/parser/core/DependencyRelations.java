@@ -19,9 +19,6 @@ class DependencyRelations {
         /** the number of children */
         private int size_ ;
 
-        /**
-         * Constructor
-         */
         private Node(){
             parent_ = -1;
             size_ = 0;
@@ -68,9 +65,7 @@ class DependencyRelations {
     /** dependency nodes */
     private Node[] nodes_;
 
-    /**
-     * Constructor:
-     */
+
     DependencyRelations(){
         size_ = 0;
         nodes_ = new Node[CAPACITY];

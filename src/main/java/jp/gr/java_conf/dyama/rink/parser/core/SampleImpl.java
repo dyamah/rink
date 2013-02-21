@@ -40,7 +40,6 @@ public class SampleImpl implements Sample {
         private State.StatePool state_pool_;
 
         /**
-         * Constructor
          * @param beamWidth the beam width. It must be more than 1.
          */
         private Agenda(int beamWidth){
@@ -121,7 +120,6 @@ public class SampleImpl implements Sample {
 
     private Agenda agenda_ ;
     /**
-     * Constructor
      * @param reader the sentence reader.
      * @param converter the IDConverter.
      * @throws IllegalArgumentException if the sentence reader is null.

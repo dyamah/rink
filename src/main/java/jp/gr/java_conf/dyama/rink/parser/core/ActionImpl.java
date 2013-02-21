@@ -9,7 +9,6 @@ final class ActionImpl implements Action {
     private int right_;
 
     /**
-     * Constructor
      * @param type the type of actions.
      * @throws IllegalArgumentException if the type of actions is null.
      */

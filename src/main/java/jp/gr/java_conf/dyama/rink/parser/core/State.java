@@ -13,7 +13,6 @@ class State implements Comparable<State> {
         private State[] pool_ ;
 
         /**
-         * Constructor
          * @param size the size of maximum pooling. the size is set to 1 if the size is less than 1.
          */
         StatePool(int size){
@@ -75,9 +74,7 @@ class State implements Comparable<State> {
     /** the number of applied actions */
     int num_actions_ ;
 
-    /**
-     * Constructor
-     */
+
     State(){
         nodes_ = new int[Resource.MAXIMUM_NUMBER_OF_WORDS];
         size_ = 0;

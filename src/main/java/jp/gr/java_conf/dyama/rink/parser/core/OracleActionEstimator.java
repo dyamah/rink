@@ -23,7 +23,6 @@ class OracleActionEstimator implements ActionEstimator {
     private Action.Type type_;
 
     /**
-     * Constructor
      * @param function The feature function.
      * @throws IllegalArgumentException if the feature function is null.
      */
@@ -35,7 +34,6 @@ class OracleActionEstimator implements ActionEstimator {
     }
 
     /**
-     * Constructor
      * @param function The feature function.
      * @throws IllegalArgumentException if the feature function is null.
      */

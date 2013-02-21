@@ -20,7 +20,6 @@ final class Estimation {
     private Score.PairwiseScore score_;
 
     /**
-     * Constructor:
      * @param classes the number of classes. The number of classes must be more than 0.
      * @param svs the number of support vectors. The number of support vectors must be 0 and over.
      */

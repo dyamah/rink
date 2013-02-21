@@ -42,7 +42,6 @@ interface Score {
         private boolean add_ ;
 
         /**
-         * Constructor:
          * @param num the number of classes. throw IllegalArgumentException if num is 0 and fewer.
          */
         PairwiseScore(int num){

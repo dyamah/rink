@@ -39,9 +39,6 @@ abstract class LearnerImpl<FS extends FeatureSpace> implements Learner<FS> {
     /** the list of labels */
     private List<Integer> y_ ;
 
-    /**
-     * Default Constructor:
-     */
     LearnerImpl(){
         x_ = new ArrayList<libsvm.svm_node[]>();
         y_ = new ArrayList<Integer>();

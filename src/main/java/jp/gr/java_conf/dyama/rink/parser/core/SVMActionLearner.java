@@ -38,7 +38,6 @@ class SVMActionLearner implements ActionLearner {
     private PrintStream out_ ;
 
     /**
-     * Constructor
      * @param params the set of parameters for SVMs.
      * @param function the feature function.
      * @throws IllegalArgumentException if the set of parameters is null.

@@ -61,8 +61,6 @@ public class AnnotatedSentenceReader implements SentenceReader {
     private AnnotationLevel level_ ;
 
     /**
-     * Constructor
-     *
      * @param path path to the annotated sentence file. throw IllegalArgumentException if path is null.
      * @param level  annotation level. throw IllegalArgumentException if level is null.
      * @throws FileNotFoundException

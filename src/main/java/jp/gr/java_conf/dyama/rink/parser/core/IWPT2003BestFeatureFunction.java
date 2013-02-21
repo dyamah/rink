@@ -26,7 +26,6 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
     private int length_of_right_context_;
 
     /**
-     * Constructor
      * @param left the length of left context for extracting features.
      * @param right the length of right context for extracting features.
      * @throws IllegalArgumentException if the length of left context is not from 1 to 7.

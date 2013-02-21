@@ -33,7 +33,6 @@ class SVMActionEstimator implements ActionEstimator {
     /** the group identifier */
     private GroupIdentifier group_identifier_ ;
     /**
-     * Constructor
      * @param function the feature function.
      * @param classifier the SVMs classifier.
      * @throws IllegalArgumentException if the function is null.
@@ -52,7 +51,6 @@ class SVMActionEstimator implements ActionEstimator {
     }
 
     /**
-     * Constructor
      * @param function the feature function.
      * @param classifiers the SVMs classifiers.
      * @param identifier the group identifier.

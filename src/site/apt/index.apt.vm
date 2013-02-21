@@ -1,4 +1,4 @@
-概要
+概要（暫定版）
 
   rink プロジェクトはIWPT2003で提案した英語の決定性上昇型依存構造解析({{Y & M IWPT03}})のJava実装です。
 
@@ -37,18 +37,10 @@
         ここではPenn Treebank コーパスにDavid Vadasの{{{http://sydney.edu.au/engineering/it/~dvadas1/?Noun_Phrases} 名詞句タグ付けの修正パッチ}}
         をあてることを強く奨めています。
 
-  [[3]] ptbconv {{http://www.jaist.ac.jp/~h-yamada/software/ptbconv-3.0.tar.gz}}
-
-        10年前自分で作ったruby 実装のコンバーターです。単語IDが0から始まり、依存木のルートを-1で表しています。
-        Penn2MaltやCoNLLでは単語IDは1から始まり、依存木のルートを0で表しているという違いがあります。
-
   []
 
-  ptbconv と Penn2Maltの出力する依存構造は同じ主辞規則を使えば同じです。
-  Penn2Malt は -LRB- などの特殊な単語の表記を "(" や "\{" に正しく変換して出力しており、一方 ptbconv は PennTreebank のまま(-LRB-)を出力している点が異なりますが、
-  依存構造は双方で完全に一致していることを確認しています。
-  一方 pennconverter は、標準の主辞規則が大きく異なります。したがって出力する依存木は ptbconvやPenn2Malt とは異なります。
-  後述する実験では Penn2Malt と同じ出力をCoNLL形式に変換したものを利用しています。
+  Penn2Malt と pennconverter は、標準の主辞規則が大きく異なります。したがって出力する依存木は Penn2Malt とは異なります。
+  後述する実験では過去の研究との比較のため Penn2Malt と同じ出力をCoNLL形式に変換したものを利用しています。
 
 使用方法
 
@@ -60,7 +52,7 @@
 
   * $test.txt:　CoNLL-X書式のテストデータ
 
-  * $rink.jar: rinkモジュールjarファイル。使用しているバージョンに読み替えてください。
+  * ${project.name}-${project.version}.jar: rinkモジュール jarファイル。
 
   * $libsvm.jar: libsvm のjar ファイル。　使用しているバージョンに読み替えてください。
 
@@ -79,13 +71,13 @@
   * 訓練データの分割：依存構造を構築するかどうかを判定する２つの単語のうち左の単語の品詞でグループ化
 
 +------------------------------------------------------------------------------------------------------------------------------------------------+
-% java -Xmx 1024m -cp $rink.jar:$libsvm.jar:$commons-cli.jar jp.gr.java_conf.dyama.rink.tools.DependencyLearner -i $train.txt -o $model -l IWPT2003
+% java -Xmx 1024m -cp ${project.name}-${project.version}.jar:$libsvm.jar:$commons-cli.jar jp.gr.java_conf.dyama.rink.tools.DependencyLearner -i $train.txt -o $model -l IWPT2003
 +------------------------------------------------------------------------------------------------------------------------------------------------+
 
 * 学習したモデルを利用した解析方法
 
 +------------------------------------------------------------------------------------------------------------------------------------------------+
-% java -Xmx 512m -cp $rink.jar:$commons-cli.jar jp.gr.java_conf.dyama.rink.tools.DependencyParser -i $test.txt -m $model -v
+% java -Xmx 512m -cp ${project.name}-${project.version}.jar:$commons-cli.jar jp.gr.java_conf.dyama.rink.tools.DependencyParser -i $test.txt -m $model -v
 +------------------------------------------------------------------------------------------------------------------------------------------------+
 
   上記コマンドで標準出力にCoNLL-X形式の解析結果を出力します。
@@ -209,7 +201,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
 
 謝辞
 
-  rink プロジェクトは東京工業大学精密工学研究所で研究員として在職中に立ち上げたプロジェクトです。
+  rink プロジェクトは{{{http://lr-www.pi.titech.ac.jp/wp/}東京工業大学精密工学研究所 奥村・高村研究室}}で研究員として在職中に立ち上げたプロジェクトです。
   短い間ではありましたが自由に研究開発を行うことができました。
   このような環境を提供してくださり、また数々のアドバイスをくださった奥村先生、高村さん、笹野さん、そして研究室の皆さんに心より感謝いたします。
 

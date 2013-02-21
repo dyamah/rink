@@ -22,7 +22,6 @@ class SimpleSentenceReader implements SentenceReader {
     WordImpl.Generator generator_ ;
 
     /**
-     * Constructor
      * @param generator the word generator.
      * @throws IllegalArgumentException if the word generator is null.
      */

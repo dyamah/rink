@@ -50,8 +50,6 @@ public class CoNLLXSentenceReader implements SentenceReader {
     private Mode mode_ ;
 
     /**
-     * Constructor
-     *
      * @param path the path to the sentence file in CoNLL-X format.
      * @param mode the training/test mode.
      * @throws IllegalArgumentException if the path is null.

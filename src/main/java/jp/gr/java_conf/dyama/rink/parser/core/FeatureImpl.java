@@ -188,9 +188,6 @@ class FeatureImpl implements Feature {
     private TYPE     type_;
     private int      value_;
 
-    /**
-     * Constructor:
-     */
     FeatureImpl(){
        position_ = POSITION.L7;
        relation_ = RELATION.SELF;

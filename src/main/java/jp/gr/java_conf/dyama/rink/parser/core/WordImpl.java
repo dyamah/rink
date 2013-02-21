@@ -72,7 +72,6 @@ public class WordImpl implements Word {
 
         private IDConverter id_converter_;
         /**
-         * Constructor
          * @param converter IDConverter.
          * @throws IllegalArgumentException if the ID converter is null.
          */
@@ -114,9 +113,7 @@ public class WordImpl implements Word {
         }
     }
 
-    /**
-    * Default Constructor
-    */
+
    WordImpl(){
        begin_    = -1;
        end_      = -1;

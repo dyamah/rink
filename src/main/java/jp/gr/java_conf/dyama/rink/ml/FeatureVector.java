@@ -30,7 +30,6 @@ public interface FeatureVector<T extends FeatureSpace> {
         private double value_;
 
         /**
-         * Constructor:
          * @param id the feature ID.
          * @param value the feature Value
          * @throws IllegalArgumentException if the feature ID is negative.
@@ -110,10 +109,7 @@ public interface FeatureVector<T extends FeatureSpace> {
             /** the internal buffer */
             private Map<Integer, Double> buffer_;
 
-            /**
-             * Constructor
-             *
-             */
+
             public Buffer(){
                 buffer_ = new TreeMap<Integer, Double>();
             }
@@ -172,7 +168,6 @@ public interface FeatureVector<T extends FeatureSpace> {
         private double sq_l2norm_ ;
 
         /**
-         * Constructor
          * the capacity of the vector is set to DEFAULT_CAPACITY.
          * the size is initialized as 0.
          */
