@@ -10,13 +10,15 @@ class DependencyRelations {
      */
     static class Node{
 
-        /** parent ID */
+        /** the parent ID */
         private int parent_ ;
 
-        /** set of children's ID */
+        /** the set of children's ID */
         private int[] children_ ;
 
+        /** the number of children */
         private int size_ ;
+
         /**
          * Constructor
          */
@@ -49,8 +51,8 @@ class DependencyRelations {
         }
 
         /**
-         * copy from a node.
-         * @param node source node. it must not be null.
+         * Copies the internal state from the source node.
+         * @param node the source node. It must not be null.
          */
         private void copy(Node node){
             parent_ = node.parent_;
@@ -74,15 +76,19 @@ class DependencyRelations {
         nodes_ = new Node[CAPACITY];
     }
 
+    /**
+     * Returns the number of dependency nodes.
+     * @return the number of dependency nodes.
+     */
     int size(){
         return size_ ;
     }
 
     /**
-     * setup initial dependency relations from a sample.
-     * @param sentence source sample.
-     * @throws IllegalArgumentException if the sample is null.
-     * @throws IllegalArgumentException if the size of sample is more than {@link CAPACITY}-1,
+     * Setup initial dependency relations from the source sentence.
+     * @param sentence the source sample.
+     * @throws IllegalArgumentException if the sentence is null.
+     * @throws IllegalArgumentException if the size of sentence is more than {@link CAPACITY}-1,
      */
     void setup(Sentence sentence){
         if (sentence == null)
@@ -100,10 +106,10 @@ class DependencyRelations {
     }
 
     /**
-     * build dependency relations from an annotated sample.
-     * @param sentence annotated sample.
+     * Builds dependency relations from the sentence.
+     * @param sentence the sentence.
      * @throws IllegalArgumentException if the sentence is null.
-     * @throws IllegalArgumentException if the size of sample is more than {@link CAPACITY}-1,
+     * @throws IllegalArgumentException if the size of sentence is more than {@link CAPACITY}-1,
      */
     void build(SentenceImpl sentence){
         if (sentence == null)
@@ -129,9 +135,9 @@ class DependencyRelations {
 
 
     /**
-     * copy all dependency relations from a source dependency relations.
-     * @param deps source dependency relations.
-     * @throws IllegalArgumentException if the deps is null.
+     * Copies all dependency relations from the source dependency relations.
+     * @param deps the source dependency relations.
+     * @throws IllegalArgumentException if the source dependency relations is null.
      */
     void copy(DependencyRelations deps){
         if (deps == null)
@@ -160,9 +166,9 @@ class DependencyRelations {
     }
 
     /**
-     * check whether there is a dependency relation between parent and child.
-     * @param parentID parent ID.
-     * @param childID child ID
+     * Checks whether there is a dependency relation between parent and child.
+     * @param parentID the parent ID.
+     * @param childID the child ID
      * @return true if there is an dependency relation between the parent and child, otherwise false.
      * @throws IllegalArgumentException if either parentID or childID is out of range.
      */
@@ -176,9 +182,9 @@ class DependencyRelations {
     }
 
     /**
-     * create a new dependency relation between parent and child.
-     * @param parentID parent ID.
-     * @param childID child ID.
+     * Creates a new dependency relation between parent and child.
+     * @param parentID the parent ID.
+     * @param childID the child ID.
      * @throws IllegalArgumentException if either parentID or childID is out of range.
      */
     void depend(int parentID, int childID){
@@ -188,8 +194,8 @@ class DependencyRelations {
     }
 
     /**
-     * get the children IDs.
-     * @param nodeID node ID.
+     * Returns the children IDs.
+     * @param nodeID the node ID.
      * @param n n-th child.
      * @return children ID. if there is no child corresponding to the n, return -1.
      * @throws IllegalArgumentException if nodeID is out of range.
@@ -202,9 +208,9 @@ class DependencyRelations {
     }
 
      /**
-      * get the number of children of a node.
-      * @param nodeID target node.
-      * @return the number of children of the nodeID.
+      * Returns the number of children of the target node.
+      * @param nodeID the ID of the target node.
+      * @return the number of children of the target node.
       * @throws IllegalArgumentException if nodeID is out of range.
       */
      int getNumberOfChildren(int nodeID){
@@ -213,8 +219,8 @@ class DependencyRelations {
      }
 
     /**
-     * get the parent ID of a node.
-     * @param nodeID node ID.
+     * Returns the parent ID of the target node.
+     * @param nodeID the ID of the target node.
      * @return the parent ID.
      * @throws IllegalArgumentException if nodeID is out of range.
      */
@@ -224,10 +230,10 @@ class DependencyRelations {
     }
 
     /**
-     * check whether the children of a node is same to other dependency relations or not.
-     * @param nodeID node ID
-     * @param deps other dependency relations.
-     * @return true the children of the node is same to deps's ones, otherwise false.
+     * Checks whether the children of the target node is same to the other dependency relations or not.
+     * @param nodeID the ID of the target node.
+     * @param deps the other dependency relations.
+     * @return true the children of the target node is same to deps's ones, otherwise false.
      * @throws IllegalArgumentException the node ID is out of range.
      * @throws IllegalArgumentException the deps is null.
      */

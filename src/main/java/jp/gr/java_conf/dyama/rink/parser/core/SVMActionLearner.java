@@ -21,30 +21,32 @@ import jp.gr.java_conf.dyama.rink.parser.FeatureFunction;
  */
 class SVMActionLearner implements ActionLearner {
 
-    /** parameters of SVMs */
+    /** the set of parameters for SVMs */
     private Parameters params_ ;
 
-    /** learner */
+    /** the learners */
     private Map<Integer, Learner<FeatureSpace.Binary>> learners_;
 
-    /** feature function */
+    /** the feature function */
     private FeatureFunction function_ ;
 
 
-    /** group identifier */
+    /** the group identifier */
     private GroupIdentifier group_identifier_ ;
 
-    /** print stream for printing learning progress */
+    /** the print stream for printing learning progress */
     private PrintStream out_ ;
 
     /**
      * Constructor
-     * @param params  parameters of SVMs. throw IllegalArgumentException if params is null.
-     * @param function feature function. throw IllegalArgumentException if function is null.
+     * @param params the set of parameters for SVMs.
+     * @param function the feature function.
+     * @throws IllegalArgumentException if the set of parameters is null.
+     * @throws IllegalArgumentException if the feature function is null.
      */
     SVMActionLearner(Parameters params, FeatureFunction function){
         if (params == null)
-            throw new IllegalArgumentException("the parameters is null.");
+            throw new IllegalArgumentException("the set of parameters is null.");
         if (function == null)
             throw new IllegalArgumentException("the feature function is null.");
 

@@ -24,17 +24,20 @@ class SVMActionEstimator implements ActionEstimator {
 
     private static final Action.Type DEFAULT_ACTION = Action.Type.SHIFT;
 
-    /** feature function */
+    /** the feature function */
     private FeatureFunction function_ ;
 
     /** SVMs Classifier */
     private Map<Integer, Classifier<?, FeatureSpace.Binary>> classifiers_ ;
 
+    /** the group identifier */
     private GroupIdentifier group_identifier_ ;
     /**
      * Constructor
-     * @param function feature function. throw IllegalArgumentException if function is null.
-     * @param classifier SVMs classifier.  throw IllegalArgumentException if classifier is null.
+     * @param function the feature function.
+     * @param classifier the SVMs classifier.
+     * @throws IllegalArgumentException if the function is null.
+     * @throws IllegalArgumentException if the classifier is null.
      */
     SVMActionEstimator(FeatureFunction function, Classifier<?, FeatureSpace.Binary> classifier) {
         if (function == null)
@@ -50,9 +53,12 @@ class SVMActionEstimator implements ActionEstimator {
 
     /**
      * Constructor
-     * @param function feature function. throw IllegalArgumentException if function is null.
-     * @param classifiers SVMs classifiers.  throw IllegalArgumentException if classifier is null.
-     * @param identifier group identifier. throw IllegalArgumentException if identifier is null.
+     * @param function the feature function.
+     * @param classifiers the SVMs classifiers.
+     * @param identifier the group identifier.
+     * @throws IllegalArgumentException if the feature function is null.
+     * @throws IllegalArgumentException if the classifier is null.
+     * @throws IllegalArgumentException if the group identifier is null.
      */
     SVMActionEstimator(FeatureFunction function, Map<Integer, Classifier<?, FeatureSpace.Binary>> classifiers, GroupIdentifier identifier) {
         if (function == null)

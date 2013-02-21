@@ -15,15 +15,16 @@ import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
  */
 class SimpleSentenceReader implements SentenceReader {
 
-    /** list of words */
+    /** the list of words */
     List<WordImpl> words_ ;
 
-    /** word generator */
+    /** the word generator */
     WordImpl.Generator generator_ ;
 
     /**
      * Constructor
-     * @param generator word generator. throw IllegalArgumentException if generator is null.
+     * @param generator the word generator.
+     * @throws IllegalArgumentException if the word generator is null.
      */
     SimpleSentenceReader(WordImpl.Generator generator){
         if (generator == null)
@@ -33,15 +34,17 @@ class SimpleSentenceReader implements SentenceReader {
     }
 
     /**
-     * add a word
-     * @param surface surface string of the word. throw IllegalArgumentException if surface is null.
-     * @param begin the beginning position of the word. throw IllegalArgumentException if begin is negative or less than the end.
+     * Adds the word
+     * @param surface the surface string of the added word.
+     * @param begin the beginning position of the word.
      * @param end the ending position of the word.
-     * @param pos part of speech.
-     * @param parent parent dependency parent ID.
+     * @param pos the part of speech.
+     * @param parentID the ID of the dependency parent.
+     * @throws IllegalArgumentException if the surface is null.
+     * @throws IllegalArgumentException if the beginning position is negative or less than the ending's one.
      */
-    void addWord(String surface, int begin,  int end, PartOfSpeech pos, int parent){
-        words_.add(generator_.generate(surface, begin, end, pos, parent, null));
+    void addWord(String surface, int begin,  int end, PartOfSpeech pos, int parentID){
+        words_.add(generator_.generate(surface, begin, end, pos, parentID, null));
     }
 
     @Override

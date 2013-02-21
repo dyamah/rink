@@ -10,7 +10,7 @@ import java.io.PrintStream;
 public interface ActionLearner {
 
     /**
-     * add a training sample.
+     * Adds the training sample.
      * @param x the training sample
      * @param y the action.
      * @throws IllegalArgumentException if the sample is null.
@@ -19,13 +19,13 @@ public interface ActionLearner {
     void addExample(SampleImpl x, Action y);
 
     /**
-     * learn the action estimator from added training examples.
+     * Learns the action estimator from added training examples.
      */
     ActionEstimator learn() ;
 
     /**
-     * set the print stream for printing the learning progress.
-     * @param out print stream. nothing will be printed if out is null.
+     * Sets the print stream for printing the learning progress.
+     * @param out the print stream. Nothing will be printed if the out is null.
      */
     void setProgressPrintStream(PrintStream out);
 }

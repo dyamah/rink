@@ -15,10 +15,11 @@ import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
  * Sentence Reader for dependency annotated sentences.<br>
  * The format is as follows:<br>
  * $word $pos $parent<br>
+ * these three columns is segmented by tab character.<br>
  * <br>
  * $word means the string of word surface.<br>
- * $pos means the string of part-of-speech tag. <br>
- * $parent means the ID of dependency parent. <br>
+ * $pos means the string of the part-of-speech tag. <br>
+ * $parent means the ID of dependency parent. If $parent is negative, the parent is root of the dependency tree/forest.   <br>
  * the empty line stands for EOS.<br>
  * For example:<br>
  * <br>
@@ -30,7 +31,10 @@ import jp.gr.java_conf.dyama.rink.parser.SentenceReader;
  * <br>
  * @author Hiroyasu Yamada
  */
+@Deprecated
 public class AnnotatedSentenceReader implements SentenceReader {
+
+    /** Annotation Level */
     public enum AnnotationLevel {
         POS(2),
         DEPENDENCY(3);

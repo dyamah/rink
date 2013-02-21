@@ -27,8 +27,10 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
 
     /**
      * Constructor
-     * @param left the length of left context for extracting features. throw IllegalArgumentException if the length is not from 1 to 7.
-     * @param right the length of right context for extracting features. throw IllegalArgumentException if the length is not from 1 to 7.
+     * @param left the length of left context for extracting features.
+     * @param right the length of right context for extracting features.
+     * @throws IllegalArgumentException if the length of left context is not from 1 to 7.
+     * @throws IllegalArgumentException if the length is not from 1 to 7.
      */
     public IWPT2003BestFeatureFunction(int left, int right) {
         if (left < 1 || left > 7)
@@ -42,9 +44,9 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
     }
 
     /**
-     * convert  a relative position to the POSITION instance.
-     * @param pos relative position (a negative number means that the position is in the left context, 0 means left/right target node).
-     * @param left flag of left or right context. the flag is used to identify left/right target node when pos is 0.
+     * Converts  the relative position to the POSITION instance.
+     * @param pos the relative position (a negative number means that the position is in the left context, 0 means left/right target node).
+     * @param left the flag of left or right context. the flag is used to identify left/right target node when pos is 0.
      * @return POSITION instance
      */
     private POSITION toPosition(int pos, boolean left) {
@@ -75,20 +77,14 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
     }
 
     /**
-     * add a encoded feature to the buffer.
+     * Adds the encoded feature to the buffer.
      *
-     * @param position
-     *            position
-     * @param relation
-     *            relation
-     * @param type
-     *            type
-     * @param value
-     *            feature value. add no feature if value is 0 and fewer.
-     * @param buffer
-     *            buffer
-     * @return true if a encoded feature is added to the buffer, otherwise
-     *         false.
+     * @param position the position.
+     * @param relation the relation.
+     * @param type  the type of features.
+     * @param value the feature's value. add no feature if value is 0 and fewer.
+     * @param buffer the buffer
+     * @return true if the encoded feature can be added to the buffer, otherwise false.
      */
     private boolean addFeature(POSITION position, RELATION relation, TYPE type, int value, FeatureImpl f, Buffer buffer) {
         f.set(position, relation, type, value);
@@ -101,9 +97,9 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
     }
 
     /**
-     * add left context features
+     * Adds the left context features to the sample.
      *
-     * @param sample a sample, features are extracted from the left context of the current position.
+     * @param sample the sample.
      */
     private void addLeftContextFeature(SampleImpl sample) {
 
@@ -142,9 +138,9 @@ public class IWPT2003BestFeatureFunction implements FeatureFunction {
     }
 
     /**
-     * add right context features
+     * Adds the right context features to the sample.
      *
-     * @param sample a sample, features are extracted from the right context of the current position.
+     * @param sample the sample.
      */
     private void addRightContextFeature(SampleImpl sample) {
         FeatureImpl f = sample.getFeature();

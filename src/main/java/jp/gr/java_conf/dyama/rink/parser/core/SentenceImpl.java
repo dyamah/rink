@@ -15,8 +15,9 @@ public class SentenceImpl implements Sentence {
 
     /**
      * Constructor
-     * @param generator word generator. throw IllegalArgumentException if generator is null.
-     * @param string sentence surface.
+     * @param generator the word generator.
+     * @param string the sentence surface.
+     * @throws IllegalArgumentException if the word generator is null.
      */
     SentenceImpl(WordImpl.Generator generator, String string){
         if (generator == null)
@@ -29,8 +30,8 @@ public class SentenceImpl implements Sentence {
     }
 
     /**
-     * get the word generator
-     * @return word generator
+     * Returns the word generator
+     * @return the word generator
      */
     WordImpl.Generator getWordGenerator(){
         return word_generator_;
@@ -41,6 +42,10 @@ public class SentenceImpl implements Sentence {
         return size_;
     }
 
+    /**
+     * Returns the maximum size of words.
+     * @return the maximum size of words.
+     */
     int capacity(){
         return words_.length;
     }
@@ -58,7 +63,7 @@ public class SentenceImpl implements Sentence {
     }
 
     /**
-     * clear the sentence.
+     * Clears this sentence.
      */
     void clear(){
         resize();
@@ -68,8 +73,8 @@ public class SentenceImpl implements Sentence {
 
 
     /**
-     * get reusable word
-     * @return word. return null if there is no reusable word.
+     * Returns the reusable word
+     * @return the reusable word. Returns null if there is no reusable word.
      */
     WordImpl getReusableWord(){
         if (size_ < words_.length)
@@ -78,8 +83,9 @@ public class SentenceImpl implements Sentence {
     }
 
     /**
-     * add a word
-     * @param word throw IllegalArgumentException if word is null.
+     * Adds the word
+     * @param word the word.
+     * @throws IllegalArgumentException if the word is null.
      */
     void addWord(WordImpl word){
         if (word == null)
@@ -90,8 +96,9 @@ public class SentenceImpl implements Sentence {
     }
 
     /**
-     * resize word buffer
-     * words_ is resize DEFAULT_CAPACITY if wors_.length is greater than DEFAULT_CAPACITY * 2 when clear() method is called.
+     * Resize the word buffer.
+     * This method is always called when {@link #clear()} method is called.
+     * The method resizes the capacity of the word to DEFAULT_CAPACITY if wors_.length is greater than DEFAULT_CAPACITY * 2.
      */
     private void resize(){
         if (words_.length > DEFAULT_CAPACITY * 2)

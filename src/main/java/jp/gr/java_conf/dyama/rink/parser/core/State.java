@@ -25,7 +25,7 @@ class State implements Comparable<State> {
         }
 
         /**
-         * creates a new state from this pool. The new instance is generated if the pool is empty.
+         * Creates a new state from this pool. The new instance is generated if the pool is empty.
          * @return a new state.
          */
         State create(){
@@ -38,7 +38,7 @@ class State implements Comparable<State> {
         }
 
         /**
-         * releases the used state to this pool.
+         * Releases the used state to this pool.
          * @param state the used state.
          * @throws IllegalArgumentException if the used state is null.
          */
@@ -60,7 +60,7 @@ class State implements Comparable<State> {
     /** the current position */
     private int position_;
 
-    /** the flag whether parsing is complete or not*/
+    /** the flag whether the parsing is complete or not*/
     private boolean complete_;
 
     /** the last applied actions */
@@ -90,7 +90,7 @@ class State implements Comparable<State> {
     }
 
     /**
-     * copies internal information from the source state.
+     * Copies internal information from the source state.
      * @param state the source state.
      * @throws IllegalArgumentException if the source state is null.
      */

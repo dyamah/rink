@@ -49,5 +49,10 @@ public interface Word extends Range {
      */
     public TagSet.PartOfSpeech getPOS();
 
+    /**
+     * Returns the ID of the dependency parent.
+     * @return ID
+     */
+    public int getParent() ;
 
 }

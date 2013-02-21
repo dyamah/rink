@@ -67,7 +67,7 @@ public class SVMActionLearnerTest {
             new SVMActionLearner(null, function_);
             fail("");
         } catch (IllegalArgumentException e){
-            assertEquals("the parameters is null.", e.getMessage());
+            assertEquals("the set of parameters is null.", e.getMessage());
         } catch (Exception e){
             fail("");
         }

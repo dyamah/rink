@@ -18,19 +18,19 @@ public class WordImpl implements Word {
     /** the end position of the word */
     private int end_;
 
-    /** word ID */
+    /** the word ID */
     private int id_;
 
     /** POS */
     private TagSet.PartOfSpeech pos_;
 
-    /** surface string */
+    /** the surface string */
     private String surface_;
 
-    /** base form string */
+    /** the base form string */
     private String baseform_ ;
 
-    /** dependency parent */
+    /** ID of the dependency parent */
     private int parent_;
 
     public static final WordImpl BOS ;
@@ -73,7 +73,8 @@ public class WordImpl implements Word {
         private IDConverter id_converter_;
         /**
          * Constructor
-         * @param converter IDConverter. throw IllegalArgumentException if converter is null.
+         * @param converter IDConverter.
+         * @throws IllegalArgumentException if the ID converter is null.
          */
         public Generator(IDConverter converter){
             if (converter == null)
@@ -82,13 +83,15 @@ public class WordImpl implements Word {
         }
 
         /**
-         * generate a word
-         * @param surface the surface of the word. throw IllegalArgumentException if surface is null
-         * @param begin the beginning of the word. throw IllegalArgumentException if begin is negative or greater than end.
+         * Generates a new word
+         * @param surface the surface of the word.
+         * @param begin the beginning of the word.
          * @param end the end of the word.
-         * @param pos part of speech tag.
-         * @param parent ID of dependency parent.
-         * @param word a word instance for reuse. if word is null, a new word instance is created.
+         * @param pos the part of speech tag.
+         * @param parent ID of the dependency parent.
+         * @param word the word instance for reuse. if the word is null, a new word instance is created.
+         * @throws IllegalArgumentException if the surface is null
+         * @throws IllegalArgumentException if the beginning of the word is negative or greater than end.
          */
         public WordImpl generate(String surface, int begin, int end, PartOfSpeech pos, int parent, WordImpl word){
             if (surface == null)
@@ -159,10 +162,7 @@ public class WordImpl implements Word {
         return pos_;
     }
 
-    /**
-     * get the ID of the dependency parent.
-     * @return ID
-     */
+    @Override
     public int getParent() {
         return parent_ ;
     }

@@ -199,11 +199,15 @@ class FeatureImpl implements Feature {
     }
 
     /**
-     * set feature information.
-     * @param position feature about position. throw IllegalArgumentException if position is null.
-     * @param relation feature about relation. throw IllegalArgumentException if relation is null.
-     * @param type     feature type. throw IllegalArgumentException if type is null.
-     * @param value    feature value. throw IllegalArgumentException if value is out of range (value  < 0 || value >= 2^21)
+     * Sets the feature information.
+     * @param position the position of the feature.
+     * @param relation the type of relations.
+     * @param type     the type of the feature.
+     * @param value    the feature's value.
+     * @throws IllegalArgumentException if the position is null.
+     * @throws IllegalArgumentException if the relation is null.
+     * @throws IllegalArgumentException if the type is null.
+     * @throws IllegalArgumentException if the value is out of range (value  < 0 || value >= 2^21)
      */
     void set(POSITION position, RELATION relation, TYPE type, int value){
         if (position == null)
@@ -225,7 +229,7 @@ class FeatureImpl implements Feature {
     }
 
     /**
-     * get the position of the feature.
+     * Returns the position of the feature.
      * @return position
      */
     public POSITION getPosition(){
@@ -233,7 +237,7 @@ class FeatureImpl implements Feature {
     }
 
     /**
-     * get the relation of the feature
+     * Returns the relation of the feature
      * @return relation
      */
     public RELATION getRelation(){
@@ -241,7 +245,7 @@ class FeatureImpl implements Feature {
     }
 
     /**
-     * get the type of feature
+     * Returns the type of feature
      * @return type
      */
     public TYPE getType(){
@@ -249,7 +253,7 @@ class FeatureImpl implements Feature {
     }
 
     /**
-     * get the feature value.
+     * Returns the feature's value.
      * @return value
      */
     public int getValue(){

@@ -52,11 +52,11 @@ public class CoNLLXSentenceReader implements SentenceReader {
     /**
      * Constructor
      *
-     * @param path   the path to the sentences file as CoNLL-X format.
-     * @param mode  the training/test mode.
+     * @param path the path to the sentence file in CoNLL-X format.
+     * @param mode the training/test mode.
      * @throws IllegalArgumentException if the path is null.
      * @throws IllegalArgumentException if the mode is null.
-     * @throws FileNotFoundException if the path has not found.
+     * @throws FileNotFoundException if the path has not been found.
      */
     public CoNLLXSentenceReader(String path, Mode mode) throws FileNotFoundException {
         if (path == null)

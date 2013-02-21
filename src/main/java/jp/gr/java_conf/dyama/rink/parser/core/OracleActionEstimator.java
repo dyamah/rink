@@ -17,14 +17,15 @@ class OracleActionEstimator implements ActionEstimator {
 
     static final double DEFAULT_SCORE = 1.0;
 
-    /** feature function */
+    /** the feature function */
     private FeatureFunction function_ ;
 
     private Action.Type type_;
 
     /**
      * Constructor
-     * @param function feature function. throw IllegalArgumentException if function is null.
+     * @param function The feature function.
+     * @throws IllegalArgumentException if the feature function is null.
      */
     OracleActionEstimator(FeatureFunction function){
         if (function == null)
@@ -35,7 +36,8 @@ class OracleActionEstimator implements ActionEstimator {
 
     /**
      * Constructor
-     * @param function feature function. throw IllegalArgumentException if function is null.
+     * @param function The feature function.
+     * @throws IllegalArgumentException if the feature function is null.
      */
     OracleActionEstimator(FeatureFunction function, SetOfActions setOfActions){
         this(function);

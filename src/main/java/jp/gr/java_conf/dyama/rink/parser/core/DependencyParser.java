@@ -16,7 +16,7 @@ public abstract class DependencyParser implements Parser {
 
 
     /**
-     * Parser Builder
+     * Parsers Builder
      * @author Hiroyasu Yamada
      *
      */
@@ -122,14 +122,14 @@ public abstract class DependencyParser implements Parser {
      * Create a new sample attaching the sentence reader. The new sample is able to parse dependency relations.
      * @param reader the sentence reader.
      * @param beamWidth the width of beam search. the beam search is enable only if the beamWidth is more than 1.
-     * @return Sample
+     * @return a new sample
      * @throws IllegalArgumentException if the sentence reader is null.
      */
     public abstract Sample createSample(SentenceReader reader, int beamWidth);
 
     /**
      * Returns the ID Converter.
-     * @return ID Converter
+     * @return the ID Converter
      */
     final IDConverter getIDConverter(){
         return idconverter_ ;
@@ -154,7 +154,7 @@ public abstract class DependencyParser implements Parser {
 
     /**
      * Saves the parser to the model file.
-     * @param path file the path to the model file.
+     * @param path the path to the model file.
      * @throws IOException
      */
     public abstract void save(String path) throws IOException ;

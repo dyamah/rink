@@ -10,10 +10,10 @@ public class BitVector implements Serializable{
 
     private static final long serialVersionUID = -7366643082593603246L;
 
-    /** base number */
+    /** the base number */
     private static int BASE = 64;
 
-    /** bit masks */
+    /** the array for bit masks */
     private static long[] BIT_MASK = {
                          1L << (64 -  1), 1L << (64 -  2), 1L << (64 -  3), 1L << (64 -  4), 1L << (64 -  5), 1L << (64 -  6), 1L << (64 -  7), 1L << (64 -  8), 1L << (64 -  9),
         1L << (64 - 10), 1L << (64 - 11), 1L << (64 - 12), 1L << (64 - 13), 1L << (64 - 14), 1L << (64 - 15), 1L << (64 - 16), 1L << (64 - 17), 1L << (64 - 18), 1L << (64 - 19),
@@ -24,6 +24,7 @@ public class BitVector implements Serializable{
         1L << (64 - 60), 1L << (64 - 61), 1L << (64 - 62), 1L << (64 - 63), 1L << (64 - 64)
     };
 
+    /** the array for pop count */
     private static long[] POP_COUNT_MASK = {
                                        ((1L <<  1) - 1) << (64 -  1), ((1L <<  2) - 1) << (64 -  2), ((1L <<  3) - 1) << (64 -  3), ((1L <<  4) - 1) << (64 -  4), ((1L <<  5) - 1) << (64 -  5), ((1L <<  6) - 1) << (64 -  6), ((1L <<  7) - 1) << (64 -  7), ((1L <<  8) - 1) << (64 -  8), ((1L <<  9) - 1) << (64 -  9),
         ((1L << 10) - 1) << (64 - 10), ((1L << 11) - 1) << (64 - 11), ((1L << 12) - 1) << (64 - 12), ((1L << 13) - 1) << (64 - 13), ((1L << 14) - 1) << (64 - 14), ((1L << 15) - 1) << (64 - 15), ((1L << 16) - 1) << (64 - 16), ((1L << 17) - 1) << (64 - 17), ((1L << 18) - 1) << (64 - 18), ((1L << 19) - 1) << (64 - 19),
@@ -34,6 +35,7 @@ public class BitVector implements Serializable{
         ((1L << 60) - 1) << (64 - 60), ((1L << 61) - 1) << (64 - 61), ((1L << 62) - 1) << (64 - 62), ((1L << 63) - 1) << (64 - 63), ~0L
     };
 
+    /** the table for pop count */
     static private final int[] POP_COUNT_TABLE;
     static {
         POP_COUNT_TABLE = new int[1 << 16];
@@ -59,18 +61,19 @@ public class BitVector implements Serializable{
         return popcount;
     }
 
-    /** bit array for index */
+    /** the array for index */
     private long[] bit_ ;
 
-    /** array for the number of elements */
+    /** the array for the number of elements */
     private int[] num_elements_ ;
 
-    /** array for elements */
+    /** the array for elements */
     private double[] elements_;
 
     /**
      * Constructor
-     * @param array original array. throw IllegalArgumentException if array is null.
+     * @param array the original array.
+     * @throws IllegalArgumentException if the array is null.
      */
     public BitVector(double[] array){
         if (array == null)
@@ -141,8 +144,8 @@ public class BitVector implements Serializable{
     }
 
     /**
-     * get the number of none-zero elements
-     * @return the number of none zero elements
+     * Returns the number of non-zero elements
+     * @return the number of non zero elements
      */
     public int size(){
         int s = 0;
@@ -153,7 +156,7 @@ public class BitVector implements Serializable{
     }
 
     /**
-     * get the value of squared L2 norm
+     * Returns the value of squared L2 norm
      * @return get the value of squared L2 norm
      */
     public double squaredL2norm(){
@@ -164,10 +167,10 @@ public class BitVector implements Serializable{
     }
 
     /**
-     * set an element.
+     * Sets the element.
      * @param id the ID of the elements.
-     * @param num the number of none zero elements until the ID.
-     * @param value the value of the elements.
+     * @param num the number of non zero elements until the ID.
+     * @param value the value of the element.
      */
     private void set(int id, int num, double value){
         int x = id / BASE;
@@ -180,16 +183,16 @@ public class BitVector implements Serializable{
     }
 
     /**
-     * get the value corresponding ID
-     * @param id ID
-     * @return the value corresponding ID.
-     * Note that if the ID is out of range, this method returns 0.0.
+     * Returns the value corresponding the index
+     * @param index the index
+     * @return the value corresponding the index.
+     * Note that if the index is out of range, this method returns 0.0.
      */
-    public double get(int id){
-        if (id < 0)
+    public double get(int index){
+        if (index < 0)
             return 0 ;
-        int x = id / BASE;
-        int y = id % BASE;
+        int x = index / BASE;
+        int y = index % BASE;
         if (x >= bit_.length)
             return 0;
 
@@ -200,13 +203,17 @@ public class BitVector implements Serializable{
         return elements_[n];
     }
 
+    /**
+     * Updates  all elements to the value of z times.
+     * @param z the value.
+     */
     void product(double z){
         for(int i = 0 ; i < elements_.length; i++){
             elements_[i] *= z;
         }
     }
     /**
-     * set the value of an index.
+     * Sets the value of the index.
      * @param index the index of vector.
      * @param value the value of the index.
      * @throws IllegalArgumentException if the index is negative.

@@ -20,7 +20,7 @@ public class SampleImpl implements Sample {
 
 
     /**
-     * Agenda class for beam searching.
+     * Agenda class for beam search.
      * @author Hiroyasu Yamada
      *
      */
@@ -41,7 +41,7 @@ public class SampleImpl implements Sample {
 
         /**
          * Constructor
-         * @param beamWidth the beam width. it must be more than 1.
+         * @param beamWidth the beam width. It must be more than 1.
          */
         private Agenda(int beamWidth){
             size_ = 0;
@@ -61,7 +61,7 @@ public class SampleImpl implements Sample {
         }
 
         /**
-         * initialize this agenda and setup the new state.
+         * Initializes this agenda and setup the new state.
          * @param state the new state.
          */
         private void setup(State state){
@@ -71,7 +71,7 @@ public class SampleImpl implements Sample {
         }
 
         /**
-         * clear this agenda.
+         * Clears this agenda.
          */
         private void clear(){
             size_ = 0;
@@ -80,7 +80,7 @@ public class SampleImpl implements Sample {
         }
 
         /**
-         * add a candidate
+         * Adds the candidate.
          * @param state the state
          * @param action the parsing action that will be apply to the state.
          */
@@ -221,8 +221,8 @@ public class SampleImpl implements Sample {
     }
 
     /**
-     * Returns the dependency feature.
-     * @return the dependency feature
+     * Returns the feature.
+     * @return the feature
      */
     FeatureImpl getFeature(){
         return feature_;
@@ -230,7 +230,7 @@ public class SampleImpl implements Sample {
 
     /**
      * Returns the feature vector for estimations.
-     * @return feature vector
+     * @return the feature vector
      */
     BinaryFeatureVector getFeatureVector(){
         return fv_ ;
