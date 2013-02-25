@@ -21,7 +21,7 @@
 	    <id>Yamada</id>
 	    <name>Hiroyasu</name>
 	    <email>dyama.h@gmail.com</email>
-	    <url>http://dyamah.github.gom/</url>
+	    <url>http://dyamah.github.com/</url>
   	</developer>
   </developers>
 
@@ -143,7 +143,12 @@
       </plugin>
     </plugins>
   </reporting>
-
+  <distributionManagement>
+    <site>
+      <id>github</id>
+      <url>gitsite:git@github.com/dyamah/rink.git</url>
+    </site>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
