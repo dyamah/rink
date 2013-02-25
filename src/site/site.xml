@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${project.name}">
+  <bannerLeft>
+    <name>${project.name}</name>
+  </bannerLeft>
+  <body>
+    <links>
+      <item name="${project.name}" href="${project.url}"/>
+    </links>
+    <menu name="Menu">
+      <item name="Introduction" href="./index.html" />
+      <item name="License" href="./license.html" />
+      <item name="Models" href="./models.html" />
+      <item name="About POS tagging" href="./models.html" />
+      <item name="Project Reports" href="./project-reports.html" />
+    </menu>
+    <footer>Copyright (C) ${project.inceptionYear}-2013 Hiroyasu Yamada All right reserved. </footer>
+  </body>
+</project>
