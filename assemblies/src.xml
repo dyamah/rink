@@ -1,7 +1,7 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-  <id>bin</id>
+  <id>src</id>
   <formats>
     <format>tar.gz</format>
     <format>zip</format>
@@ -14,6 +14,7 @@
         <include>README*</include>
         <include>LICENSE*</include>
         <include>NOTICE*</include>
+        <include>pom.xml</include>
       </includes>
     </fileSet>
 
@@ -26,19 +27,19 @@
     </fileSet>
 
     <fileSet>
-      <directory>${project.build.directory}</directory>
-      <outputDirectory>/</outputDirectory>
+      <directory>${project.basedir}/assemblies</directory>
+      <outputDirectory>assemblies</outputDirectory>
       <includes>
-        <include>*exec.jar</include>
+        <include>*.xml</include>
       </includes>
     </fileSet>
 
+
     <fileSet>
-      <directory>${project.build.directory}/site</directory>
-      <outputDirectory>docs</outputDirectory>
+      <directory>${project.basedir}/src</directory>
+      <useDefaultExcludes>true</useDefaultExcludes>
       <excludes>
-        <exclude>models/*</exclude>
-        <exclude>releases/*</exclude>
+        <exclude>site/resources/models/*</exclude>
       </excludes>
     </fileSet>
 

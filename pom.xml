@@ -72,9 +72,9 @@
           <execution>
             <id>exec-jar</id>
             <configuration>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
+              <descriptors>
+                <descriptor>assemblies/exec.xml</descriptor>
+              </descriptors>
               <archive>
                 <manifest>
                   <mainClass>jp.gr.java_conf.dyama.rink.tools.DependencyParser</mainClass>
@@ -87,10 +87,10 @@
             </goals>
           </execution>
           <execution>
-            <id>make-assembly</id>
+            <id>bin-archive</id>
             <configuration>
               <descriptors>
-                <descriptor>assembly.xml</descriptor>
+                <descriptor>assemblies/bin.xml</descriptor>
               </descriptors>
             </configuration>
             <phase>site</phase>
