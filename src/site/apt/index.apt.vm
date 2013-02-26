@@ -8,14 +8,13 @@
 
 必要なモジュール
 
-  * rinkモジュール本体：${project.name}-${project.version}.jar　
+  * rinkモジュール本体：{{{./release/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-exec.jar }}　
 
-  動作には以下２つのモジュールが必要です。
-  詳細は{{{./dependencies.html}依存関係}}を参照してください。
+  上記モジュールには動作に必要な以下２つの依存モジュールが同封されています。
+  各依存モジュールのライセンス等の詳細は{{{./dependencies.html}ここ}}を参照してください。
 
-  *{{{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} LIBSVM}}:  SVMライブラリ。SVMで学習をする場合に必要
-
-  *{{{http://commons.apache.org/cli/} commons-cli}}:  コマンドライン解析ライブラリ
+    * {{{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} LIBSVM}}:  SVMライブラリ。SVMで学習をする場合に必要
+    *{{{http://commons.apache.org/cli/} commons-cli}}:  コマンドライン解析ライブラリ
 
 
 入出力データ形式
@@ -202,8 +201,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
 謝辞
 
   rink プロジェクトは{{{http://lr-www.pi.titech.ac.jp/wp/}東京工業大学精密工学研究所 奥村・高村研究室}}で研究員として在職中に立ち上げたプロジェクトです。
-  短い間ではありましたが自由に研究開発を行うことができました。
-  このような環境を提供してくださり、また数々のアドバイスをくださった奥村先生、高村さん、笹野さん、そして研究室の皆さんに心より感謝いたします。
+  このような環境を提供してくださいました奥村先生、高村さん、そして研究室の皆さんに心より感謝いたします。
 
   本当にありがとうございました。
 
