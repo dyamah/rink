@@ -63,19 +63,37 @@
       </plugins>
     </pluginManagement>
 
+
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.4</version>
-        <configuration>
-          <descriptors>
-            <descriptor>assembly.xml</descriptor>
-          </descriptors>
-        </configuration>
         <executions>
           <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>site</phase> <!-- bind to the packaging phase -->
+            <id>exec-jar</id>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>jp.gr.java_conf.dyama.rink.tools.DependencyParser</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>make-assembly</id>
+            <configuration>
+              <descriptors>
+                <descriptor>assembly.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <phase>site</phase>
             <goals>
               <goal>single</goal>
             </goals>
@@ -88,7 +106,7 @@
         <artifactId>maven-site-plugin</artifactId>
         <version>3.2</version>
         <configuration>
-          <locales>ja,en</locales>
+          <locales>ja</locales>
           <inputEncoding>UTF-8</inputEncoding>
           <outputEncoding>UTF-8</outputEncoding>
         </configuration>
@@ -117,6 +135,7 @@
                 <resource>
                   <directory>target</directory>
                   <includes>
+                    <include>*.jar</include>
                     <include>*.tar.gz</include>
                     <include>*.zip</include>
                   </includes>
@@ -124,13 +143,7 @@
               </resources>
             </configuration>
           </execution>
-        </executions>
-      </plugin>
 
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
           <execution>
             <id>copy-models</id>
             <phase>site</phase>
