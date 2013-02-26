@@ -10,8 +10,8 @@
     <menu name="Menu">
       <item name="Introduction" href="./index.html" />
       <item name="License" href="./license.html" />
-      <item name="Models" href="./models.html" />
-      <item name="About POS tagging" href="./postag.html" />
+      <item name="Download" href="./models.html" />
+      <item name="Usage" href="./usage.html" />
       <item name="Project Reports" href="./project-reports.html" />
     </menu>
     <footer>Copyright (C) ${project.inceptionYear}-2013 Hiroyasu Yamada All right reserved. </footer>

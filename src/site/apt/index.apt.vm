@@ -11,7 +11,7 @@
   * rinkモジュール本体：${project.name}-${project.version}.jar　
 
   動作には以下２つのモジュールが必要です。
-  詳細は{{{../site/dependencies.html}依存関係}}を参照してください。
+  詳細は{{{./dependencies.html}依存関係}}を参照してください。
 
   *{{{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} LIBSVM}}:  SVMライブラリ。SVMで学習をする場合に必要
 

@@ -62,13 +62,33 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
     <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <descriptors>
+            <descriptor>assembly.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>site</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <version>3.2</version>
         <configuration>
-          <locales>ja</locales>
+          <locales>ja,en</locales>
           <inputEncoding>UTF-8</inputEncoding>
           <outputEncoding>UTF-8</outputEncoding>
         </configuration>
@@ -79,6 +99,32 @@
             <version>0.4.1</version>
           </dependency>
           </dependencies>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>copy-archive</id>
+            <phase>site</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/site/releases</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>target</directory>
+                  <includes>
+                    <include>*.tar.gz</include>
+                    <include>*.zip</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -143,12 +189,14 @@
       </plugin>
     </plugins>
   </reporting>
+
   <distributionManagement>
     <site>
       <id>github</id>
       <url>gitsite:git@github.com/dyamah/rink.git</url>
     </site>
   </distributionManagement>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
