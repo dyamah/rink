@@ -2,7 +2,7 @@
 
 * rinkモジュールバイナリパッケージ
 
-  * {{{./release/${project.name}-${project.version}-bin.tar.gz} ${project.version} }} : (2013/02/28)
+  * {{{./releases/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-bin.tar.gz}} (2013/02/28)
 
 * 学習済みモデル
 

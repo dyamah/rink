@@ -8,7 +8,7 @@
 
 必要なモジュール
 
-  * rinkモジュール本体：{{{./release/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-exec.jar }}　
+  * rinkモジュール本体：{{{./releases/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-exec.jar }}　
 
   上記モジュールには動作に必要な以下２つの依存モジュールが同封されています。
 

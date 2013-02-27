@@ -15,6 +15,6 @@
       <item name="Project Reports" href="./project-reports.html" />
       <item name="Dependencies" href="./dependencies.html"/>
     </menu>
-    <footer>Copyright (C) ${project.inceptionYear}-2013 Hiroyasu Yamada All right reserved. </footer>
+    <footer>Copyright (C) ${project.inceptionYear}-2013 Hiroyasu Yamada All rights reserved. </footer>
   </body>
 </project>
