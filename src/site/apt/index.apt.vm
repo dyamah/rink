@@ -28,7 +28,12 @@
 
 入出力データ形式
 
-  解析対象文の入出力データは、{{CoNLL-X}} の{{{http://ilk.uvt.nl/conll/index.html#dataformat}書式}}と同じとします。
+  解析対象文の入出力データは、{{CoNLL-X}} の{{{http://ilk.uvt.nl/conll/index.html#dataformat}書式}}に準拠します。
+
+  書式の例は{{{http://ilk.uvt.nl/conll/example.html}こちら}}。
+
+  rinkプロジェクトの解析器は、学習時は7列目、解析時は6列目まであれば動作するようになっています。
+  また現状では学習及び解析処理内部でに3列目、5列目、6列目の情報は使用していません。
 
 * コーパスについて
 
