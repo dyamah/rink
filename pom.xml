@@ -98,6 +98,18 @@
               <goal>single</goal>
             </goals>
           </execution>
+          <execution>
+            <id>src-archive</id>
+            <configuration>
+              <descriptors>
+                <descriptor>assemblies/src.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <phase>site</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
 

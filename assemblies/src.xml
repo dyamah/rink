@@ -39,7 +39,7 @@
       <directory>${project.basedir}/src</directory>
       <useDefaultExcludes>true</useDefaultExcludes>
       <excludes>
-        <exclude>site/resources/models/*</exclude>
+        <exclude>site/*</exclude>
       </excludes>
     </fileSet>
 
