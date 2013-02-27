@@ -166,10 +166,10 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>target/site/models</outputDirectory>
+              <outputDirectory>target/site/models/${project.version}</outputDirectory>
               <resources>
                 <resource>
-                  <directory>models</directory>
+                  <directory>models/${project.version}</directory>
                   <includes>
                     <include>*.*</include>
                   </includes>
