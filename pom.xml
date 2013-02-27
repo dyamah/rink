@@ -151,6 +151,9 @@
                     <include>*.tar.gz</include>
                     <include>*.zip</include>
                   </includes>
+                  <excludes>
+                    <exclude>*SNAPSHOT*</exclude>
+                  </excludes>
                 </resource>
               </resources>
             </configuration>
