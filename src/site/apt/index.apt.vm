@@ -1,20 +1,22 @@
-概要（暫定版 0.2）
+概要
 
   rink プロジェクトはIWPT2003で提案した英語の決定性上昇型依存構造解析({{Y & M IWPT03}})のJava実装です。
 
 動作環境
 
-  * JRE 1.6以降
+  * JRE 1.7以降
 
 必要なモジュール
 
   * rinkモジュール本体：{{{./release/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-exec.jar }}　
 
   上記モジュールには動作に必要な以下２つの依存モジュールが同封されています。
+
   各依存モジュールのライセンス等の詳細は{{{./dependencies.html}ここ}}を参照してください。
 
-    * {{{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} LIBSVM}}:  SVMライブラリ。SVMで学習をする場合に必要
-    *{{{http://commons.apache.org/cli/} commons-cli}}:  コマンドライン解析ライブラリ
+  * {{{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} LIBSVM}}:  SVMライブラリ。SVMで学習をする場合に必要
+
+  * {{{http://commons.apache.org/cli/} commons-cli}}:  コマンドライン解析ライブラリ
 
 
 入出力データ形式
@@ -70,13 +72,13 @@
   * 訓練データの分割：依存構造を構築するかどうかを判定する２つの単語のうち左の単語の品詞でグループ化
 
 +------------------------------------------------------------------------------------------------------------------------------------------------+
-% java -Xmx 1024m -cp ${project.name}-${project.version}.jar:$libsvm.jar:$commons-cli.jar jp.gr.java_conf.dyama.rink.tools.DependencyLearner -i $train.txt -o $model -l IWPT2003
+% java -Xmx1024m -cp ${project.name}-${project.version}-exec.jar jp.gr.java_conf.dyama.rink.tools.DependencyLearner -i $train.txt -o $model -l IWPT2003
 +------------------------------------------------------------------------------------------------------------------------------------------------+
 
 * 学習したモデルを利用した解析方法
 
 +------------------------------------------------------------------------------------------------------------------------------------------------+
-% java -Xmx 512m -cp ${project.name}-${project.version}.jar:$commons-cli.jar jp.gr.java_conf.dyama.rink.tools.DependencyParser -i $test.txt -m $model -v
+% java -Xmx512m -jar ${project.name}-${project.version}-exec.jar -i $test.txt -m $model -v
 +------------------------------------------------------------------------------------------------------------------------------------------------+
 
   上記コマンドで標準出力にCoNLL-X形式の解析結果を出力します。
@@ -100,14 +102,7 @@ Total Memory [MB] :	237.71
 
   * OS: Mac OS X 10.8.2
 
-  * JRE: 1.6
-
-+---------------------------------------------------------------+
-#以下は java -version の結果
-java version "1.7.0_09"
-Java(TM) SE Runtime Environment (build 1.7.0_09-b05)
-Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
-+---------------------------------------------------------------+
+  * JRE: 1.7
 
 * データ
 
@@ -185,23 +180,23 @@ Java HotSpot(TM) 64-Bit Server VM (build 23.5-b02, mixed mode)
 
 今後の予定
 
-  現在 0.1 alpha 版として必要最低限のテストは実施していますが、一部試験実装（変更の可能性が高い箇所）でテストが不十分な部分がまだあります。
-  また先行研究 Zhang & Nivre ACL2011 にあるように、ビームサーチを使うことで精度を上げることが可能なので、同様の機能をrinkモジュールにも取り込みたいと考えています。
+  先行研究 Zhang & Nivre ACL2011 にあるように、ビームサーチを使うことで精度を上げることが可能なので、同様の機能をrinkモジュールにも取り込みたいと考えています。
 
   2013/3末にリリース予定の version 1.0　では以下の機能変更を予定しています。
 
     * SVM 学習機能の無効化（研究比較用のためモデルのロード、解析機能は可能のままにします。）
 
-    * MIRA による学習機能、解析機能の対応
+    * MIRA による学習機能、解析機能の正式対応
 
-    * ビームサーチによる冗長解析機能
+    * ビームサーチによる冗長解析機能（精度性能調査結果次第では無効または非推奨機能にする場合もあります）
 
   また品質向上のため可能な限り多くのテストを追加する予定です。
+  (現状のテスト状況については{{{./project-reports.html}プロジェクトレポート}}をご参照ください。)
 
 謝辞
 
   rink プロジェクトは{{{http://lr-www.pi.titech.ac.jp/wp/}東京工業大学精密工学研究所 奥村・高村研究室}}で研究員として在職中に立ち上げたプロジェクトです。
-  このような環境を提供してくださいました奥村先生、高村さん、そして研究室の皆さんに心より感謝いたします。
+  いろいろとお世話になりました奥村先生、高村さんをはじめ、研究室の皆さんに心より感謝いたします。
 
   本当にありがとうございました。
 

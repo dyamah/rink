@@ -1,0 +1,17 @@
+1	The	_	DT	DT	_	2
+2	price	_	NN	NN	_	3
+3	is	_	VBZ	VBZ	_	0
+4	high	_	JJ	JJ	_	3
+5	.	_	.	.	_	3
+
+1	You	_	PRP	PRP	_	2
+2	have	_	VBP	VBP	_	0
+3	my	_	PRP$	PRP$	_	4
+4	bow	_	NN	NN	_	2
+5	.	_	.	.	_	2
+
+1	Did	_	NNP	NNP	_	3
+2	you	_	PRP	PRP	_	3
+3	see	_	VBP	VBP	_	0
+4	that	_	IN	IN	_	3
+5	?	_	.	.	_	3
