@@ -22,7 +22,7 @@
       <directory>${project.basedir}/samples</directory>
       <outputDirectory>samples</outputDirectory>
       <includes>
-        <include>*.*</include>
+        <include>*.txt</include>
       </includes>
     </fileSet>
 
