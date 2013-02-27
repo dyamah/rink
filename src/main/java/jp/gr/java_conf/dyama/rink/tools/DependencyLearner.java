@@ -104,6 +104,8 @@ public class DependencyLearner {
         grouping_ = false;
         iterations_ = 1;
 
+        format_ = Common.Format.CoNLLX;
+
         opts_ = new Options();
         opts_.addOption("h", "help", false, "show usage.");
         opts_.addOption("i", "input", true, "path to the input file.");
@@ -314,7 +316,6 @@ public class DependencyLearner {
 
         if (cl.hasOption("f")){
             String format = cl.getOptionValue("f");
-            format_ = Common.Format.CoNLLX;
             if (format.equals(Common.Format.ORIGINAL.toString()))
                 format_ = Common.Format.ORIGINAL;
         }
