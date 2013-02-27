@@ -1,12 +1,10 @@
 #!/bin/sh
 
-M2_REPO=~/.m2/repository
-RINK=${M2_REPO}/jp/gr/java_conf/dyama/rink/rink/0.1-beta/rink-0.1-beta.jar
-
-classpath=${RINK}
+jar=@name@-@version@-exec.jar
 pkg=jp.gr.java_conf.dyama.rink
-tool=${pkg}.tools.EvalDependencies
+tools=${pkg}.tools
+main=${tools}.EvalDependencies
 
-command="java -Xmx128m -cp ${classpath} ${tool} $@"
+command="java -Xmx1024m -cp ${jar} ${main} $@"
 
 ${command};
