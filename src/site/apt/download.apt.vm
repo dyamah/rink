@@ -4,16 +4,17 @@
 
   依存モジュールも含めた実行可能rinkモジュールとドキュメント類が同封されています。
 
-  * {{{./releases/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-bin.tar.gz}} (2013/02/28)
+  * {{{./releases/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-bin.tar.gz}} [2013/02/27]
 
 * rinkモジュールソースパッケージ
 
-  * {{{./releases/${project.name}-${project.version}-src.tar.gz} ${project.name}-${project.version}-src.tar.gz}} (2013/02/28)
-
-  <<ビルド方法>>
-
   rinkモジュールのソースコードとビルドに必要なファイルが同封されています。ビルドには maven 3 が必要になります。
-  解凍したフォルダに移動して以下のコマンドを実行すると target/ 以下に jar ファイルが生成されます。
+
+  * {{{./releases/${project.name}-${project.version}-src.tar.gz} ${project.name}-${project.version}-src.tar.gz}} [2013/02/27]
+
+  []
+
+  ビルド方法: 解凍したフォルダに移動して以下のコマンドを実行すると target/ 以下に jar ファイルが生成されます。
 
 +-----------------------------+
   mvn package
