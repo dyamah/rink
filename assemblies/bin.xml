@@ -14,7 +14,6 @@
         <include>README*</include>
         <include>LICENSE*</include>
         <include>NOTICE*</include>
-        <include>check.sh</include>
       </includes>
     </fileSet>
 
