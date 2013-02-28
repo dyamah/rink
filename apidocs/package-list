@@ -1,0 +1,8 @@
+jp.gr.java_conf.dyama.rink.common
+jp.gr.java_conf.dyama.rink.corpus
+jp.gr.java_conf.dyama.rink.ml
+jp.gr.java_conf.dyama.rink.ml.svm
+jp.gr.java_conf.dyama.rink.parser
+jp.gr.java_conf.dyama.rink.parser.core
+jp.gr.java_conf.dyama.rink.tools
+jp.gr.java_conf.dyama.rink.utils
