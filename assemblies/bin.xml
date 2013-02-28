@@ -33,14 +33,6 @@
       </includes>
     </fileSet>
 
-    <fileSet>
-      <directory>${project.build.directory}/site</directory>
-      <outputDirectory>docs</outputDirectory>
-      <excludes>
-        <exclude>models/*</exclude>
-        <exclude>releases/*</exclude>
-      </excludes>
-    </fileSet>
 
   </fileSets>
 </assembly>

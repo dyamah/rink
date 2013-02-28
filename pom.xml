@@ -179,7 +179,7 @@
             </configuration>
           </execution>
 
-          <execution>
+          <!--  <execution>
             <id>copy-models</id>
             <phase>site</phase>
             <goals>
@@ -196,7 +196,7 @@
                 </resource>
               </resources>
             </configuration>
-          </execution>
+          </execution> -->
         </executions>
       </plugin>
 

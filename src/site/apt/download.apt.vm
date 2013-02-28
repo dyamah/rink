@@ -2,13 +2,13 @@
 
 * rinkモジュールバイナリパッケージ
 
-  依存モジュールも含めた実行可能rinkモジュールとドキュメント類が同封されています。
+  依存モジュールも含めた実行可能rinkモジュールが同封されています。
 
   * {{{./releases/${project.name}-${project.version}-bin.tar.gz} ${project.name}-${project.version}-bin.tar.gz}} [2013/02/28]
 
 * rinkモジュールソースパッケージ
 
-  rinkモジュールのソースコードとビルドに必要なファイルが同封されています。ビルドには maven 3 が必要になります。
+  rinkモジュールのソースコードとビルドに必要なファイルが同封されています。ビルドには {{{http://maven.apache.org} maven 3}}  が必要になります。
 
   * {{{./releases/${project.name}-${project.version}-src.tar.gz} ${project.name}-${project.version}-src.tar.gz}} [2013/02/28]
 
@@ -20,15 +20,14 @@
   mvn package
 +-----------------------------+
 
-* 学習済みモデル
-
-  以下の２つの事前学習済みモデルはrinkモジュール同様の{{{../site/license.html}修正BSDライセンス}}とします。
-  ただし、利用に注意事項及び制限があります。
-
-  [[1]] {{{./models/rink.IWPT2003.svm}rink.IWPT2003.svm}} (IWPT2003の最良モデルの再現モデル）
-
-  [[2]] {{{./models/rink.IWPT2003.mira}rink.IWPT2003.mira}} (IWPT2003の最良結果と同一素性を利用。1.より精度は落ちるが解析速度を高速化したモデル）
-
-  << 注意事項：上記2つのモデルの利用には、{{{http://www.ldc.upenn.edu} LDC}} が販売する {{{http://www.ldc.upenn.edu/Catalog/catalogEntry.jsp?catalogId=LDC99T42} Penn Treebank}} コーパスのライセンスを保持している必要があります。
-  またPenn Treebankコーパスのライセンスを保持している場合でも、研究目的以外で利用することはできません。ご利用には十分ご注意ください。 >>
-
+~~ * 学習済みモデル
+~~
+~~ 以下の２つの事前学習済みモデルはrinkモジュール同様の{{{../site/license.html}修正BSDライセンス}}とします。
+~~   ただし、利用に注意事項及び制限があります。
+~~
+~~   [[1]] {{{./models/rink.IWPT2003.svm}rink.IWPT2003.svm}} (IWPT2003の最良モデルの再現モデル）
+~~
+~~   [[2]] {{{./models/rink.IWPT2003.mira}rink.IWPT2003.mira}} (IWPT2003の最良結果と同一素性を利用。1.より精度は落ちるが解析速度を高速化したモデル）
+~~
+~~   << 注意事項：上記2つのモデルの利用には、{{{http://www.ldc.upenn.edu} LDC}} が販売する {{{http://www.ldc.upenn.edu/Catalog/catalogEntry.jsp?catalogId=LDC99T42} Penn Treebank}} コーパスのライセンスを保持している必要があります。
+~~   またPenn Treebankコーパスのライセンスを保持している場合でも、研究目的以外で利用することはできません。ご利用には十分ご注意ください。 >>
